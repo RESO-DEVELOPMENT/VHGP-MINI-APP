@@ -1,28 +1,30 @@
 import { Sheet } from "components/fullscreen-sheet";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { cartState, childrenProductState } from "state";
 import { Store } from "./../../types/store";
-import { Box, Button, Text } from "zmp-ui";
+import { Box, Button, Text, useNavigate } from "zmp-ui";
 
-export interface StoreRecommendProps {
+export interface StorePickerProps {
   store: Store;
   isUpdate: false;
-  children: (methods: { open: () => void; close: () => void }) => ReactNode;
+  children: (methods: { open: () => void }) => ReactNode;
 }
-export const StoreRecommend: FC<StoreRecommendProps> = ({
+export const RecommendStorePicker: FC<StorePickerProps> = ({
   children,
   isUpdate,
   store,
 }) => {
   const [visible, setVisible] = useState(false);
 
+  const navigate = useNavigate();
+
+  const gotoStore = (storeId: string) => {
+    navigate("/store", { state: { storeId } });
+  };
   return (
     <>
       {children({
-        open: () => setVisible(true),
-        close: () => setVisible(false),
+        open: () => gotoStore(store.id),
       })}
       {createPortal(
         <Sheet visible={visible} onClose={() => setVisible(false)} autoHeight>

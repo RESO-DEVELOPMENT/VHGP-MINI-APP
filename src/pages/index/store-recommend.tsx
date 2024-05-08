@@ -1,15 +1,13 @@
-import { FinalPrice } from "components/display/final-price";
-import { DisplayPrice } from "components/display/price";
-import { ProductPicker } from "components/product/picker";
 import { Section } from "components/section";
 import { ProductSlideSkeleton } from "components/skeletons";
-import { StoreRecommend } from "components/store/store-picker";
-import { StorePicker } from "pages/cart/store-picker";
+import { RecommendStorePicker } from "components/store/store-picker";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
-import { listStoreState, recommendProductsState } from "state";
+import { listStoreState } from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Text } from "zmp-ui";
+import { Box, Text, useNavigate } from "zmp-ui";
+
+//TODO: design
 import logo from "./../../static/logo.png";
 
 export const RecommendContent: FC = () => {
@@ -41,7 +39,8 @@ export const RecommendContent: FC = () => {
       <Swiper slidesPerView={1.25} spaceBetween={16} className="">
         {recommendStores.map((store) => (
           <SwiperSlide key={store.id}>
-            <StoreRecommend store={store} isUpdate={false}>
+            {/* Các cửa hàng được recomment render ở đây */}
+            <RecommendStorePicker store={store} isUpdate={false}>
               {({ open }) => (
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box
@@ -60,7 +59,7 @@ export const RecommendContent: FC = () => {
                   </Box>
                 </div>
               )}
-            </StoreRecommend>
+            </RecommendStorePicker>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -68,13 +67,14 @@ export const RecommendContent: FC = () => {
   );
 };
 
+//Phần sẽ dc hiển thị khi RecommendContent đag chạy
 export const RecommendFallback: FC = () => {
-  const recommendProducts = [...new Array(5)];
-  console.log("tới đây");
+  //5 cửa hàng trống sẽ dc hiển thị khi đợi chạy dữ liệu
+  const recommendStores = [...new Array(5)];
   return (
     <Section title="Quán ăn gần bạn" padding="title-only">
       <Swiper slidesPerView={1.25} spaceBetween={16} className="px-4">
-        {recommendProducts.map((_, i) => (
+        {recommendStores.map((_, i) => (
           <SwiperSlide key={i}>
             <ProductSlideSkeleton />
           </SwiperSlide>
@@ -86,6 +86,7 @@ export const RecommendFallback: FC = () => {
 
 export const Recommend: FC = () => {
   return (
+    //Fallback sẽ dc hiển thị khi  <RecommendContent /> đag xử lý dữ liệu
     <Suspense fallback={<RecommendFallback />}>
       <RecommendContent />
     </Suspense>

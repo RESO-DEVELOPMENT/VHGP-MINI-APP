@@ -34,6 +34,8 @@ import userApi from "api/user";
 import axios from "utils/axios";
 import { Payment } from "types/payment";
 import { BlogDetails } from "types/blog";
+import { StoreProduct } from "types/types-mock/storeProducts";
+import storeProductsData from "./../mock/storeProduct.json";
 
 export const accessTokenState = selector({
   key: "accessToken",
@@ -341,7 +343,7 @@ export const recommendProductsState = selector<Product[]>({
 
 export const selectedCategoryIdState = atom({
   key: "selectedCategoryId",
-  default: "coffee",
+  default: ["coffee", "bread", "food"],
 });
 
 export const productsByCategoryState = selectorFamily<Product[], string>({
@@ -515,4 +517,9 @@ export const phoneState = selector<string | undefined>({
     }
     return;
   },
+});
+
+export const storeProductsState = selector<StoreProduct[]>({
+  key: "storeProductsAtom",
+  get: () => storeProductsData as StoreProduct[], // Gán dữ liệu từ tệp JSON cho atom
 });
