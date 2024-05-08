@@ -1,6 +1,6 @@
 import { Section } from "components/section";
 import { ProductSlideSkeleton } from "components/skeletons";
-import { RecommendStorePicker } from "components/store/store-picker";
+import { RecommendStorePicker } from "pages/index/store/store-picker";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
 import { listStoreState } from "state";

@@ -1,7 +1,7 @@
 import { Sheet } from "components/fullscreen-sheet";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Store } from "./../../types/store";
+import { Store } from "../../../types/store";
 import { Box, Button, Text, useNavigate } from "zmp-ui";
 
 export interface StorePickerProps {
@@ -18,13 +18,13 @@ export const RecommendStorePicker: FC<StorePickerProps> = ({
 
   const navigate = useNavigate();
 
-  const gotoStore = (storeId: string) => {
-    navigate("/store", { state: { storeId } });
+  const gotoStore = (store: Store) => {
+    navigate("/store", { state: { store } });
   };
   return (
     <>
       {children({
-        open: () => gotoStore(store.id),
+        open: () => gotoStore(store),
       })}
       {createPortal(
         <Sheet visible={visible} onClose={() => setVisible(false)} autoHeight>

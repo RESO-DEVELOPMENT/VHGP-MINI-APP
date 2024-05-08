@@ -18,7 +18,7 @@ import QRCodePage from "pages/qr-code";
 import InformationPage from "pages/information";
 import FeedbackForm from "pages/feedback";
 import BlogDetail from "pages/wallet/blog-detail";
-import StorePage from "pages/store";
+import StorePage from "pages/index/store/store";
 
 if (getSystemInfo().platform === "android") {
   const androidSafeTop = Math.round(
