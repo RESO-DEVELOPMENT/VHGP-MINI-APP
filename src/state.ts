@@ -103,7 +103,9 @@ export const memberState = selector({
               console.log("set error", error);
             },
           });
-          var member = await userApi.getUserInfo(response.data.data.userId ?? "");
+          var member = await userApi.getUserInfo(
+            response.data.data.userId ?? ""
+          );
           return member.data;
         }
       }
@@ -124,6 +126,7 @@ export const memberState = selector({
   },
 });
 
+//gọi api lấy số danh sách cửa hàng
 export const listStoreState = selector({
   key: "listStore",
   get: async () => {
@@ -132,6 +135,7 @@ export const listStoreState = selector({
       size: 10,
       brandCode: "BEANAPP",
     });
+    // console.log(listStore.data.items);
     return listStore.data.items;
   },
 });
@@ -344,14 +348,14 @@ export const productsByCategoryState = selectorFamily<Product[], string>({
   key: "productsByCategory",
   get:
     (categoryId) =>
-      ({ get }) => {
-        const allProducts = get(productsState);
-        return allProducts.filter(
-          (product) =>
-            product.categoryId.includes(categoryId) &&
-            (product.type === "SINGLE" || product.type === "PARENT")
-        );
-      },
+    ({ get }) => {
+      const allProducts = get(productsState);
+      return allProducts.filter(
+        (product) =>
+          product.categoryId.includes(categoryId) &&
+          (product.type === "SINGLE" || product.type === "PARENT")
+      );
+    },
 });
 
 export const cartState = atom<Cart>({

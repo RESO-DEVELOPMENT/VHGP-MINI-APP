@@ -4,7 +4,7 @@ import { Inquiry } from "./inquiry";
 import { Welcome } from "./welcome";
 import { Banner } from "./banner";
 import { Categories } from "./categories";
-import { Recommend } from "./recommend";
+import { Recommend } from "./store-recommend";
 import { ProductList } from "./product-list";
 import { Divider } from "components/divider";
 
@@ -19,6 +19,7 @@ const HomePage: React.FunctionComponent = () => {
           <Categories />
         </Suspense>
         <Divider />
+        {/* Thay đổi recommend Quán ăn gần bạn */}
         <Recommend />
         <Divider />
         <ProductList />
