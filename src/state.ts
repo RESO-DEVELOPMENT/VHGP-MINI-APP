@@ -35,8 +35,6 @@ import userApi from "api/user";
 import axios from "utils/axios";
 import { Payment } from "types/payment";
 import { BlogDetails } from "types/blog";
-
-//TODO: design
 import categories from "../mock/categories.json";
 
 export const accessTokenState = selector({
@@ -130,7 +128,6 @@ export const memberState = selector({
   },
 });
 
-//gọi api lấy số danh sách cửa hàng
 export const listStoreState = selector({
   key: "listStore",
   get: async () => {
@@ -345,7 +342,7 @@ export const recommendProductsState = selector<Product[]>({
 
 export const selectedCategoryIdState = atom({
   key: "selectedCategoryId",
-  default: ["coffee", "bread", "food"],
+  default: "coffee",
 });
 
 export const productsByCategoryState = selectorFamily<Product[], string>({
@@ -521,8 +518,38 @@ export const phoneState = selector<string | undefined>({
   },
 });
 
-//TODO: design
+//lấy tiêu đề của cho các loại thức ăn
 export const foodCategoriesState = selector<FoodCategory[]>({
   key: "foodCategories",
   get: () => categories,
+});
+
+//lấy id
+export const selectedStoreIdState = atom<string>({
+  key: "selectedStoreId",
+  default: "",
+});
+//lấy store info từ id
+export const selectedStoreByIdState = selector({
+  key: "selectedStoreById",
+  get: async ({ get }) => {
+    const id = get(selectedStoreIdState);
+    const stores = get(listStoreState);
+    return stores.filter((s) => s.id === id)[0];
+  },
+});
+//lấy menu từ store id dc đưa vào
+export const storeMenuByIdState = selector({
+  key: "storeMenuById",
+  get: async ({ get }) => {
+    const currentStore = get(selectedStoreByIdState);
+    if (currentStore === null || currentStore === undefined) {
+      const store = get(listStoreState);
+      const menu = await menuApi.getMenu(store[0].id);
+      return menu.data;
+    } else {
+      const menu = await menuApi.getMenu(currentStore.id);
+      return menu.data;
+    }
+  },
 });

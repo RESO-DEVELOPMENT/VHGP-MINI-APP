@@ -3,7 +3,7 @@ import { ProductSlideSkeleton } from "components/skeletons";
 import { RecommendStorePicker } from "pages/index/store/store-picker";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
-import { listStoreState } from "state";
+import { nearbyStoresState } from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, useNavigate } from "zmp-ui";
 
@@ -13,7 +13,7 @@ import logo from "./../../static/logo.png";
 export const RecommendContent: FC = () => {
   //state: nơi gọi api lấy danh sách sản phẩm bán, cần sửa lại cho nó có thể lấy ra các cửa hàng
   //sửa thành lấy danh sách cửa hàng
-  const recommendStores = useRecoilValue(listStoreState);
+  const recommendStores = useRecoilValue(nearbyStoresState);
   /*
     1 cửa hàng gồm các thông tin sau (mẫu)
   {
@@ -49,7 +49,7 @@ export const RecommendContent: FC = () => {
                   >
                     <Text
                       size="small"
-                      className="absolute right-2 top-2  bg-red-700 text-white h-5 px-[8px] rounded-full"
+                      className="absolute right-2 top-2  bg-red-500 text-white h-5 px-[8px] rounded-full"
                     >
                       <h6>HOT</h6>
                     </Text>

@@ -3,6 +3,8 @@ import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Store } from "../../../types/store";
 import { Box, Button, Text, useNavigate } from "zmp-ui";
+import { useSetRecoilState } from "recoil";
+import { selectedStoreIdState } from "state";
 
 export interface StorePickerProps {
   store: Store;
@@ -15,10 +17,13 @@ export const RecommendStorePicker: FC<StorePickerProps> = ({
   store,
 }) => {
   const [visible, setVisible] = useState(false);
-
+  //set lại Id cho Selected Store -> sử dụng trong hiện StorePage
+  const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
   const navigate = useNavigate();
 
   const gotoStore = (store: Store) => {
+    setSelectedStoreIdState(store.id);
+    // console.log("set giá trị");
     navigate("/store", { state: { store } });
   };
   return (
