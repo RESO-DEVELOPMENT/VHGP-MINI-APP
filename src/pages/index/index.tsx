@@ -3,10 +3,11 @@ import { Box, Page } from "zmp-ui";
 import { Inquiry } from "./inquiry";
 import { Welcome } from "./welcome";
 import { Banner } from "./banner";
-import { Categories } from "./categories";
+
 import { Recommend } from "./store-recommend";
 import { ProductList } from "./product-list";
 import { Divider } from "components/divider";
+import { Categories } from "./food-categories";
 
 const HomePage: React.FunctionComponent = () => {
   return (

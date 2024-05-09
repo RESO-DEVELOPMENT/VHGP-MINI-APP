@@ -17,6 +17,7 @@ import logo from "static/logo.png";
 import {
   Category,
   CategoryType,
+  FoodCategory,
   Product,
   ProductTypeEnum,
 } from "types/store-menu";
@@ -34,6 +35,9 @@ import userApi from "api/user";
 import axios from "utils/axios";
 import { Payment } from "types/payment";
 import { BlogDetails } from "types/blog";
+
+//TODO: design
+import categories from "../mock/categories.json";
 
 export const accessTokenState = selector({
   key: "accessToken",
@@ -515,4 +519,10 @@ export const phoneState = selector<string | undefined>({
     }
     return;
   },
+});
+
+//TODO: design
+export const foodCategoriesState = selector<FoodCategory[]>({
+  key: "foodCategories",
+  get: () => categories,
 });

@@ -18,7 +18,9 @@ import QRCodePage from "pages/qr-code";
 import InformationPage from "pages/information";
 import FeedbackForm from "pages/feedback";
 import BlogDetail from "pages/wallet/blog-detail";
-import StorePage from "pages/index/store/store";
+
+import { StoresPickerByFood } from "pages/index/store-picker-by-food";
+import StorePage from "pages/index/store";
 
 if (getSystemInfo().platform === "android") {
   const androidSafeTop = Math.round(
@@ -50,10 +52,15 @@ export const Layout: FC = () => {
           <Route path="/qr" element={<QRCodePage />}></Route>
           <Route path="/info" element={<InformationPage />}></Route>,
           <Route path="/feedback" element={<FeedbackForm />} />
-          <Route path="/store" element={<StorePage />} />
           <Route path="/blog" element={<BlogDetail />}>
-            {" "}
+            {""}
           </Route>
+          {/* TODO: Design */}
+          <Route path="/store" element={<StorePage />} />{" "}
+          <Route
+            path="/stores-picker-by-food"
+            element={<StoresPickerByFood />}
+          />
         </Routes>
       </Box>
       <Navigation />

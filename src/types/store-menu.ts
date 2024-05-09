@@ -75,3 +75,10 @@ export enum CategoryStatus {
   ACTIVE = "Active",
   DEACTIVE = "Deactive",
 }
+
+//TODO: design
+export interface FoodCategory {
+  id: string;
+  name: string;
+  icon?: string;
+}
