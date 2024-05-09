@@ -518,13 +518,18 @@ export const phoneState = selector<string | undefined>({
   },
 });
 
+export const selectedStoreNameState = atom<string>({
+  key: "selectedStoreName",
+  default: "Tên Quán",
+});
+
 //lấy tiêu đề của cho các loại thức ăn
 export const foodCategoriesState = selector<FoodCategory[]>({
   key: "foodCategories",
   get: () => categories,
 });
 
-//lấy id
+// lưu id
 export const selectedStoreIdState = atom<string>({
   key: "selectedStoreId",
   default: "",

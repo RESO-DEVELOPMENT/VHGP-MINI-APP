@@ -1,41 +1,46 @@
 import React, { FC, Suspense } from "react";
-import { useLocation } from "react-router-dom";
-import { useRecoilValueLoadable } from "recoil";
-import { selectedStoreByIdState, storeMenuByIdState } from "state";
-import { Button, Header, Icon, Page, Switch } from "zmp-ui";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
+import { selectedStoreNameState, storeMenuByIdState } from "state";
+import { Box, Button, Header, Icon, Page, Switch } from "zmp-ui";
 import { ProductList } from "../product-list";
 import { Recommend } from "../recommend";
-import { StoreBanner } from "./store-banner";
+import { StoreBanner } from "./banner";
 
 const StorePage: FC = () => {
-  //lấy storeId từ useNavigate
-  const location = useLocation();
-  const { state } = location;
+  const selectedStoreName = useRecoilValue(selectedStoreNameState);
+  const navigate = useNavigate();
 
-  //lấy store infor từ selectedStoreByIdState
-  const currentStore = useRecoilValueLoadable(selectedStoreByIdState);
-  // console.log(currentStore);
+  const handleDetailButtonClick = () => {
+    // console.log("đã nhấn");
+    navigate("/store-detail");
+  };
+
   //lấy store menu data từ storeMenuByIdState
-  const currentStoreMenus = useRecoilValueLoadable(storeMenuByIdState);
+  // const currentStoreMenus = useRecoilValueLoadable(storeMenuByIdState);
   // console.log(currentStoreMenus);
   // console.log("rerender");
-
-  const storeName = currentStore.contents.name;
-  // console.log(storeName);
   return (
     <Page className="flex flex-col ">
-      <Header title={storeName} className="z-10" />
-      <Button
-        className="z-20 absolute right-4 top-8 text-VHGP"
-        variant="secondary"
-        size="medium"
-        icon={<Icon icon="zi-info-circle" />}
-      >
-        Button
-      </Button>
-      <StoreBanner />
-      <Recommend />
-      <ProductList />
+      <Box>
+        <Header title={selectedStoreName} className="z-10" />
+        <Button
+          onClick={handleDetailButtonClick}
+          className="z-20 absolute right-4 top-8 text-VHGP"
+          variant="secondary"
+          size="medium"
+          icon={<Icon icon="zi-info-circle" />}
+        />
+        <StoreBanner />
+        <Suspense>
+          <Recommend />
+          <ProductList />
+        </Suspense>
+      </Box>
     </Page>
   );
 };

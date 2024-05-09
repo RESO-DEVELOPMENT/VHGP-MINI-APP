@@ -21,6 +21,7 @@ import BlogDetail from "pages/wallet/blog-detail";
 
 import { StoresPickerByFood } from "pages/index/store-picker-by-food";
 import StorePage from "pages/index/store";
+import { StoreDetail } from "pages/index/store/detail";
 
 if (getSystemInfo().platform === "android") {
   const androidSafeTop = Math.round(
@@ -55,8 +56,12 @@ export const Layout: FC = () => {
           <Route path="/blog" element={<BlogDetail />}>
             {""}
           </Route>
-          {/* TODO: Design */}
+          {/* 
+          TODO: Design 
+          Đánh dấu đường dẫn store
+          */}
           <Route path="/store" element={<StorePage />} />{" "}
+          <Route path="/store-detail" element={<StoreDetail />} />
           <Route
             path="/stores-picker-by-food"
             element={<StoresPickerByFood />}
