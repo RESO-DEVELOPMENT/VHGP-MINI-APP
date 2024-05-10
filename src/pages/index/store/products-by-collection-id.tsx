@@ -20,22 +20,7 @@ export const ProductsOfCollection: FC<CollectionPickerProps> = ({
   children,
   isUpdate,
 }) => {
-  const [cart, setCart] = useRecoilState(cartState);
-  const childProducts = useRecoilValue(childrenProductState);
-  // let currentChild = childProducts
-  //   .filter(
-  //     (p) =>
-  //       collection &&
-  //       collection.type === ProductTypeEnum.PARENT &&
-  //       p.parentProductId === collection.id
-  //   )
-  //   .sort((a, b) => a.sellingPrice - b.sellingPrice);
-
   const [visible, setVisible] = useState(false);
-
-  // const [menuProductId, setMenuProductId] = useState(
-  //   childProducts ? null : collection?.menuProductId
-  // );
 
   return (
     <>

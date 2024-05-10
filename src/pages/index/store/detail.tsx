@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useRecoilValueLoadable } from "recoil";
 import { selectedStoreByIdState } from "state";
 import { Hours } from "types/hours";
-import { Box, Button, Header, Icon, Page, Text } from "zmp-ui";
+import { Box, Text } from "zmp-ui";
 
 //TODO: design
 import logo from "../../../static/logo.png";
@@ -39,11 +39,3 @@ export const StoreDetail: FC = () => {
   );
 };
 
-function Time({ time }: { time: Hours }) {
-  const [hour, minute, ampm] = time;
-  return (
-    <>
-      {`${hour}`.padStart(2, "0")}:{`${minute}`.padStart(2, "0")} {ampm}
-    </>
-  );
-}
