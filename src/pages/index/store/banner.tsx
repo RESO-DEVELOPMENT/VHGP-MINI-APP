@@ -4,7 +4,7 @@ import { Box } from "zmp-ui";
 //TODO: design
 import logo from "./../../../static/logo.png";
 
-export const StoreBanner: FC = () => {
+export const StoreBanner: FC = (banner: string) => {
   return (
     <Box
       m={3}

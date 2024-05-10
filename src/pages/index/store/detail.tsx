@@ -20,25 +20,37 @@ export const StoreDetail: FC = () => {
       <Box>
         <Header title="Thông tin quán" className="z-10" />
       </Box>
-      {/* Địa chỉ */}
-      <Box
-        mx={4}
-        px={4}
-        pb={2}
-        className="bg-white bg-center bg-cover rounded-xl relative overflow-hidden "
-        style={{
-          backgroundImage: `url(${logo})`,
-        }}
-      >
+      <Box m={5}>
+        <div className="relative aspect-video w-full">
+          <img
+            src={logo}
+            className="absolute w-full h-full object-cover rounded-xl"
+          />
+        </div>
         <Box
-          className="bg-white rounded-xl text-center relative restaurant-detail-box"
-          style={{ marginTop: 60 }}
+          mx={4}
+          className="bg-white rounded-2xl text-center relative restaurant-detail-box"
+          p={4}
+          style={{ marginTop: -60 }}
         >
-          <Title className="font-semibold mb-2" size="small">
-            Địa chỉ
-          </Title>
           <Text className="font-bold">{currentStore.name}</Text>
           <Text className="text-gray-500">{currentStore.address}</Text>
+          <Box flex justifyContent="center" mt={0} py={3}>
+            <Button
+              prefixIcon={
+                <Icon icon="zi-location-solid" className="text-red-500" />
+              }
+              variant="tertiary"
+            >
+              Nút 1
+            </Button>
+            <Button
+              prefixIcon={<Icon icon="zi-send-solid" />}
+              variant="tertiary"
+            >
+              Nút 2
+            </Button>
+          </Box>
         </Box>
       </Box>
 

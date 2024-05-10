@@ -30,9 +30,9 @@ const StorePage: FC = () => {
         <Header title={selectedStoreName} className="z-10" />
         <Button
           onClick={handleDetailButtonClick}
-          className="z-20 absolute right-4 top-8 text-VHGP"
+          className="z-20 absolute right-4 top-0 text-VHGP"
           variant="secondary"
-          size="medium"
+          size="large"
           icon={<Icon icon="zi-info-circle" />}
         />
         <StoreBanner />
