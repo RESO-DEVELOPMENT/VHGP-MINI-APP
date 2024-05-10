@@ -10,6 +10,7 @@ export const SingleOptionPicker: FC<{
   varianName: string;
   onChange: (value: string) => void;
 }> = ({ variant, value, defaultValue, varianName, onChange }) => {
+  // console.log(variant)
   return (
     <Box my={4} className="space-y-2">
       <Text.Title size="small">{varianName}</Text.Title>
@@ -22,7 +23,7 @@ export const SingleOptionPicker: FC<{
           onChange(selectedOption);
         }}
       >
-        {variant.map((option) => (
+        {variant.length > 0 && variant.map((option) => (
           <Radio
             key={option.menuProductId}
             value={option.menuProductId}

@@ -523,6 +523,7 @@ export const selectedStoreNameState = atom<string>({
   default: "Tên Quán",
 });
 
+
 //lấy tiêu đề của cho các loại thức ăn
 export const foodCategoriesState = selector<FoodCategory[]>({
   key: "foodCategories",
@@ -543,21 +544,6 @@ export const selectedStoreByIdState = selector({
     return stores.filter((s) => s.id === id)[0];
   },
 });
-//lấy menu từ store id dc đưa vào
-export const storeMenuByIdState = selector({
-  key: "storeMenuById",
-  get: async ({ get }) => {
-    const currentStore = get(selectedStoreByIdState);
-    if (currentStore === null || currentStore === undefined) {
-      const store = get(listStoreState);
-      const menu = await menuApi.getMenu(store[0].id);
-      return menu.data;
-    } else {
-      const menu = await menuApi.getMenu(currentStore.id);
-      return menu.data;
-    }
-  },
-});
 
 //lấy collections từ store id dc đưa vào
 export const storeCollectionsByIdState = selector({
@@ -576,23 +562,28 @@ export const storeCollectionsByIdState = selector({
 });
 
 export const storeProductsByCollectionIdState = selectorFamily({
-  key: 'storeProductsByCollectionId',
-  get: (collectionId : string) => async ({ get }) => {
-    // Lấy thông tin store hiện tại
-    const currentStore = get(selectedStoreByIdState);
-    if (currentStore === null || currentStore === undefined) {
-      // Nếu không có store nào được chọn, lấy store đầu tiên từ danh sách
-      const stores = get(listStoreState);
-      const menu = await menuApi.getMenu(stores[0].id);
-      //trả về danh sách products thuộc collection
-      const productsByCollectionId = menu.data.products.filter(p => p.collectionIds.includes(collectionId));
-      return productsByCollectionId;
-    } else {
-      // Nếu có store được chọn, lấy menu từ store đó
-      const menu = await menuApi.getMenu(currentStore.id);
-      //trả về danh sách products thuộc collection 
-      const productsByCollectionId = menu.data.products.filter(p => p.collectionIds.includes(collectionId));
-      return productsByCollectionId;
-    }
-  },
+  key: "storeProductsByCollectionId",
+  get:
+    (collectionId: string) =>
+    async ({ get }) => {
+      // Lấy thông tin store hiện tại
+      const currentStore = get(selectedStoreByIdState);
+      if (currentStore === null || currentStore === undefined) {
+        // Nếu không có store nào được chọn, lấy store đầu tiên từ danh sách
+        const stores = get(listStoreState);
+        const menu = await menuApi.getMenu(stores[0].id);
+        
+      } else {
+        // Nếu có store được chọn, lấy menu từ store đó
+        const menu = await menuApi.getMenu(currentStore.id);
+        // console.log(menu)
+        //trả về danh sách products thuộc collection
+        const productsByCollectionId = menu.data.products.filter((p) =>
+          p.collectionIds.includes(collectionId) &&  p.type === "PARENT"
+        );
+        return productsByCollectionId;
+      }
+    },
 });
+
+

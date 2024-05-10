@@ -13,7 +13,7 @@ const { Title } = Text;
 export const StoreDetail: FC = () => {
   //lấy store infor từ selectedStoreByIdState
   const currentStoreLoadable = useRecoilValueLoadable(selectedStoreByIdState);
-  console.log(currentStoreLoadable);
+  // console.log(currentStoreLoadable);
 
   const currentStore = currentStoreLoadable.contents;
   return (
