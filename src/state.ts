@@ -558,3 +558,41 @@ export const storeMenuByIdState = selector({
     }
   },
 });
+
+//lấy collections từ store id dc đưa vào
+export const storeCollectionsByIdState = selector({
+  key: "storeCollectionsById",
+  get: async ({ get }) => {
+    const currentStore = get(selectedStoreByIdState);
+    if (currentStore === null || currentStore === undefined) {
+      const store = get(listStoreState);
+      const menu = await menuApi.getMenu(store[0].id);
+      return menu.data.collections;
+    } else {
+      const menu = await menuApi.getMenu(currentStore.id);
+      return menu.data.collections;
+    }
+  },
+});
+
+export const storeProductsByCollectionIdState = selectorFamily({
+  key: 'storeProductsByCollectionId',
+  get: (collectionId : string) => async ({ get }) => {
+    // Lấy thông tin store hiện tại
+    const currentStore = get(selectedStoreByIdState);
+    if (currentStore === null || currentStore === undefined) {
+      // Nếu không có store nào được chọn, lấy store đầu tiên từ danh sách
+      const stores = get(listStoreState);
+      const menu = await menuApi.getMenu(stores[0].id);
+      //trả về danh sách products thuộc collection
+      const productsByCollectionId = menu.data.products.filter(p => p.collectionIds.includes(collectionId));
+      return productsByCollectionId;
+    } else {
+      // Nếu có store được chọn, lấy menu từ store đó
+      const menu = await menuApi.getMenu(currentStore.id);
+      //trả về danh sách products thuộc collection 
+      const productsByCollectionId = menu.data.products.filter(p => p.collectionIds.includes(collectionId));
+      return productsByCollectionId;
+    }
+  },
+});

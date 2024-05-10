@@ -11,6 +11,7 @@ import { ProductList } from "../product-list";
 import { Recommend } from "../recommend";
 import { StoreBanner } from "./banner";
 import { StoreDetail } from "./detail";
+import { Collections } from "./collections";
 
 const StorePage: FC = () => {
   const selectedStoreName = useRecoilValue(selectedStoreNameState);
@@ -39,7 +40,8 @@ const StorePage: FC = () => {
         {/* <StoreBanner /> */}
         <StoreDetail />
         <Suspense>
-          <Recommend />
+          <Collections/>
+          {/* <Recommend /> */}
           <ProductList />
         </Suspense>
       </Box>
