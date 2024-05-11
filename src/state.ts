@@ -523,7 +523,6 @@ export const selectedStoreNameState = atom<string>({
   default: "Tên Quán",
 });
 
-
 //lấy tiêu đề của cho các loại thức ăn
 export const foodCategoriesState = selector<FoodCategory[]>({
   key: "foodCategories",
@@ -545,45 +544,81 @@ export const selectedStoreByIdState = selector({
   },
 });
 
-//lấy collections từ store id dc đưa vào
-export const storeCollectionsByIdState = selector({
-  key: "storeCollectionsById",
+//lấy menu từ store id đã dc lưu
+export const currentStoreMenuState = selector({
+  key: "currentStoreMenu",
   get: async ({ get }) => {
     const currentStore = get(selectedStoreByIdState);
     if (currentStore === null || currentStore === undefined) {
       const store = get(listStoreState);
       const menu = await menuApi.getMenu(store[0].id);
-      return menu.data.collections;
+      return menu.data;
     } else {
       const menu = await menuApi.getMenu(currentStore.id);
-      return menu.data.collections;
+      return menu.data;
     }
   },
 });
 
+//lấy collections từ store id đã dc lưu
+export const storeCollectionsByIdState = selector({
+  key: "storeCollectionsById",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.collections;
+  },
+});
+
+//lấy các categoried Id có trong cửa hàng được chọn
+export const selectedStoreCategoriesState = selector({
+  key: "selectedStoreCategories",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.categories;
+  },
+});
+
+//lấy ra các product CHA thuộc collection id đưa vào
 export const storeProductsByCollectionIdState = selectorFamily({
   key: "storeProductsByCollectionId",
   get:
     (collectionId: string) =>
     async ({ get }) => {
       // Lấy thông tin store hiện tại
-      const currentStore = get(selectedStoreByIdState);
-      if (currentStore === null || currentStore === undefined) {
-        // Nếu không có store nào được chọn, lấy store đầu tiên từ danh sách
-        const stores = get(listStoreState);
-        const menu = await menuApi.getMenu(stores[0].id);
-        
-      } else {
-        // Nếu có store được chọn, lấy menu từ store đó
-        const menu = await menuApi.getMenu(currentStore.id);
-        // console.log(menu)
-        //trả về danh sách products thuộc collection
-        const productsByCollectionId = menu.data.products.filter((p) =>
-          p.collectionIds.includes(collectionId) &&  p.type === "PARENT"
-        );
-        return productsByCollectionId;
-      }
+      const menu = get(currentStoreMenuState);
+      const productsByCollectionId = menu.products.filter(
+        (p) => p.collectionIds.includes(collectionId) && p.type === "PARENT"
+      );
+      return productsByCollectionId;
     },
 });
 
+//lấy ra các product CHA/SINGLE dựa vào categoryId
+export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
+  {
+    key: "storeProductsByCategoryId",
+    get:
+      (categoryId: string) =>
+      async ({ get }) => {
+        const menu = get(currentStoreMenuState);
+        const result = menu.products.filter(
+          (p) =>
+            p.categoryId == categoryId &&
+            (p.type === ProductTypeEnum.SINGLE ||
+              p.type === ProductTypeEnum.PARENT)
+        );
+        return result;
+      },
+  }
+);
 
+//lấy children product của store được chọn
+export const currentStoreChildrenProductState = selector<Product[]>({
+  key: "currentStoreChildrenProduct",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.products.filter(
+      (product) => product.type === ProductTypeEnum.CHILD
+    );
+  },
+});
