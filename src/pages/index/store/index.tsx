@@ -17,11 +17,11 @@ const StorePage: FC = () => {
     // console.log("FAB Clicked");
     // Define the action for FAB click, e.g., navigate to a specific route
   };
-  const selectedStoreName = useRecoilValue(selectedStoreNameState);
+  // const selectedStoreName = useRecoilValue(selectedStoreNameState);
   return (
     <Page className="flex flex-col ">
       <Box>
-        <Header title={selectedStoreName} className="z-10" />
+        <Header className="z-10" />
         <StoreDetail />
         <Suspense>
           <Collections />

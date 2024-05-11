@@ -9,8 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
 import { ProductPicker } from "components/product/picker";
 
-
-
 export const Collections: FC = (collectionId: string) => {
   const collections = useRecoilValue(storeCollectionsByIdState);
   return (
@@ -20,21 +18,19 @@ export const Collections: FC = (collectionId: string) => {
           storeProductsByCollectionIdState(collection.id)
         );
         return (
-          <Section
-            key={index}
-            title={collection.name}
-            padding="title-only"
-          >
-            <Swiper slidesPerView={1.25} spaceBetween={16} className="">
+          <Section key={index} title={collection.name} padding="title-only">
+            <Swiper slidesPerView={1.5} spaceBetween={-70} className="">
               {productsByCollectionId.map((product) => (
                 <SwiperSlide key={product.id}>
-                  <ProductPicker isUpdate={false} product={product} >
+                  <ProductPicker isUpdate={false} product={product}>
                     {({ open }) => (
                       <div onClick={open} className="space-y-3 ml-3">
-                        <Box
-                          className="relative aspect-video rounded-lg bg-cover bg-center bg-skeleton"
-                          style={{ backgroundImage: `url(${product.picUrl})` }}
-                        >
+                        <Box className="w-9/12 aspect-square relative">
+                          <img
+                            loading="lazy"
+                            src={product.picUrl}
+                            className="absolute left-0 right-0 top-0 bottom-0 w-full h-full object-cover object-center rounded-lg bg-skeleton"
+                          />
                         </Box>
                         <Box className="space-y-1">
                           <Text size="normal">{product.name}</Text>

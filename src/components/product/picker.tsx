@@ -7,6 +7,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import {
   cartState,
   childrenProductState,
+  currentStoreChildrenProductState,
 } from "state";
 import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
@@ -26,7 +27,8 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   product,
 }) => {
   const [cart, setCart] = useRecoilState(cartState);
-  const childProducts = useRecoilValue(childrenProductState);
+  // const childProducts = useRecoilValue(childrenProductState);
+  const childProducts = useRecoilValue(currentStoreChildrenProductState);
   let currentChild = childProducts
     .filter(
       (p) =>
