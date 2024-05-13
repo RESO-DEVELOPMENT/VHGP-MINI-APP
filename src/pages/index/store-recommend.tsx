@@ -14,6 +14,7 @@ export const RecommendContent: FC = () => {
   //state: nơi gọi api lấy danh sách sản phẩm bán, cần sửa lại cho nó có thể lấy ra các cửa hàng
   //sửa thành lấy danh sách cửa hàng
   const recommendStores = useRecoilValue(nearbyStoresState);
+  // console.log(recommendStores)
   /*
     1 cửa hàng gồm các thông tin sau (mẫu)
   {

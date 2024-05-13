@@ -34,6 +34,7 @@ export const ProductListContent: FC = () => {
         const productsByCategoryId = useRecoilValueLoadable(
           storeProductsByCategoryIdState(categorie.id)
         );
+        console.log(productsByCategoryId)
         // console.log(productsByCategoryId);
         return (
           <Section key={categorie.id} title={categorie.name}>

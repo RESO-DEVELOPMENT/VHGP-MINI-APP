@@ -11,6 +11,7 @@ import { ProductPicker } from "components/product/picker";
 
 export const Collections: FC = (collectionId: string) => {
   const collections = useRecoilValue(storeCollectionsByIdState);
+  // console.log(collections)
   return (
     <>
       {collections.map((collection, index) => {

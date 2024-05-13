@@ -134,7 +134,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
                       key={product.menuProductId}
                       variant={currentChild}
                       defaultValue={""}
-                      varianName={"Kích cỡ"}
+                      varianName={currentChild.length > 0? "Kích cỡ": ""}
                       value={menuProductId ?? ""}
                       onChange={(selectedOption) =>
                         setMenuProductId(selectedOption)
