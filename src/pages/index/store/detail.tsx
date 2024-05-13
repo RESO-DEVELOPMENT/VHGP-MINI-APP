@@ -40,7 +40,7 @@ export const StoreDetail: FC = () => {
     </Box> 
     );
   }else return (<>Không thể tải dữ liệu của quán</>);
-  const currentStore = currentStoreLoadable.contents;
+  // const currentStore = currentStoreLoadable.contents;
   
 };
 
