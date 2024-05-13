@@ -3,7 +3,7 @@ import { DisplayPrice } from "components/display/price";
 import React, { FC, useState } from "react";
 import { Product } from "types/store-menu";
 import { Box, Text } from "zmp-ui";
-import { ProductPicker } from "./picker";
+import { ProductPicker } from "./store-picker";
 import drinkSekeleton from "../../static/drink-skeleton.jpg";
 
 export const ProductItem: FC<{

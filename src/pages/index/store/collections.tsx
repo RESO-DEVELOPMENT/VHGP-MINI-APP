@@ -7,7 +7,9 @@ import {
 } from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
-import { ProductPicker } from "components/product/picker";
+import { ProductPicker } from "components/product/store-picker";
+import drinkSekeleton from "../../../static/drink-skeleton.jpg";
+
 
 export const Collections: FC = (collectionId: string) => {
   const collections = useRecoilValue(storeCollectionsByIdState);
@@ -20,16 +22,16 @@ export const Collections: FC = (collectionId: string) => {
         );
         return (
           <Section key={index} title={collection.name} padding="title-only">
-            <Swiper slidesPerView={1.5} spaceBetween={-70} className="">
+            <Swiper slidesPerView={2} spaceBetween={4} className="">
               {productsByCollectionId.map((product) => (
                 <SwiperSlide key={product.id}>
                   <ProductPicker isUpdate={false} product={product}>
                     {({ open }) => (
                       <div onClick={open} className="space-y-3 ml-3">
-                        <Box className="w-9/12 aspect-square relative">
+                        <Box className="w-full aspect-square relative">
                           <img
                             loading="lazy"
-                            src={product.picUrl}
+                            src={product.picUrl || drinkSekeleton}
                             className="absolute left-0 right-0 top-0 bottom-0 w-full h-full object-cover object-center rounded-lg bg-skeleton"
                           />
                         </Box>

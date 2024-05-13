@@ -6,7 +6,7 @@ import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
 import { Collections } from "./collections";
 import CartPage from "pages/cart";
-import { ProductPicker } from "components/product/picker";
+import { ProductPicker } from "components/product/store-picker";
 import { CartIcon } from "components/cart-icon";
 import FloatingActionButton from "pages/FloatingActionButton";
 
