@@ -11,6 +11,7 @@ import { TStore } from "types/store";
 export const StorePickerbyFoodResult: FC = (foodKey: string) => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);
   const loadableStores = useRecoilValueLoadable(storesByCategoryState);
+  console.log(loadableStores);
   const stores: TStore[] = loadableStores.contents;
   console.log(stores);
   const navigate = useNavigate();

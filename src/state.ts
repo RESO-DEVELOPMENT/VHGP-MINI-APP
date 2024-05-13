@@ -570,6 +570,6 @@ export const storesByCategoryState = selector({
         return product.name.toLowerCase().includes(category.toLowerCase());
       });
     });
-    return await Promise.all(res);
+    return res;
   },
 });
