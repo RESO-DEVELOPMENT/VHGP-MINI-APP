@@ -49,7 +49,7 @@ const Personal: FC = () => {
             left: <Icon icon="zi-user" />,
             right: (
               <Box flex>
-                <Text.Header className="flex-1 items-center font-normal">
+                <Text.Header className="flex-1 items-center font-normal ">
                   Thông tin tài khoản
                 </Text.Header>
                 <Icon icon="zi-chevron-right" />

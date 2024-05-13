@@ -6,9 +6,7 @@ import { useRecoilValue } from "recoil";
 import { nearbyStoresState } from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, useNavigate } from "zmp-ui";
-
-//TODO: design
-import logo from "./../../static/logo.png";
+import storeSkeleton from "./../../static/store-skeleton.jpg";
 
 export const RecommendContent: FC = () => {
   //state: nơi gọi api lấy danh sách sản phẩm bán, cần sửa lại cho nó có thể lấy ra các cửa hàng
@@ -46,7 +44,7 @@ export const RecommendContent: FC = () => {
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box
                     className="relative aspect-video rounded-lg bg-cover bg-center bg-skeleton"
-                    style={{ backgroundImage: `url(${logo})` }}
+                    style={{ backgroundImage: `url(${store.picUrl || storeSkeleton})` }}
                   >
                     <Text
                       size="small"
