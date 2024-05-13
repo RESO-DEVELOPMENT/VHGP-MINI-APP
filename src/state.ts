@@ -561,7 +561,7 @@ export const storeMenuByIdState = selector({
 
 export const storesByCategoryState = selector({
   key: "storesByCategory",
-  get: ({ get }) => {
+  get: async ({ get }) => {
     const category = get(selectedCategoryIdState);
     const stores = get(listStoreState);
     const res = stores.filter(async (store) => {
@@ -570,6 +570,6 @@ export const storesByCategoryState = selector({
         return product.name.toLowerCase().includes(category.toLowerCase());
       });
     });
-    return res;
+    return await Promise.all(res);
   },
 });
