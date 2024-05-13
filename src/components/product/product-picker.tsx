@@ -50,8 +50,8 @@ export const ProductPicker: FC<ProductPickerProps> = ({
       product.type == ProductTypeEnum.SINGLE
         ? product.menuProductId
         : currentChild != null && currentChild != undefined
-          ? currentChild[0].menuProductId
-          : null
+        ? currentChild[0].menuProductId
+        : null
     );
     setQuantity(1);
   }, []);
@@ -59,14 +59,43 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   const addToCart = async () => {
     if (product) {
       setCart((prevCart) => {
+        // console.log(prevCart)
+        //lấy thông tin object đưa vào res - những cái đã có trong đó
         let res = { ...prevCart };
-        if (false) {
+        //kiểm tra trạng thái product dc add
+        //Nếu single -> trả về sản phẩm đó thôi
+        //Nếu Kiểu khác (Parent) -> tìm thằng con nó ở currentChild -> xác định child nào cần dc add
+        const productToAdd =
+          product.type == ProductTypeEnum.SINGLE
+            ? product
+            : currentChild.find((a) => a.menuProductId === menuProductId);
+        // console.log(productToAdd);
+        let isProductInCart = false;
+        const updatedProductList = res.productList.map((addedProduct) => {
+          if (addedProduct.productInMenuId === productToAdd?.menuProductId) {
+            isProductInCart = true;
+            // Tạo một bản sao của addedProduct
+            const productListObjectToUpdate = { ...addedProduct };
+            // Cập nhật thuộc tính quantity trong bản sao
+            productListObjectToUpdate.quantity += quantity;
+            // Trả về bản sao đã được cập nhật
+            return productListObjectToUpdate;
+          }
+          // Trả về phần tử đã được cập nhật hoặc không thay đổi
+          return addedProduct;
+        });
+        
+        
+        
+        console.log(updatedProductList)
+        if (isProductInCart) {
+          res = {
+            ...prevCart,
+            productList: updatedProductList
+          };
+          console.log("Có rồi nè");
         } else {
-          const productToAdd =
-            product.type == ProductTypeEnum.SINGLE
-              ? product
-              : currentChild.find((a) => a.menuProductId === menuProductId);
-
+          //tạo 1 đối tượng productList để thêm vào
           const cartItem: ProductList = {
             productInMenuId: productToAdd!.menuProductId,
             parentProductId: productToAdd!.parentProductId,
@@ -92,8 +121,10 @@ export const ProductPicker: FC<ProductPickerProps> = ({
         return prepareCart(res);
       });
     }
+
     setVisible(false);
   };
+  // console.log(cart)
   return (
     <>
       {children({
@@ -134,7 +165,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
                       key={product.menuProductId}
                       variant={currentChild}
                       defaultValue={""}
-                      varianName={currentChild.length > 0? "Kích cỡ": ""}
+                      varianName={currentChild.length > 0 ? "Kích cỡ" : ""}
                       value={menuProductId ?? ""}
                       onChange={(selectedOption) =>
                         setMenuProductId(selectedOption)
@@ -181,9 +212,9 @@ export const ProductPicker: FC<ProductPickerProps> = ({
                   >
                     {quantity > 0
                       ? //  existed
-                      //   ? "Cập nhật giỏ hàng"
-                      //   :
-                      "Thêm vào giỏ hàng"
+                        //   ? "Cập nhật giỏ hàng"
+                        //   :
+                        "Thêm vào giỏ hàng"
                       : "Xoá"}
                   </Button>
                 ) : (

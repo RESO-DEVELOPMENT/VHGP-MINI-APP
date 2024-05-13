@@ -7,7 +7,7 @@ import {
 } from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
-import { ProductPicker } from "components/product/store-picker";
+import { ProductPicker } from "components/product/product-picker";
 import drinkSekeleton from "../../../static/drink-skeleton.jpg";
 
 

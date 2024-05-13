@@ -69,10 +69,12 @@ export const phoneTokenState = selector({
     }),
 });
 
+
 export const userState = selector({
   key: "user",
   get: () => getUserInfo({}).then((res) => res.userInfo),
 });
+
 
 export const memberState = selector({
   key: "member",
@@ -622,3 +624,9 @@ export const currentStoreChildrenProductState = selector<Product[]>({
     );
   },
 });
+
+//lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
+export const isAddedProductState = atom({
+  key: "isAddedProductState",
+  default: false
+})

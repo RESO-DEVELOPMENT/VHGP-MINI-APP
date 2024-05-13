@@ -6,9 +6,10 @@ import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
 import { Collections } from "./collections";
 import CartPage from "pages/cart";
-import { ProductPicker } from "components/product/store-picker";
+import { ProductPicker } from "components/product/product-picker";
 import { CartIcon } from "components/cart-icon";
 import FloatingActionButton from "pages/FloatingActionButton";
+import { Divider } from "components/divider";
 
 const StorePage: FC = () => {
   const navigate = useNavigate();
@@ -23,10 +24,12 @@ const StorePage: FC = () => {
       <Box>
         <Header className="z-10" />
         <StoreDetail />
+        <Divider />
         <Suspense>
           <Collections />
           <ProductList />
         </Suspense>
+        <Divider />
         <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
       </Box>
     </Page>
