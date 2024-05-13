@@ -558,3 +558,18 @@ export const storeMenuByIdState = selector({
     }
   },
 });
+
+export const storesByCategoryState = selector({
+  key: "storesByCategory",
+  get: ({ get }) => {
+    const category = get(selectedCategoryIdState);
+    const stores = get(listStoreState);
+    const res = stores.filter(async (store) => {
+      const menu = (await menuApi.getMenu(store.id)).data;
+      return menu.products.some((product) => {
+        return product.name.toLowerCase().includes(category.toLowerCase());
+      });
+    });
+    return res;
+  },
+});

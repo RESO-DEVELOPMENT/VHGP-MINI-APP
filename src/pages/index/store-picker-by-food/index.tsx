@@ -6,11 +6,11 @@ import { StorePickerbyFoodResult } from "./result";
 
 export const StoresPickerByFood: FC = () => {
   const { state } = useLocation();
-  const foodPickedName = state.foodCategoryId;
+  const pickedCategoryName = state.foodCategoryName;
   return (
     <Page className="flex flex-col">
-      <Header title={foodPickedName} />
-      <StorePickerbyFoodResult />
+      <Header title={pickedCategoryName} />
+      <StorePickerbyFoodResult  />
     </Page>
   );
 };

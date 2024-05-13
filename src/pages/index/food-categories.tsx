@@ -7,10 +7,12 @@ export const Categories: FC = () => {
   const foodCategories = useRecoilValue(foodCategoriesState);
   // console.log(foodCategories);
   const navigate = useNavigate();
+  const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
 
-  const gotoCategory = (categoryId: string) => {
+  const gotoCategory = (categoryId: string,categoryName :string) => {
+    setSelectedCategoryId(categoryId);
     navigate("/stores-picker-by-food", {
-      state: { foodCategoryId: categoryId },
+      state: { foodCategoryName: categoryName },
     });
   };
 
@@ -19,7 +21,7 @@ export const Categories: FC = () => {
       {foodCategories.map((category, i) => (
         <div
           key={i}
-          onClick={() => gotoCategory(category.id)}
+          onClick={() => gotoCategory(category.id, category.name)}
           className="flex flex-col space-y-2 items-center"
         >
           <img className="w-12 h-12" src={category.icon} />
