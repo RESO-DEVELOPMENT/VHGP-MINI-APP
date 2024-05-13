@@ -3,16 +3,14 @@ import { FC } from "react";
 import { useNavigate } from "react-router";
 import { Box, Button, Icon, Text } from "zmp-ui";
 import { storesByCategoryState, selectedStoreIdState } from "state";
-import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 //TODO: design
 import logo from "../../../static/logo.png";
 import { TStore } from "types/store";
 
 export const StorePickerbyFoodResult: FC = (foodKey: string) => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);
-  const loadableStores = useRecoilValueLoadable(storesByCategoryState);
-  console.log(loadableStores);
-  const stores: TStore[] = loadableStores.contents;
+  const stores = useRecoilValue(storesByCategoryState);
   console.log(stores);
   const navigate = useNavigate();
   const gotoStore = (storeId: string) => {
@@ -24,7 +22,7 @@ export const StorePickerbyFoodResult: FC = (foodKey: string) => {
       <Suspense fallback={<h1>Chưa có kết quả</h1>}>
 
         <div className="bg-white rounded-xl overflow-hidden p-0 w-full">
-          {stores.map((store: TStore) => (
+          {stores?.map((store: TStore) => (
             <Box className="mb-5" flex onClick={() => gotoStore(store.id)}>
               <div className="flex-none aspect-card relative w-3/12">
                 <img
