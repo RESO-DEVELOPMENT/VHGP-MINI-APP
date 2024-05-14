@@ -19,9 +19,9 @@ const HomePage: React.FunctionComponent = () => {
       <Welcome />
       <Box className="flex-1 overflow-auto">
         <Inquiry />
-        <Suspense>
-          <Categories />
-        </Suspense>
+        <Banner />
+        <Categories />
+
         <Divider />
         {/* Thay đổi recommend Quán ăn gần bạn */}
         <Recommend />
