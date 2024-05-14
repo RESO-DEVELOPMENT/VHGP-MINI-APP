@@ -10,7 +10,6 @@ import { Box, Text } from "zmp-ui";
 import { ProductPicker } from "components/product/product-picker";
 import drinkSekeleton from "../../../static/drink-skeleton.jpg";
 
-
 export const Collections: FC = (collectionId: string) => {
   const collections = useRecoilValue(storeCollectionsByIdState);
   // console.log(collections)
@@ -20,11 +19,12 @@ export const Collections: FC = (collectionId: string) => {
         const productsByCollectionId = useRecoilValue(
           storeProductsByCollectionIdState(collection.id)
         );
+        if (productsByCollectionId.length <= 0) return;
         return (
           <Section key={index} title={collection.name} padding="title-only">
             <Swiper slidesPerView={2} spaceBetween={4} className="">
               {productsByCollectionId.map((product) => (
-                <SwiperSlide key={product.id}>
+                <SwiperSlide key={product.id} >
                   <ProductPicker isUpdate={false} product={product}>
                     {({ open }) => (
                       <div onClick={open} className="space-y-3 ml-3">

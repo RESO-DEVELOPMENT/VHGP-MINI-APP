@@ -557,6 +557,7 @@ export const currentStoreMenuState = selector({
       return menu.data;
     } else {
       const menu = await menuApi.getMenu(currentStore.id);
+      console.log(menu.data)
       return menu.data;
     }
   },
