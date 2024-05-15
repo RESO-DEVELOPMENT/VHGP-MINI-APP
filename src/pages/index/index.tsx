@@ -12,6 +12,7 @@ import { ListItem } from "zmp-react";
 import { CartIcon } from "components/cart-icon";
 import FloatingActionButton from "pages/FloatingActionButton";
 import { useNavigate } from "react-router";
+import Promtions from "./promotions";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -19,15 +20,17 @@ const HomePage: React.FunctionComponent = () => {
       <Welcome />
       <Box className="flex-1 overflow-auto">
         <Inquiry />
-        <Banner />
+
+        {/* <Banner /> */}
+
         <Categories />
 
         <Divider />
-        {/* Thay đổi recommend Quán ăn gần bạn */}
+        <Promtions />
+        <Divider />
+
         <Recommend />
         <Divider />
-        {/* <ProductList />
-        <Divider /> */}
       </Box>
     </Page>
   );

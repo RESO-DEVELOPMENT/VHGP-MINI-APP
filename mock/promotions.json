@@ -1,0 +1,50 @@
+[
+  {
+    "actionType": 2,
+    "currentVoucherQuantity": 0,
+    "description": "Giảm 20% cho sinh viên",
+    "endDate": "2025-01-01T00:00:00+07:00",
+    "forMembership": 0,
+    "imgUrl": "https://logo-zp.zdn.vn/app/ffb12dc71082f9dca093_2_1.jpg",
+    "listVoucher": [],
+    "promotionCode": "DISCOUNT20%",
+    "promotionId": "fda45a87-2227-4b01-8641-7e2010e30690",
+    "promotionName": "Giảm 20% cho sinh viên",
+    "promotionTierId": "00000000-0000-0000-0000-000000000000",
+    "promotionType": 2,
+    "saleMode": 7,
+    "tierIndex": 0
+  },
+  {
+    "actionType": 2,
+    "currentVoucherQuantity": 0,
+    "description": "Giảm 20% cho sinh viên",
+    "endDate": "2025-01-01T00:00:00+07:00",
+    "forMembership": 0,
+    "imgUrl": "",
+    "listVoucher": [],
+    "promotionCode": "DISCOUNT25%",
+    "promotionId": "fda45a87-2227-4b01-8641-7e2010e30691",
+    "promotionName": "Giảm 20% cho sinh viên",
+    "promotionTierId": "00000000-0000-0000-0000-000000000001",
+    "promotionType": 2,
+    "saleMode": 7,
+    "tierIndex": 0
+  },
+  {
+    "actionType": 2,
+    "currentVoucherQuantity": 0,
+    "description": "Giảm 20% cho sinh viên",
+    "endDate": "2025-01-01T00:00:00+07:00",
+    "forMembership": 0,
+    "imgUrl": "https://logo-zp.zdn.vn/app/ffb12dc71082f9dca093_2_1.jpg",
+    "listVoucher": [],
+    "promotionCode": "DISCOUNT30%",
+    "promotionId": "fda45a87-2227-4b01-8641-7e2010e30692",
+    "promotionName": "Giảm 20% cho sinh viên",
+    "promotionTierId": "00000000-0000-0000-0000-000000000002",
+    "promotionType": 2,
+    "saleMode": 7,
+    "tierIndex": 0
+  }
+]

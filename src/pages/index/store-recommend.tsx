@@ -33,8 +33,8 @@ export const RecommendContent: FC = () => {
   */
 
   return (
-    //Phần hiện "Quán ăn gần bạn"
-    <Section title="Quán gần bạn" padding="title-only">
+
+    <Section title="Quán ngon gần bạn" padding="title-only">
       <Swiper slidesPerView={1.25} spaceBetween={16} className="">
         {recommendStores.map((store) => (
           <SwiperSlide key={store.id}>

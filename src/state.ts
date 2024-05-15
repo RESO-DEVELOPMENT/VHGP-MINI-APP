@@ -35,7 +35,10 @@ import userApi from "api/user";
 import axios from "utils/axios";
 import { Payment } from "types/payment";
 import { BlogDetails } from "types/blog";
+
+//TODO: mock data
 import categories from "../mock/categories.json";
+import promotions from "../mock/promotions.json";
 
 export const accessTokenState = selector({
   key: "accessToken",
@@ -69,50 +72,64 @@ export const phoneTokenState = selector({
     }),
 });
 
-
 export const userState = selector({
   key: "user",
   get: () => getUserInfo({}).then((res) => res.userInfo),
 });
-
 
 export const memberState = selector({
   key: "member",
   get: async ({ get }) => {
     const requested = get(requestPhoneTriesState);
     if (requested) {
-      const accessToken = await getAccessToken();
+      // const accessToken = await getAccessToken();
+      // const user = get(userState);
+      // let phone = "0337076898";
+      // const { token } = await getPhoneNumber({
+      //   fail: (err) => {
+      //     console.log("Lỗi đăng nhập: ", err);
+      //   },
+      // });
       const user = get(userState);
-      let phone = "0337076898";
-      const { token } = await getPhoneNumber({
-        fail: (err) => {
-          console.log("Lỗi đăng nhập: ", err);
-        },
-      });
-      if (token !== undefined && user != null) {
-        console.log("token", token);
-        console.log("accessToken", accessToken);
-        var response = await userApi.userLogin(accessToken, token, user.name);
+      // console.log("Để ý");
+      // console.log(user);
+      const phone = get(phoneState);
+      // console.log(phone);
+      if (phone !== undefined && user != null) {
+        var response = await userApi.userLogin(phone, user.name);
+        // console.log(response);
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
-          setStorage({
-            data: {
-              token: response.data.data.token,
-              userId: response.data.data.userId,
-            },
-            success: (data) => {
-              console.log("set ok", data);
-            },
-            fail: (error) => {
-              console.log("set error", error);
-            },
-          });
           var member = await userApi.getUserInfo(
             response.data.data.userId ?? ""
           );
+          // console.log(member.data);
           return member.data;
         }
       }
+
+      // if (token !== undefined && user != null) {
+      //   console.log("token", token);
+      //   console.log("accessToken", accessToken);
+      //   var response = await userApi.userLogin(accessToken, token, user.name);
+      //   if (response.status == 200) {
+      //     axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+      //     setStorage({
+      //       data: {
+      //         token: response.data.data.token,
+      //         userId: response.data.data.userId,
+      //       },
+      //       success: (data) => {
+      //         console.log("set ok", data);
+      //       },
+      //       fail: (error) => {
+      //         console.log("set error", error);
+      //       },
+      //     });
+      //     var member = await userApi.getUserInfo(response.data.data.userId ?? "");
+      //     return member.data;
+      //   }
+      // }
       return null;
     }
     return null;
@@ -136,7 +153,7 @@ export const listStoreState = selector({
     const listStore = await storeApi.getListStore({
       page: 1,
       size: 10,
-      brandCode: "VHGP",
+      brandCode: "BEANAPP",
     });
     // console.log(listStore.data.items);
     return listStore.data.items;
@@ -212,12 +229,22 @@ export const listPromotionState = selector({
   key: "listPromotion",
   get: async ({ get }) => {
     const member = get(memberState);
-    const listOrder = await userApi.getListPromotion(member?.id ?? "", {
-      brandCode: "BeanApp",
-    });
-    return listOrder.data;
+    // console.log("Xin chào", member)
+    if (member) {
+      const listOrder = await userApi.getListPromotion(member?.id ?? "", {
+        brandCode: "BeanApp",
+      });
+      return listOrder.data;
+    }
+    return null;
   },
 });
+
+export const listPromotionMockState = selector({
+  key: "listPromotionMock",
+  get: () => promotions
+});
+
 export const listBlogState = selector({
   key: "listBlog",
   get: async () => {
@@ -557,7 +584,7 @@ export const currentStoreMenuState = selector({
       return menu.data;
     } else {
       const menu = await menuApi.getMenu(currentStore.id);
-      console.log(menu.data)
+      console.log(menu.data);
       return menu.data;
     }
   },
@@ -629,7 +656,7 @@ export const currentStoreChildrenProductState = selector<Product[]>({
 //lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
 export const isAddedProductState = atom({
   key: "isAddedProductState",
-  default: false
-})
+  default: false,
+});
 
-//lấy blog 
+//lấy blog
