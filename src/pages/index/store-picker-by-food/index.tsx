@@ -6,7 +6,7 @@ import { StorePickerbyFoodResult } from "./result";
 
 export const StoresPickerByFood: FC = () => {
   const { state } = useLocation();
-  const pickedCategoryName = state.foodCategoryName;
+  const pickedCategoryName = state.foodCategoryName ?? "";
   return (
     <Page className="flex flex-col">
       <Header title={pickedCategoryName} />

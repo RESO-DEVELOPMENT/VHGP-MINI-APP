@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 
 export const Categories: FC = () => {
   const categories = useRecoilValue(categoriesState);
-
+  // console.log(categories);
   const navigate = useNavigate();
   const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
 

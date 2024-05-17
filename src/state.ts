@@ -36,6 +36,7 @@ import axios from "utils/axios";
 import { Payment } from "types/payment";
 import { BlogDetails } from "types/blog";
 import categories from "../mock/categories.json";
+import CategoriesApi from "api/category";
 
 export const accessTokenState = selector({
   key: "accessToken",
@@ -342,7 +343,7 @@ export const recommendProductsState = selector<Product[]>({
 
 export const selectedCategoryIdState = atom({
   key: "selectedCategoryId",
-  default: "coffee",
+  default: "",
 });
 
 export const productsByCategoryState = selectorFamily<Product[], string>({
@@ -524,7 +525,7 @@ export const selectedStoreNameState = atom<string>({
 });
 
 //lấy tiêu đề của cho các loại thức ăn
-export const foodCategoriesState = selector<FoodCategory[]>({
+export const foodCategoriesMockState = selector<FoodCategory[]>({
   key: "foodCategories",
   get: () => categories,
 });
@@ -559,17 +560,50 @@ export const storeMenuByIdState = selector({
   },
 });
 
-export const storesByCategoryState = selector({
-  key: "storesByCategory",
+export const storeIdsByCategoryState = selector({
+  key: "storeIdsByCategory",
   get: async ({ get }) => {
-    const category = get(selectedCategoryIdState);
+    // Lấy ra category đã chọn
+    const categoryId = get(selectedCategoryIdState);
+
+    // Lấy các store trong hệ thống
     const stores = get(listStoreState);
-    const res = stores.filter(async (store) => {
-      const menu = (await menuApi.getMenu(store.id)).data;
-      return menu.products.some((product) => {
-        return product.name.toLowerCase().includes(category.toLowerCase());
-      });
+
+    // Chờ cho tất cả các promise trong mảng stores được giải quyết
+    const res = stores.map((store) => {
+      const menu = get(storeMenuByInputIdState(store.id));
+      return menu.categories.some((c) => c.id === categoryId)
+        ? store
+        : null;
     });
-    return res;
+    // console.log(res);
+    // Lọc bỏ các giá trị null ra khỏi mảng res
+    const filteredRes = res.filter((store) => store !== null);
+
+    // console.log(filteredRes);
+    return filteredRes;
+  },
+});
+
+export const storeMenuByInputIdState = selectorFamily({
+  key: "storeMenuByInputId",
+  get:
+    (storeId: string) =>
+    async ({ get }) => {
+      const menu = await menuApi.getMenu(storeId);
+      return menu.data;
+    },
+});
+
+//lấy food categories
+export const foodCategoriesListState = selector({
+  key: "foodCategoriesList",
+  get: async () => {
+    const brandCode = "BEANAPP";
+    const foodCategoriesResponse = await CategoriesApi.getCategories(brandCode);
+    // console.log(foodCategoriesResponse.data.items);
+    return foodCategoriesResponse.data.items.sort(
+      (a, b) => b.displayOrder - a.displayOrder
+    );
   },
 });
