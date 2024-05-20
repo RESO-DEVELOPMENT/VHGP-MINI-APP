@@ -1,5 +1,5 @@
 import { FinalPrice } from "components/display/final-price";
-import { ProductPicker } from "components/product/product-picker";
+import { ProductPicker } from "components/product/picker";
 import { ProductSearchResultSkeleton } from "components/skeletons";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";

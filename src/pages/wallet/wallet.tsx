@@ -3,14 +3,16 @@ import { Subscription } from "pages/profile";
 import { SwiperEn } from "pages/swiper-entertainment";
 import { SwiperItem } from "pages/swiper-items";
 import React, { useEffect } from "react";
-import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import {
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
 import { memberState, selectedStoreIndexState } from "state";
 import { getStorage } from "zmp-sdk";
 import { Box, Page, Text } from "zmp-ui";
 import { WelcomeUser } from "./hello";
 const WalletScreen: React.FunctionComponent = () => {
   const member = useRecoilValueLoadable(memberState);
-  console.log(member);
   const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
   const flexContainerStyle: React.CSSProperties = {
     display: "flex",

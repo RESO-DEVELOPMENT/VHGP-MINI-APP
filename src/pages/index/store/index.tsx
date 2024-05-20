@@ -1,36 +1,45 @@
 import React, { FC, Suspense } from "react";
-import { useRecoilValue } from "recoil";
-import { selectedStoreNameState } from "state";
-import { Box, Header, Page, useNavigate } from "zmp-ui";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
+import { selectedStoreNameState, storeMenuByIdState } from "state";
+import { Box, Button, Header, Icon, Page, Switch } from "zmp-ui";
 import { ProductList } from "../product-list";
-import { StoreDetail } from "./detail";
-import { Collections } from "./collections";
-import CartPage from "pages/cart";
-import { ProductPicker } from "components/product/product-picker";
-import { CartIcon } from "components/cart-icon";
-import FloatingActionButton from "pages/FloatingActionButton";
-import { Divider } from "components/divider";
+import { Recommend } from "../recommend";
+import { StoreBanner } from "./banner";
 
 const StorePage: FC = () => {
+  const selectedStoreName = useRecoilValue(selectedStoreNameState);
   const navigate = useNavigate();
-  const handleFabClick = () => {
-    navigate("/cart");
-    // console.log("FAB Clicked");
-    // Define the action for FAB click, e.g., navigate to a specific route
+
+  const handleDetailButtonClick = () => {
+    // console.log("đã nhấn");
+    navigate("/store-detail");
   };
-  // const selectedStoreName = useRecoilValue(selectedStoreNameState);
+
+  //lấy store menu data từ storeMenuByIdState
+  // const currentStoreMenus = useRecoilValueLoadable(storeMenuByIdState);
+  // console.log(currentStoreMenus);
+  // console.log("rerender");
   return (
     <Page className="flex flex-col ">
       <Box>
-        <Header className="z-10" />
-        <StoreDetail />
-        <Divider />
+        <Header title={selectedStoreName} className="z-10" />
+        <Button
+          onClick={handleDetailButtonClick}
+          className="z-20 absolute right-4 top-0 text-VHGP"
+          variant="secondary"
+          size="large"
+          icon={<Icon icon="zi-info-circle" />}
+        />
+        <StoreBanner />
         <Suspense>
-          <Collections />
+          <Recommend />
           <ProductList />
         </Suspense>
-        <Divider />
-        <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
       </Box>
     </Page>
   );

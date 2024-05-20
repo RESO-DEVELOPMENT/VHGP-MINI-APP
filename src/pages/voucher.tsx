@@ -10,7 +10,6 @@ import orderApi from "api/order";
 const VoucherPage = () => {
   const navigate = useNavigate();
   const promotionListData = useRecoilValueLoadable(listPromotionState);
-  // console.log(promotionListData);
   const [cart, setCart] = useRecoilState(cartState);
 
   return (
@@ -29,7 +28,7 @@ const VoucherPage = () => {
                 }}
               >
                 {promotionListData.contents
-                  .filter((e) => e.promotionType === 2)
+                  .filter((e) => e.promotionType === 3)
                   .map((promotion) => (
                     <VoucherCard
                       key={promotion.promotionId}
@@ -77,7 +76,7 @@ const VoucherPage = () => {
                 {promotionListData.contents.filter((e) => e.promotionType === 2)
                   .length > 0 ? (
                   promotionListData.contents
-                    .filter((e) => e.promotionType === 3)
+                    .filter((e) => e.promotionType === 2)
                     .map((promotion) => (
                       <VoucherCard
                         key={promotion.promotionId}

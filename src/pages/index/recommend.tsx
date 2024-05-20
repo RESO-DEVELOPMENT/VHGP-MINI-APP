@@ -1,6 +1,6 @@
 import { FinalPrice } from "components/display/final-price";
 import { DisplayPrice } from "components/display/price";
-import { ProductPicker } from "components/product/product-picker";
+import { ProductPicker } from "components/product/picker";
 import { Section } from "components/section";
 import { ProductSlideSkeleton } from "components/skeletons";
 import React, { Suspense } from "react";

@@ -1,8 +1,8 @@
 import { Sheet } from "components/fullscreen-sheet";
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Store } from "../../../types/store";
-import { Box, Text, useNavigate } from "zmp-ui";
+import { Box, Button, Text, useNavigate } from "zmp-ui";
 import { useSetRecoilState } from "recoil";
 import { selectedStoreIdState, selectedStoreNameState } from "state";
 
@@ -38,7 +38,14 @@ export const RecommendStorePicker: FC<StorePickerProps> = ({
             <Box className="space-y-6 mt-2" p={4}>
               <Box className="space-y-4 ml">
                 <Text.Title>{store.name}</Text.Title>
-
+                {/* <div className="flex justify-center items-center">
+                  {" "}
+                  <img
+                    src={product.picUrl}
+                    alt={product.name}
+                    className="w-32 h-32 object-cover"
+                  />
+                </div> */}
                 <Box className="flex justify-between">
                   <Text>
                     <div
@@ -47,6 +54,9 @@ export const RecommendStorePicker: FC<StorePickerProps> = ({
                       }}
                     ></div>
                   </Text>
+                  {/* <Text className="ml-40 font-bold">
+                    <DisplayPrice>{product.sellingPrice}</DisplayPrice>
+                  </Text> */}
                 </Box>
               </Box>
             </Box>

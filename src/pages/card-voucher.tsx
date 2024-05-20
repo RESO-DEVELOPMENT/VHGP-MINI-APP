@@ -5,7 +5,6 @@ import { Promotion } from "types/promotion";
 import { displayDate } from "utils/date";
 import { Button } from "zmp-react";
 import { Box, Text } from "zmp-ui";
-import promotionSkeleton from "../static/promotion-skeleton.jpg"
 
 interface VoucherCardProps {
   promotion: Promotion;
@@ -66,7 +65,7 @@ const VoucherCard: FC<VoucherCardProps> = ({
   return (
     <Box style={containerStyle}>
       <Box style={cardStyle}>
-        <img src={promotion.imgUrl || promotionSkeleton} alt="Voucher Image" style={imageStyle} className="object-contain w-32 h-32" />
+        <img src={promotion.imgUrl} alt="Voucher Image" style={imageStyle} />
         <Box>
           <Text className="font-bold">{promotion.promotionName}</Text>
           <p>{promotion.description}</p>

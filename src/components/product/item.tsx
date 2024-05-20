@@ -3,8 +3,7 @@ import { DisplayPrice } from "components/display/price";
 import React, { FC, useState } from "react";
 import { Product } from "types/store-menu";
 import { Box, Text } from "zmp-ui";
-import { ProductPicker } from "./product-picker";
-import drinkSekeleton from "../../static/drink-skeleton.jpg";
+import { ProductPicker } from "./picker";
 
 export const ProductItem: FC<{
   product: Product;
@@ -47,7 +46,7 @@ export const ProductItem: FC<{
           <Box className="w-full aspect-square relative">
             <img
               loading="lazy"
-              src={product.picUrl || drinkSekeleton}
+              src={product.picUrl}
               className="absolute left-0 right-0 top-0 bottom-0 w-full h-full object-cover object-center rounded-lg bg-skeleton"
             />
           </Box>
