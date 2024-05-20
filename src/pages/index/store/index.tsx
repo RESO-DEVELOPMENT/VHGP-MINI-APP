@@ -1,6 +1,6 @@
 import React, { FC, Suspense } from "react";
-import { useRecoilValue } from "recoil";
-import { selectedStoreNameState } from "state";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { cartState, selectedStoreIdState, selectedStoreNameState } from "state";
 import { Box, Header, Page, useNavigate } from "zmp-ui";
 import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
@@ -10,6 +10,7 @@ import { ProductPicker } from "components/product/product-picker";
 import { CartIcon } from "components/cart-icon";
 import FloatingActionButton from "pages/FloatingActionButton";
 import { Divider } from "components/divider";
+import cart from "pages/cart";
 
 const StorePage: FC = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const StorePage: FC = () => {
     // Define the action for FAB click, e.g., navigate to a specific route
   };
   // const selectedStoreName = useRecoilValue(selectedStoreNameState);
+ 
   return (
     <Page className="flex flex-col ">
       <Box>
