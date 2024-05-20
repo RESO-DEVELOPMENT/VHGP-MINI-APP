@@ -154,7 +154,7 @@ export const listStoreState = selector({
     const listStore = await storeApi.getListStore({
       page: 1,
       size: 10,
-      brandCode: "BEANAPP",
+      brandCode: "VHGP",
     });
     // console.log(listStore.data.items);
     return listStore.data.items;
@@ -603,9 +603,7 @@ export const storeIdsByCategoryState = selector({
     // Chờ cho tất cả các promise trong mảng stores được giải quyết
     const res = stores.map((store) => {
       const menu = get(storeMenuByInputIdState(store.id));
-      return menu.categories.some((c) => c.id === categoryId)
-        ? store
-        : null;
+      return menu.categories.some((c) => c.id === categoryId) ? store : null;
     });
     // console.log(res);
     // Lọc bỏ các giá trị null ra khỏi mảng res
@@ -630,12 +628,14 @@ export const storeMenuByInputIdState = selectorFamily({
 export const foodCategoriesListState = selector({
   key: "foodCategoriesList",
   get: async () => {
-    const brandCode = "BEANAPP";
-    const foodCategoriesResponse = await CategoriesApi.getCategories(brandCode);
-    // console.log(foodCategoriesResponse.data.items);
-    return foodCategoriesResponse.data.items.sort(
+    const brandCode = "VHGP";
+    const foodCategoriesResponse = (
+      await CategoriesApi.getCategories(brandCode)
+    ).data;
+    const res = foodCategoriesResponse.items.sort(
       (a, b) => b.displayOrder - a.displayOrder
     );
+    return res;
   },
 });
 //lấy collections từ store id đã dc lưu

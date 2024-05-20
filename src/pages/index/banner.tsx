@@ -36,7 +36,7 @@ export const Banner: FC = () => {
         }}
       >
         {member.state === "hasValue" &&
-          member.contents?.level.membershipCard.map((card, i) => (
+          member.contents?.memberLevel.membershipCard.map((card, i) => (
             <SwiperSlide
               key={i}
               className="px-4"

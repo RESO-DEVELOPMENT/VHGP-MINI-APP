@@ -6,20 +6,23 @@ import {
   useRecoilValue,
   useRecoilValueLoadable,
 } from "recoil";
+import iconWallet from "../../static/icons8-wallet-50.png";
+import iconUser from "../../static/icons8-user-60.png";
 
-import logo from "static/logo.png";
 import { UserInfo } from "types/user";
 import { userState } from "state";
-import wallet from "static/icon-bean.png";
+
 import { DisplayValue } from "components/display/value";
 export interface MemberBalanceProps {
   memberInfo?: UserInfo;
 }
 export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
   const user = useRecoilValueLoadable(userState);
-  const monney = memberInfo?.level.memberWallet.find(
-    (e) => e.walletType.name === "MONEY"
-  );
+  // console.log("user", user);
+  // const money = memberInfo?.memberLevel.memberWallet.find(
+  //   (e) => e.walletType.name === "MONEY"
+  // );
+  const money = memberInfo?.memberLevel.memberWallet[0];
   return (
     <Header
       className={`app-header no-border pl-4 flex-none pb-[6px] custom-header`}
@@ -29,7 +32,7 @@ export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
           <Box flex alignItems="center" className="space-x-2">
             <img
               className="w-8 h-8 rounded-lg border-inset"
-              src={user.contents.avatar || logo}
+              src={memberInfo?.avatar || iconUser}
             />
 
             <Box>
@@ -43,8 +46,8 @@ export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
               </Text>
               <Box className="flex" alignItems="center">
                 <Text size="normal" className="font-bold text-primary flex">
-                  <DisplayValue value={monney?.balance ?? 0} />
-                  <img className="w-5 h-5 ml-1.5" src={wallet} />
+                  <DisplayValue value={money?.balance ?? 0} />
+                  <img className="w-5 h-5 ml-1.5" src={iconWallet} />
                 </Text>
               </Box>
             </Box>

@@ -1,71 +1,71 @@
 import React, { FC } from "react";
-import {
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
-import {
-  foodCategoriesListState,
-  foodCategoriesMockState,
-  selectedCategoryIdState,
-} from "state";
+import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { foodCategoriesListState, selectedCategoryIdState } from "state";
 import { Category } from "types/store-menu";
 import { Box, useNavigate, Text } from "zmp-ui";
 
 import foodCateSkeleton from "../../static/food-categories-skeleton.png";
 
 export const Categories: FC = () => {
-  const foodCategoriesSkeleton = useRecoilValue(foodCategoriesMockState);
-  // console.log(foodCategoriesSkeleton);
-
-  const foodCategories = useRecoilValue(
+  const foodCategoriesLoadable = useRecoilValueLoadable(
     foodCategoriesListState
   );
-  // console.log(foodCategories);
+  const navigate = useNavigate();
+  const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
 
-  //sắp xếp theo displayOrder
-  const categories: Category[] = foodCategories;
-  // console.log(categories);
-  if ( categories != null && categories.length > 0) {
-    const navigate = useNavigate();
-    const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
+  const gotoCategory = (categoryId: string, categoryName: string) => {
+    setSelectedCategoryId(categoryId);
+    navigate("/stores-picker-by-food", {
+      state: { foodCategoryName: categoryName },
+    });
+  };
 
-    const gotoCategory = (categoryId: string, categoryName: string) => {
-      setSelectedCategoryId(categoryId);
-      navigate("/stores-picker-by-food", {
-        state: { foodCategoryName: categoryName },
-      });
-    };
-
-    return (
-      <Box className="bg-white grid grid-cols-4 gap-4 p-4">
-        {categories.map((category, i) => (
-          <div
-            key={category.code}
-            onClick={() => gotoCategory(category.id, category.name)}
-            className="flex flex-col space-y-2 items-center"
-          >
-            <img
-              className="w-12 h-12"
-              src={category.picUrl || foodCateSkeleton}
-            />
-            <Text size="xxSmall" className="text-gray">
-              {category.name}
-            </Text>
-          </div>
-        ))}
-      </Box>
-    );
-  }
-  return (
-    <Box className="bg-white grid grid-cols-4 gap-4 p-4">
-      {foodCategoriesSkeleton.map((category, i) => (
-        <div key={i} className="flex flex-col space-y-2 items-center">
-          <img className="w-12 h-12" src={category.icon} />
+  switch (foodCategoriesLoadable.state) {
+    case "loading":
+      return (
+        <Box className="bg-white grid grid-cols-4 gap-4 p-4">
+          {/* Skeleton loading state */}
+          {[...Array(8)].map((_, index) => (
+            <div key={index} className="flex flex-col space-y-2 items-center">
+              <img className="w-12 h-12" src={foodCateSkeleton} alt="Loading" />
+              <Text size="xxSmall" className="text-gray">
+                Loading...
+              </Text>
+            </div>
+          ))}
+        </Box>
+      );
+    case "hasError":
+      return (
+        <Box className="bg-white p-4">
           <Text size="xxSmall" className="text-gray">
-            {category.name}
+            Failed to load categories.
           </Text>
-        </div>
-      ))}
-    </Box>
-  );
+        </Box>
+      );
+    case "hasValue":
+      const categories: Category[] = foodCategoriesLoadable.contents;
+      return (
+        <Box className="bg-white grid grid-cols-4 gap-4 p-4">
+          {categories.map((category) => (
+            <div
+              key={category.code}
+              onClick={() => gotoCategory(category.id, category.name)}
+              className="flex flex-col space-y-2 items-center cursor-pointer"
+            >
+              <img
+                className="w-12 h-12"
+                src={category.picUrl || foodCateSkeleton}
+                alt={category.name}
+              />
+              <Text size="xxSmall" className="text-gray">
+                {category.name}
+              </Text>
+            </div>
+          ))}
+        </Box>
+      );
+    default:
+      return null;
+  }
 };
