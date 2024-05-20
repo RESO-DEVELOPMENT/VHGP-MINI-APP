@@ -87,13 +87,13 @@ export const ProductPicker: FC<ProductPickerProps> = ({
         
         
         
-        console.log(updatedProductList)
+        // console.log(updatedProductList)
         if (isProductInCart) {
           res = {
             ...prevCart,
             productList: updatedProductList
           };
-          console.log("Có rồi nè");
+          // console.log("Có rồi nè");
         } else {
           //tạo 1 đối tượng productList để thêm vào
           const cartItem: ProductList = {

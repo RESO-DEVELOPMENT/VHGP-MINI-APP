@@ -392,6 +392,11 @@ export const productsByCategoryState = selectorFamily<Product[], string>({
     },
 });
 
+export const addressState = atom({
+  key: "address",
+  default: "",
+})
+
 export const cartState = atom<Cart>({
   key: "cart",
   default: {
