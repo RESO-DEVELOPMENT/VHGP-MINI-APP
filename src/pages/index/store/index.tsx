@@ -1,5 +1,5 @@
-import React, { FC, Suspense, useEffect } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import React, { FC, Suspense } from "react";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { cartState, selectedStoreIdState, selectedStoreNameState } from "state";
 import { Box, Header, Page, useNavigate } from "zmp-ui";
 import { ProductList } from "../product-list";
@@ -21,16 +21,6 @@ const StorePage: FC = () => {
   };
   // const selectedStoreName = useRecoilValue(selectedStoreNameState);
  
-  const [cart, setCart] = useRecoilState(cartState);
-
-  const resetCart = useResetRecoilState(cartState);
-  const currentPickedStore = useRecoilValue(selectedStoreIdState);
-
-  useEffect(() => {
-    if (cart.storeId !== currentPickedStore) {
-      resetCart();
-    }
-  }, [cart.storeId, currentPickedStore]);
   return (
     <Page className="flex flex-col ">
       <Box>
