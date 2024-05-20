@@ -8,6 +8,11 @@ import { Recommend } from "./store-recommend";
 import { ProductList } from "./product-list";
 import { Divider } from "components/divider";
 import { Categories } from "./food-categories";
+import { ListItem } from "zmp-react";
+import { CartIcon } from "components/cart-icon";
+import FloatingActionButton from "pages/FloatingActionButton";
+import { useNavigate } from "react-router";
+import Promtions from "./promotions";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -16,15 +21,16 @@ const HomePage: React.FunctionComponent = () => {
       <Box className="flex-1 overflow-auto">
         <Inquiry />
 
-        <Suspense>
-          <Categories />
-        </Suspense>
+        {/* <Banner /> */}
+
+        <Categories />
+
         <Divider />
-        {/* Thay đổi recommend Quán ăn gần bạn */}
+        <Promtions />
+        <Divider />
+
         <Recommend />
         <Divider />
-        {/* <ProductList />
-        <Divider /> */}
       </Box>
     </Page>
   );

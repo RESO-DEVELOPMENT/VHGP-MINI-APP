@@ -16,7 +16,7 @@ const CartPage: FC = () => {
   console.log("current cart", cart.contents);
   return (
     <Page className="flex flex-col">
-      <Header title="Giỏ hàng" showBackIcon={false} />
+      <Header title="Giỏ hàng" showBackIcon={true} />
       {cart.state === "hasValue" && cart.contents !== null ? (
         <>
           <CartItems />
