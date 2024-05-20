@@ -103,7 +103,7 @@ export const memberState = selector({
           var member = await userApi.getUserInfo(
             response.data.data.userId ?? ""
           );
-          // console.log(member.data);
+          console.log(member.data);
           return member.data;
         }
       }
@@ -242,7 +242,7 @@ export const listPromotionState = selector({
 
 export const listPromotionMockState = selector({
   key: "listPromotionMock",
-  get: () => promotions
+  get: () => promotions,
 });
 
 export const listBlogState = selector({

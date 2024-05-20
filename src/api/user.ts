@@ -18,16 +18,17 @@ const userLogin = (phone: string, name: string) => {
     brandCode: "VHGP",
     fullName: name,
   };
+  const apiKey = "34519997-3D4B-4B31-857F-D6612082C11B";
   //Cái cần chạy
-  // return requestPomotion.post<UserLogin>(
-  //   `/memberships/signin-zalo?apiKey=34519997-3D4B-4B31-857F-D6612082C11B`,
-  //   data
-  // );
-  // Cái có thể chạy nhưng chưa đúng
   return requestPomotion.post<UserLogin>(
-    `/memberships/signin-zalo?apiKey=E40D5DEE-FC46-4BA1-A2F3-E50A8140D1A6`,
+    `/memberships/signin-zalo?apiKey=${apiKey}`,
     data
   );
+  // Cái có thể chạy nhưng chưa đúng
+  // return requestPomotion.post<UserLogin>(
+  //   `/memberships/signin-zalo?apiKey=E40D5DEE-FC46-4BA1-A2F3-E50A8140D1A6`,
+  //   data
+  // );
 };
 
 const getListPromotion = (id: string, params?: any) =>
@@ -36,7 +37,7 @@ const getListPromotion = (id: string, params?: any) =>
   });
 
 const getUserInfo = (id: string, params?: any) =>
-  requestWebAdmin.get<UserInfo>(`users/${id}`, {
+  requestPomotion.get<UserInfo>(`memberships/${id}`, {
     params,
   });
 const generateQrCode = (id: string, params?: any) =>
