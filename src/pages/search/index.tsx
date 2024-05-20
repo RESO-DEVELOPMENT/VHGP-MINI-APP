@@ -9,6 +9,7 @@ const SearchPage: FC = () => {
       <Header title="Tìm kiếm" />
       <Inquiry />
       <SearchResult />
+     
     </Page>
   );
 };

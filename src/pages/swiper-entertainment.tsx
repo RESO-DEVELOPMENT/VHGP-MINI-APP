@@ -25,7 +25,7 @@ const NextButton = () => {
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         height="25"
-        fill="#04bfad"
+        fill="#dca447"
         className="bi bi-arrow-right-circle-fill"
         viewBox="0 0 16 16"
       >

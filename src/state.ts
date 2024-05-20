@@ -35,8 +35,11 @@ import userApi from "api/user";
 import axios from "utils/axios";
 import { Payment } from "types/payment";
 import { BlogDetails } from "types/blog";
+
+//TODO: mock data
 import categories from "../mock/categories.json";
 import CategoriesApi from "api/category";
+import promotions from "../mock/promotions.json";
 
 export const accessTokenState = selector({
   key: "accessToken",
@@ -80,38 +83,54 @@ export const memberState = selector({
   get: async ({ get }) => {
     const requested = get(requestPhoneTriesState);
     if (requested) {
-      const accessToken = await getAccessToken();
+      // const accessToken = await getAccessToken();
+      // const user = get(userState);
+      // let phone = "0337076898";
+      // const { token } = await getPhoneNumber({
+      //   fail: (err) => {
+      //     console.log("Lỗi đăng nhập: ", err);
+      //   },
+      // });
       const user = get(userState);
-      let phone = "0337076898";
-      const { token } = await getPhoneNumber({
-        fail: (err) => {
-          console.log("Lỗi đăng nhập: ", err);
-        },
-      });
-      if (token !== undefined && user != null) {
-        console.log("token", token);
-        console.log("accessToken", accessToken);
-        var response = await userApi.userLogin(accessToken, token, user.name);
+      // console.log("Để ý");
+      // console.log(user);
+      const phone = get(phoneState);
+      // console.log(phone);
+      if (phone !== undefined && user != null) {
+        var response = await userApi.userLogin(phone, user.name);
+        // console.log(response);
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
-          setStorage({
-            data: {
-              token: response.data.data.token,
-              userId: response.data.data.userId,
-            },
-            success: (data) => {
-              console.log("set ok", data);
-            },
-            fail: (error) => {
-              console.log("set error", error);
-            },
-          });
           var member = await userApi.getUserInfo(
             response.data.data.userId ?? ""
           );
+          console.log(member.data);
           return member.data;
         }
       }
+
+      // if (token !== undefined && user != null) {
+      //   console.log("token", token);
+      //   console.log("accessToken", accessToken);
+      //   var response = await userApi.userLogin(accessToken, token, user.name);
+      //   if (response.status == 200) {
+      //     axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+      //     setStorage({
+      //       data: {
+      //         token: response.data.data.token,
+      //         userId: response.data.data.userId,
+      //       },
+      //       success: (data) => {
+      //         console.log("set ok", data);
+      //       },
+      //       fail: (error) => {
+      //         console.log("set error", error);
+      //       },
+      //     });
+      //     var member = await userApi.getUserInfo(response.data.data.userId ?? "");
+      //     return member.data;
+      //   }
+      // }
       return null;
     }
     return null;
@@ -211,12 +230,22 @@ export const listPromotionState = selector({
   key: "listPromotion",
   get: async ({ get }) => {
     const member = get(memberState);
-    const listOrder = await userApi.getListPromotion(member?.id ?? "", {
-      brandCode: "BeanApp",
-    });
-    return listOrder.data;
+    // console.log("Xin chào", member)
+    if (member) {
+      const listOrder = await userApi.getListPromotion(member?.id ?? "", {
+        brandCode: "BeanApp",
+      });
+      return listOrder.data;
+    }
+    return null;
   },
 });
+
+export const listPromotionMockState = selector({
+  key: "listPromotionMock",
+  get: () => promotions,
+});
+
 export const listBlogState = selector({
   key: "listBlog",
   get: async () => {
@@ -544,9 +573,10 @@ export const selectedStoreByIdState = selector({
     return stores.filter((s) => s.id === id)[0];
   },
 });
-//lấy menu từ store id dc đưa vào
-export const storeMenuByIdState = selector({
-  key: "storeMenuById",
+
+//lấy menu từ store id đã dc lưu
+export const currentStoreMenuState = selector({
+  key: "currentStoreMenu",
   get: async ({ get }) => {
     const currentStore = get(selectedStoreByIdState);
     if (currentStore === null || currentStore === undefined) {
@@ -555,6 +585,7 @@ export const storeMenuByIdState = selector({
       return menu.data;
     } else {
       const menu = await menuApi.getMenu(currentStore.id);
+      console.log(menu.data);
       return menu.data;
     }
   },
@@ -607,3 +638,73 @@ export const foodCategoriesListState = selector({
     );
   },
 });
+//lấy collections từ store id đã dc lưu
+export const storeCollectionsByIdState = selector({
+  key: "storeCollectionsById",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.collections;
+  },
+});
+
+//lấy các categoried Id có trong cửa hàng được chọn
+export const selectedStoreCategoriesState = selector({
+  key: "selectedStoreCategories",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.categories;
+  },
+});
+
+//lấy ra các product CHA thuộc collection id đưa vào
+export const storeProductsByCollectionIdState = selectorFamily({
+  key: "storeProductsByCollectionId",
+  get:
+    (collectionId: string) =>
+    async ({ get }) => {
+      // Lấy thông tin store hiện tại
+      const menu = get(currentStoreMenuState);
+      const productsByCollectionId = menu.products.filter(
+        (p) => p.collectionIds.includes(collectionId) && p.type === "PARENT"
+      );
+      return productsByCollectionId;
+    },
+});
+
+//lấy ra các product CHA/SINGLE dựa vào categoryId
+export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
+  {
+    key: "storeProductsByCategoryId",
+    get:
+      (categoryId: string) =>
+      async ({ get }) => {
+        const menu = get(currentStoreMenuState);
+        const result = menu.products.filter(
+          (p) =>
+            p.categoryId == categoryId &&
+            (p.type === ProductTypeEnum.SINGLE ||
+              p.type === ProductTypeEnum.PARENT)
+        );
+        return result;
+      },
+  }
+);
+
+//lấy children product của store được chọn
+export const currentStoreChildrenProductState = selector<Product[]>({
+  key: "currentStoreChildrenProduct",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.products.filter(
+      (product) => product.type === ProductTypeEnum.CHILD
+    );
+  },
+});
+
+//lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
+export const isAddedProductState = atom({
+  key: "isAddedProductState",
+  default: false,
+});
+
+//lấy blog
