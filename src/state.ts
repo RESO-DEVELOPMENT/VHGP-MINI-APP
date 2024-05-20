@@ -230,11 +230,14 @@ export const listPromotionState = selector({
   key: "listPromotion",
   get: async ({ get }) => {
     const member = get(memberState);
-    // console.log("Xin chào", member)
+    console.log("Xin chào", member);
     if (member) {
-      const listOrder = await userApi.getListPromotion(member?.id ?? "", {
-        brandCode: "BeanApp",
-      });
+      const listOrder = await userApi.getListPromotion(
+        member?.membershipId ?? "",
+        {
+          brandCode: "VHGP",
+        }
+      );
       return listOrder.data;
     }
     return null;

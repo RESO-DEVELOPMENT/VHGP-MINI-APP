@@ -32,7 +32,7 @@ const userLogin = (phone: string, name: string) => {
 };
 
 const getListPromotion = (id: string, params?: any) =>
-  requestWebAdmin.get<Promotion[]>(`users/${id}/promotions`, {
+  requestPomotion.get<Promotion[]>(`memberships/${id}/promotions`, {
     params,
   });
 

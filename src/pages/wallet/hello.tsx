@@ -39,7 +39,7 @@ export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
               <Text className=" flex">
                 <Text className="mr-1.5 font-bold">Chào</Text>
                 {user.state === "hasValue" ? (
-                  <Text className="font-bold">{user.contents.name}</Text>
+                  <Text className="font-bold">{memberInfo?.fullname || user.contents.name}</Text>
                 ) : (
                   <Text className="font-bold">...</Text>
                 )}

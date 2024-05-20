@@ -18,7 +18,8 @@ const Promtions = () => {
   const [cart, setCart] = useRecoilState(cartState);
   if (
     promotionListData.state === "hasValue" &&
-    promotionListData.contents !== null
+    promotionListData.contents !== null &&
+    promotionListData.contents.length > 0
   )
     return (
       <Section title="Deal xịn lấy ngay" padding="title-only">
