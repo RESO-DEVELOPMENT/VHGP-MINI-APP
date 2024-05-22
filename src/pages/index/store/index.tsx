@@ -1,5 +1,5 @@
 import React, { FC, Suspense, useEffect } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useResetRecoilState } from "recoil";
 import { cartState, selectedStoreIdState, selectedStoreNameState } from "state";
 import { Box, Header, Page, useNavigate } from "zmp-ui";
 import { ProductList } from "../product-list";
@@ -14,7 +14,7 @@ import cart from "pages/cart";
 import { prepareCart } from "utils/product";
 
 const StorePage: FC = () => {
-  const [cart, setCart] = useRecoilState(cartState);
+  const [cart, setCart] = useRecoilStateLoadable(cartState);
   const [currentPickedStore, setCurrentPickedStore] = useRecoilState(selectedStoreIdState);
   const ResetCart = () => {
     setCart((prevCart) => {
@@ -22,19 +22,20 @@ const StorePage: FC = () => {
       res = {
         ...prevCart,
         productList: [],
-        totalQuantity: 0
+        totalQuantity: 0,
+        storeId: currentPickedStore,
       };
       return prepareCart(res);
     });
   };
   useEffect(() => {
-    if (cart.storeId !== currentPickedStore) {
+    if (cart.contents.storeId !== currentPickedStore) {
       // console.log("store id in carrt", cart.storeId);
       // console.log("picked store", currentPickedStore);
-      setCurrentPickedStore(cart.storeId ?? "");
-      ResetCart();
+      // setCurrentPickedStore(cart.storeId ?? "");
+     ResetCart();
     }
-  }, [cart.storeId, currentPickedStore  ]);
+  }, [currentPickedStore]);
   const navigate = useNavigate();
   const handleFabClick = () => {
     navigate("/cart");
@@ -43,7 +44,7 @@ const StorePage: FC = () => {
   };
   // const selectedStoreName = useRecoilValue(selectedStoreNameState);
  
- 
+ console.log("current cart no click ",cart);
   return (
     <Page className="flex flex-col ">
       <Box>

@@ -6,6 +6,8 @@ import { Promotion } from "types/promotion";
 
 import { axiosInstances } from "utils/axios";
 
+const apiKey = "34519997-3D4B-4B31-857F-D6612082C11B";
+
 const requestPomotion = axiosInstances.promotion;
 const getListStore = (params?: any) =>
   requestWebAdmin.get<BaseReponse<TStore>>(`brands/stores`, {
@@ -18,7 +20,6 @@ const userLogin = (phone: string, name: string) => {
     brandCode: "VHGP",
     fullName: name,
   };
-  const apiKey = "34519997-3D4B-4B31-857F-D6612082C11B";
   //Cái cần chạy
   return requestPomotion.post<UserLogin>(
     `/memberships/signin-zalo?apiKey=${apiKey}`,
@@ -31,17 +32,19 @@ const userLogin = (phone: string, name: string) => {
   // );
 };
 
-const getListPromotion = (id: string, params?: any) =>
-  requestPomotion.get<Promotion[]>(`memberships/${id}/promotions`, {
-    params,
-  });
+// const getListPromotion = (id: string, params?: any) =>
+//   requestPomotion.get<Promotion[]>(`memberships/${id}/promotions`, {
+//     params,
+//   });
+const getListPromotion = (id: string) =>
+  requestPomotion.get<Promotion[]>(`memberships/${id}/promotions?apiKey=${apiKey}`);
 
 const getUserInfo = (id: string, params?: any) =>
   requestPomotion.get<UserInfo>(`memberships/${id}`, {
     params,
   });
 const generateQrCode = (id: string, params?: any) =>
-  requestWebAdmin.post<string>(`users/${id}/generate-qr`, {
+  requestPomotion.get<string>(`memberships/${id}/qr`, {
     params,
   });
 

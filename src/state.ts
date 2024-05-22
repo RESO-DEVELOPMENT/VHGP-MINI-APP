@@ -186,7 +186,7 @@ export const qrState = selector({
     if (request) {
       const member = get(memberState);
       if (member !== null) {
-        const listOrder = await userApi.generateQrCode(member?.id ?? "");
+        const listOrder = await userApi.generateQrCode(member?.membershipId ?? "");
         return listOrder.data;
       }
     }
@@ -233,10 +233,8 @@ export const listPromotionState = selector({
     console.log("Xin chào", member);
     if (member) {
       const listOrder = await userApi.getListPromotion(
-        member?.membershipId ?? "",
-        {
-          brandCode: "VHGP",
-        }
+        member?.membershipId ?? ""
+       
       );
       return listOrder.data;
     }
@@ -593,7 +591,7 @@ export const currentStoreMenuState = selector({
       return menu.data;
     } else {
       const menu = await menuApi.getMenu(currentStore.id);
-      console.log(menu.data);
+      // console.log(menu.data);
       return menu.data;
     }
   },
