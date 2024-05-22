@@ -6,6 +6,8 @@ import { MenuItem } from "types/menu";
 import { BottomNavigation, Icon } from "zmp-ui";
 import { CartIcon } from "./cart-icon";
 import { OrderIcon } from "./order-icon";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartState } from "state";
 
 const tabs: Record<string, MenuItem> = {
   "/": {
@@ -38,6 +40,7 @@ export const Navigation: FC = () => {
   const [activeTab, setActiveTab] = useState<TabKeys>("/");
   const navigate = useNavigate();
   const location = useLocation();
+  const quantityCart = useRecoilValue(cartState).totalQuantity;
 
   const noBottomNav = useMemo(
     () => NO_BOTTOM_NAVIGATION_PAGES.includes(location.pathname),
@@ -75,7 +78,7 @@ export const Navigation: FC = () => {
           />
         ))}
       </BottomNavigation>
-      {shouldShowFAB && (
+      {shouldShowFAB && quantityCart > 0 && (
         <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
       )}
     </>
