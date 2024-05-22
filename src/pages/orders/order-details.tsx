@@ -5,7 +5,7 @@ import { useRecoilValueLoadable } from "recoil";
 import { getOrderDetailstate } from "state";
 import { DisplayPrice } from "components/display/price";
 import { showOrderType, showPaymentType } from "utils/product";
-import { displayDate, displayTime } from "utils/date";
+import { adjustDeliveryTime, displayDate, displayTime } from "utils/date";
 import { ListRenderer } from "components/list-renderer";
 import { OrderStatus, OrderType } from "types/order";
 import { showOrderStatus } from "utils/product";
@@ -16,6 +16,7 @@ const OrderDetailsPage: FC = () => {
   const location = useLocation();
   const id = location.state?.id;
   const orderDetail = useRecoilValueLoadable(getOrderDetailstate(id));
+  console.log(orderDetail);
   const [showCancellationOptions, setShowCancellationOptions] = useState(false);
   const [cancellationReason, setCancellationReason] = useState("");
 
@@ -273,6 +274,25 @@ const OrderDetailsPage: FC = () => {
                   {
                     left: (
                       <Box flex className="space-x-1">
+                        <Text size="small">Địa chỉ giao hàng</Text>
+                      </Box>
+                    ),
+                    right: (
+                      <Box flex className="space-x-1">
+                        <Box className="flex-1 space-y-[2px]"></Box>
+                        <Text.Title size="small">
+                          {orderDetail.state == "hasValue" &&
+                          orderDetail.contents !== null
+                            ? orderDetail.contents.customerInfo.address
+                            : ""}
+                        </Text.Title>
+                      </Box>
+                    ),
+                  },
+
+                  {
+                    left: (
+                      <Box flex className="space-x-1">
                         <Text size="small">Thời gian giao</Text>
                       </Box>
                     ),
@@ -282,7 +302,16 @@ const OrderDetailsPage: FC = () => {
                         <Text size="small">
                           {orderDetail.state == "hasValue" &&
                           orderDetail.contents !== null
-                            ? orderDetail.contents.customerInfo.deliTime
+                            ? displayTime(
+                              adjustDeliveryTime(
+                                  orderDetail.contents.checkInDate,
+                                  10
+                                )
+                              ) +
+                              " " +
+                              displayDate(
+                                new Date(orderDetail.contents.checkInDate)
+                              )
                             : ""}
                         </Text>
                       </Box>

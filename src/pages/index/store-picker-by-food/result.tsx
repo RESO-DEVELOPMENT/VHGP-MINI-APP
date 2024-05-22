@@ -9,8 +9,7 @@ import {
   useSetRecoilState,
 } from "recoil";
 //TODO: design
-import logo from "../../../static/logo.png";
-import { TStore } from "types/store";
+import storeSkeleton from "../../../static/store-skeleton.jpg";
 
 export const StorePickerbyFoodResult: FC = (foodKey: string) => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);
@@ -41,7 +40,7 @@ export const StorePickerbyFoodResult: FC = (foodKey: string) => {
               >
                 <div className="flex-none aspect-card relative w-3/12">
                   <img
-                    src={logo}
+                    src={storeSkeleton}
                     className="absolute w-full h-full object-cover rounded-xl"
                   />
                 </div>

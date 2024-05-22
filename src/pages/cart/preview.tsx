@@ -27,7 +27,9 @@ import { PaymentPicker } from "./payment-picker";
 export const CartPreview: FC = () => {
   const setCart = useSetRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
+  // console.log(cartPrepare);
   const member = useRecoilValueLoadable(memberState);
+  // console.log(member);
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   // console.log("cartPrepare", cartPrepare.contents);
@@ -141,10 +143,15 @@ export const CartPreview: FC = () => {
       // });
     } else {
       try {
-        const body = { ...cartPrepare.contents };
-        // console.log("body for createNewOrder", body)
+        const body = {
+          ...cartPrepare.contents,
+          // customerId: member.contents.membershipId,
+          customerName : member.contents.fullname,
+          customerPhone: member.contents.phoneNumber,
+        };
+        console.log("body for createNewOrder", body)
         const res = await orderApi.createNewOrder(body);
-        console.log("response for createNewOrder", res)
+        // console.log("response for createNewOrder", res);
         if (res.status == 200) {
           console.log(res.data);
           snackbar.openSnackbar({
@@ -216,7 +223,6 @@ export const CartPreview: FC = () => {
             customerId: null,
             promotionList: [],
             promotionCode: null,
-       
           };
           return res;
         });
@@ -285,8 +291,8 @@ export const CartPreview: FC = () => {
             >
               <PaymentPicker />
               {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
-             ? showPaymentType(cartPrepare.contents.paymentType)
-             : "TIỀN MẶT"}
+                ? showPaymentType(cartPrepare.contents.paymentType)
+                : "TIỀN MẶT"}
             </Text.Title>
           </Box>
           <Button

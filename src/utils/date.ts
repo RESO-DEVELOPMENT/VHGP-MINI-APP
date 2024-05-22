@@ -28,3 +28,10 @@ export function displayDate(date: Date, hint?: boolean) {
   }
   return `${day}/${month}/${year}`;
 }
+
+export function adjustDeliveryTime(deliDate: string, addedMinutes: number): Date {
+  const result = new Date(deliDate);
+  result.setMinutes(result.getMinutes() + addedMinutes);
+  return result;
+}
+
