@@ -15,7 +15,7 @@ import { prepareCart } from "utils/product";
 
 const StorePage: FC = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const currentPickedStore = useRecoilValue(selectedStoreIdState);
+  const [currentPickedStore, setCurrentPickedStore] = useRecoilState(selectedStoreIdState);
   const ResetCart = () => {
     setCart((prevCart) => {
       let res = { ...prevCart };
@@ -29,9 +29,12 @@ const StorePage: FC = () => {
   };
   useEffect(() => {
     if (cart.storeId !== currentPickedStore) {
+      // console.log("store id in carrt", cart.storeId);
+      // console.log("picked store", currentPickedStore);
+      setCurrentPickedStore(cart.storeId ?? "");
       ResetCart();
     }
-  }, []);
+  }, [cart.storeId, currentPickedStore  ]);
   const navigate = useNavigate();
   const handleFabClick = () => {
     navigate("/cart");
