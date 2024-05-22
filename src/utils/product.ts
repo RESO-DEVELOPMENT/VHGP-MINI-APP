@@ -45,7 +45,7 @@ export function prepareCart(cart: Cart) {
   cart.discountAmount = 0;
   cart.totalQuantity = 0;
   cart.productList.map((item) => {
-    cart.totalAmount += item.totalAmount * item.quantity;
+    cart.totalAmount += item.totalAmount;
     cart.totalQuantity += item.quantity;
   });
   cart.finalAmount = cart.totalAmount - cart.discountAmount!;
