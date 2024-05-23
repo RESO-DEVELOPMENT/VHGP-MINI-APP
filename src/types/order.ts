@@ -42,6 +42,7 @@ export interface OrderPreview {
 }
 
 export interface OrderDetails {
+  notes: String;
   orderId: string;
   invoiceId: string;
   storeName: string;

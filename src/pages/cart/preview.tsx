@@ -35,7 +35,13 @@ export const CartPreview: FC = () => {
   // console.log("cartPrepare", cartPrepare.contents);
   const onCheckout = async () => {
     if (cartPrepare.contents.paymentType == PaymentType.CASH) {
-      const body = { ...cartPrepare.contents };
+      const body = {
+        ...cartPrepare.contents,
+        // customerId: member.contents.membershipId,
+        customerName : member.contents.fullname,
+        customerPhone: member.contents.phoneNumber,
+      };
+      console.log(cartPrepare.contents.finalAmount);
       Payment.createOrder({
         desc: `Thanh toán cho ${getConfig((config) => config.app.title)}`,
         item: [],
@@ -149,7 +155,7 @@ export const CartPreview: FC = () => {
           customerName : member.contents.fullname,
           customerPhone: member.contents.phoneNumber,
         };
-        console.log("body for createNewOrder", body)
+        // console.log("body for createNewOrder", body)
         const res = await orderApi.createNewOrder(body);
         // console.log("response for createNewOrder", res);
         if (res.status == 200) {
@@ -290,9 +296,9 @@ export const CartPreview: FC = () => {
               size="small"
             >
               <PaymentPicker />
-              {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
+              {/* {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
                 ? showPaymentType(cartPrepare.contents.paymentType)
-                : "TIỀN MẶT"}
+                : "TIỀN MẶT"} */}
             </Text.Title>
           </Box>
           <Button

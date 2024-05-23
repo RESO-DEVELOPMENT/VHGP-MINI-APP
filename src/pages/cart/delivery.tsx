@@ -7,14 +7,14 @@ import { StorePicker } from "./store-picker";
 import { TimePicker } from "./time-picker";
 import { LocationPicker } from "./location-picker";
 
-const AddressPopup = ({ onConfirm, address, setAddress }) => {
+export const AddressPopup = ({ title, onConfirm, address, setAddress }) => {
   const handleClose = () => {
     onConfirm(address);
   };
   return (
     <Modal
       visible={true}
-      title="Ghi chú"
+      title={title}
       onClose={handleClose}
       actions={[
         {
@@ -28,7 +28,7 @@ const AddressPopup = ({ onConfirm, address, setAddress }) => {
         type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        placeholder="Nhập ghi chú"
+        placeholder={`Nhập ${title}`}
         className="w-full border rounded"
       />
     </Modal>
@@ -116,6 +116,7 @@ export const Delivery: FC = () => {
       </Box>
       {showPopup && (
         <AddressPopup
+          title={"Ghi chú"}
           onConfirm={handleNotesChange}
           address={notes}
           setAddress={setNotes}

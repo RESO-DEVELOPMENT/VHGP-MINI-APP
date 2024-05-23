@@ -5,7 +5,8 @@ export interface User {
 }
 
 export interface UserInfo {
-  id: string;
+  membershipId: string;
+  // id: string;
   phoneNumber: string;
   fullName: string;
   gender: string;

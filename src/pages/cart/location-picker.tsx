@@ -1,12 +1,10 @@
-import { Sheet } from "components/fullscreen-sheet";
 import { ListItem } from "components/list-item";
 
 import React, { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { addressState, cartState, selectedStoreState } from "state";
-import { OrderType } from "types/order";
-import { Box, Button, Input } from "zmp-ui";
+import { AddressPopup } from "./delivery";
 
 export const LocationPicker: FC = () => {
   const [visible, setVisible] = useState(false);
@@ -19,9 +17,9 @@ export const LocationPicker: FC = () => {
           .split("_")
           .map((item: string) => item.trim())
       : [];
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setAddress(e.target.value);
+  // };
   const handleAddressSubmit = () => {
     setCart((prevCart) => ({
       ...prevCart,
@@ -41,29 +39,38 @@ export const LocationPicker: FC = () => {
       />
       {selectedStore.state === "hasValue" &&
         createPortal(
-          <Sheet
-            title="Địa chỉ giao hàng có thể giao"
-            visible={visible}
-            onClose={() => setVisible(false)}
-            autoHeight
-            swipeToClose
-          >
-            <Box className="w-full flex justify-center items-center p-3 pb-10">
-              <Input
-                className="w-9/12 block rounded-l-[3rem] rounded-r-none"
-                placeholder="Nhập địa chỉ giao hàng..."
-                value={address}
-                onChange={handleInputChange}
-              ></Input>
-              <Button
-                className="w-3/12 block rounded-l-none rounded-r-[3rem]"
-                type="neutral"
-                onClick={handleAddressSubmit}
-              >
-                Nhập
-              </Button>
-            </Box>
-          </Sheet>,
+          // <Sheet
+          //   title="Địa chỉ giao hàng có thể giao"
+          //   visible={visible}
+          //   onClose={() => setVisible(false)}
+          //   autoHeight
+          //   swipeToClose
+          // >
+          //   <Box className="w-full flex justify-center items-center p-3 pb-10">
+          //     <Input
+          //       className="w-9/12 block rounded-l-[3rem] rounded-r-none"
+          //       placeholder="Nhập địa chỉ giao hàng..."
+          //       value={address}
+          //       onChange={handleInputChange}
+          //     ></Input>
+          //     <Button
+          //       className="w-3/12 block rounded-l-none rounded-r-[3rem]"
+          //       type="neutral"
+          //       onClick={handleAddressSubmit}
+          //     >
+          //       Nhập
+          //     </Button>
+          //   </Box>
+          // </Sheet>
+
+          visible && (
+            <AddressPopup
+              title={"Địa chỉ"}
+              onConfirm={handleAddressSubmit}
+              address={address}
+              setAddress={setAddress}
+            />
+          ),
           document.body
         )}
     </>

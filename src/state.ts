@@ -141,7 +141,7 @@ export const memberState = selector({
     let res = { ...cart };
     res = {
       ...cart,
-      customerId: member?.id,
+      customerId: member?.membershipId,
     };
     console.log("cart set", res);
     set(cartState, res);
@@ -167,8 +167,9 @@ export const listOrderState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
+      // console.log(member);
       if (member !== null) {
-        const listOrder = await orderApi.getListOrder(member?.id ?? "", {
+        const listOrder = await orderApi.getListOrder(member?.membershipId ?? "", {
           page: 1,
           size: 100,
         });
@@ -212,7 +213,7 @@ export const listTransactionState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
-      const listOrder = await orderApi.getListTransactions(member?.id ?? "", {
+      const listOrder = await orderApi.getListTransactions(member?.membershipId ?? "", {
         page: 1,
         size: 100,
       });
