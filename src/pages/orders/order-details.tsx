@@ -372,6 +372,21 @@ const OrderDetailsPage: FC = () => {
                       </Box>
                     ),
                   },
+                  {
+                    left: (
+                      <Box className="flex-1 space-y-[1px]">
+                        <Text size="small">Ghi chú</Text>
+                      </Box>
+                    ),
+                    right: (
+                      <Box flex className="space-x-1">
+                        <Box className="flex-1 space-y-[1px]"></Box>
+                        <Text size="small">
+                          {orderDetail.contents.notes}
+                        </Text>
+                      </Box>
+                    ),
+                  },
                 ]}
                 limit={5}
                 renderLeft={(item) => item.left}
