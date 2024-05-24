@@ -64,7 +64,7 @@ export const Delivery: FC = () => {
                 <React.Suspense fallback={<div>Loading...</div>}>
                   <Box>
                     <Text size="small" className="text-primary">
-                      {store.contents.name || "Cửa hàng"}
+                      {store.contents?.name || "Cửa hàng"}
                     </Text>
                     <Text size="xSmall" className="text-gray">
                       {"Cửa hàng"}
