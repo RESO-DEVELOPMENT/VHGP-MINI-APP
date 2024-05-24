@@ -261,7 +261,7 @@ export const listBlogState = selector({
     const listBlog = await blogApi.getListBlog({
       page: 1,
       size: 10,
-      brandCode: "BEANAPP",
+      brandCode: "VHGP",
     });
     return listBlog.data.items;
   },

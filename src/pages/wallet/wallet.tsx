@@ -58,7 +58,7 @@ const WalletScreen: React.FunctionComponent = () => {
             <Subscription />
             <SwiperItem />
             <Box className="mx-4 mt-4" style={flexContainerStyle}>
-              <Text.Title size="normal">Chương trình</Text.Title>
+              {/* <Text.Title size="normal">Chương trình</Text.Title> */}
             </Box>
             <SwiperEn />
           </>
