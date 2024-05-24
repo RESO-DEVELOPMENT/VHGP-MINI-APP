@@ -58,6 +58,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
 
   const addToCart = async () => {
     if (product) {
+      console.log(product);
       setCart((prevCart) => {
         // console.log(prevCart)
         //lấy thông tin object đưa vào res - những cái đã có trong đó
