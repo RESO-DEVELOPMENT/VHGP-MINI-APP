@@ -43,6 +43,7 @@ const HistoryPicker: FC = () => {
     retry((r) => r + 1);
   }, []);
   const gotoPage = (id: string) => {
+    console.log("đi tới trang chi tiết đơn hàng");
     navigate("/order-detail", { state: { id } });
   };
   return (
@@ -66,7 +67,7 @@ const HistoryPicker: FC = () => {
                   {orderListData.contents.map((order, index) => (
                     <Box
                       key={index}
-                      onClick={() => gotoPage(order.id)}
+                      // onClick={() => gotoPage(order.id)}
                       className="m-2 p-2 bg-white"
                       flex
                     >
@@ -113,12 +114,14 @@ const HistoryPicker: FC = () => {
 
                         <hr className="hr-order" />
                         <div className="flex mt-1 justify-center">
+                          <div className=" m-1 flex-1 align-middle font-normal text-m text-primary">
                           <Text.Header
-                            className=" m-1 flex-1 align-middle font-normal text-m text-primary"
+                            
                             onClick={() => gotoPage(order.id)}
                           >
                             Chi tiết đơn hàng
                           </Text.Header>
+                          </div>
                           {order && order.status !== OrderStatus.PENDING && (
                             <ProductRePicker
                               isUpdate={false}

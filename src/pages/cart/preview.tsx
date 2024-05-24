@@ -27,7 +27,7 @@ import { PaymentPicker } from "./payment-picker";
 export const CartPreview: FC = () => {
   const setCart = useSetRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
-  // console.log(cartPrepare);
+  console.log(cartPrepare);
   const member = useRecoilValueLoadable(memberState);
   // console.log(member);
   const snackbar = useSnackbar();
@@ -41,7 +41,7 @@ export const CartPreview: FC = () => {
         customerName : member.contents.fullname,
         customerPhone: member.contents.phoneNumber,
       };
-      console.log(cartPrepare.contents.finalAmount);
+      // console.log(cartPrepare.contents.finalAmount);
       Payment.createOrder({
         desc: `Thanh toán cho ${getConfig((config) => config.app.title)}`,
         item: [],

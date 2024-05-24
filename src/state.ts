@@ -169,10 +169,13 @@ export const listOrderState = selector({
       const member = get(memberState);
       // console.log(member);
       if (member !== null) {
-        const listOrder = await orderApi.getListOrder(member?.membershipId ?? "", {
-          page: 1,
-          size: 100,
-        });
+        const listOrder = await orderApi.getListOrder(
+          member?.membershipId ?? "",
+          {
+            page: 1,
+            size: 100,
+          }
+        );
         return listOrder.data.items;
       }
     }
@@ -187,7 +190,9 @@ export const qrState = selector({
     if (request) {
       const member = get(memberState);
       if (member !== null) {
-        const listOrder = await userApi.generateQrCode(member?.membershipId ?? "");
+        const listOrder = await userApi.generateQrCode(
+          member?.membershipId ?? ""
+        );
         return listOrder.data;
       }
     }
@@ -213,10 +218,13 @@ export const listTransactionState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
-      const listOrder = await orderApi.getListTransactions(member?.membershipId ?? "", {
-        page: 1,
-        size: 100,
-      });
+      const listOrder = await orderApi.getListTransactions(
+        member?.membershipId ?? "",
+        {
+          page: 1,
+          size: 100,
+        }
+      );
       return listOrder.data.items;
     }
     return [];
@@ -235,7 +243,6 @@ export const listPromotionState = selector({
     if (member) {
       const listOrder = await userApi.getListPromotion(
         member?.membershipId ?? ""
-       
       );
       return listOrder.data;
     }
@@ -271,6 +278,7 @@ export const prepareCartState = selector<Cart>({
   key: "prepareCart",
   get: async ({ get }) => {
     const cart = get(cartState);
+    console.log(cart);
     var res = await orderApi.prepareOrder(cart);
     return res.data;
   },
@@ -394,7 +402,7 @@ export const productsByCategoryState = selectorFamily<Product[], string>({
 export const addressState = atom({
   key: "address",
   default: "",
-})
+});
 
 export const cartState = atom<Cart>({
   key: "cart",
@@ -713,5 +721,3 @@ export const isAddedProductState = atom({
   key: "isAddedProductState",
   default: false,
 });
-
-//lấy blog
