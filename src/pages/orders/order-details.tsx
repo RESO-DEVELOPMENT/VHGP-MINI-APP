@@ -264,7 +264,7 @@ const OrderDetailsPage: FC = () => {
                           orderDetail.contents !== null
                             ? orderDetail.contents.orderType ==
                               OrderType.DELIVERY
-                              ? orderDetail.contents.customerInfo.address
+                              ? orderDetail.contents.customerInfo?.address
                               : orderDetail.contents.storeName
                             : ""}
                         </Text>
@@ -283,7 +283,7 @@ const OrderDetailsPage: FC = () => {
                         <Text.Title size="small">
                           {orderDetail.state == "hasValue" &&
                           orderDetail.contents !== null
-                            ? orderDetail.contents.customerInfo.address
+                            ? orderDetail.contents.customerInfo?.address
                             : ""}
                         </Text.Title>
                       </Box>
@@ -352,7 +352,7 @@ const OrderDetailsPage: FC = () => {
                       <Box flex className="space-x-1">
                         <Box className="flex-1 space-y-[1px]"></Box>
                         <Text size="small">
-                          {orderDetail.contents.customerInfo.name}
+                          {orderDetail.contents.customerInfo?.name}
                         </Text>
                       </Box>
                     ),
@@ -367,7 +367,7 @@ const OrderDetailsPage: FC = () => {
                       <Box flex className="space-x-1">
                         <Box className="flex-1 space-y-[1px]"></Box>
                         <Text size="small">
-                          {orderDetail.contents.customerInfo.phone}
+                          {orderDetail.contents.customerInfo?.phone}
                         </Text>
                       </Box>
                     ),
