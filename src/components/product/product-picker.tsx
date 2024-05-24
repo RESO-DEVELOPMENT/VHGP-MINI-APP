@@ -79,6 +79,8 @@ export const ProductPicker: FC<ProductPickerProps> = ({
             const productListObjectToUpdate = { ...addedProduct };
             // Cập nhật thuộc tính quantity trong bản sao
             productListObjectToUpdate.quantity += quantity;
+
+            productListObjectToUpdate.finalAmount += (quantity * productToAdd.sellingPrice)
             // Trả về bản sao đã được cập nhật
             return productListObjectToUpdate;
           }

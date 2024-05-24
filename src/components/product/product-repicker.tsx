@@ -73,6 +73,7 @@ export const ProductRePicker: FC<ProductPickerProps> = ({
             isProductInCart = true;
             const productListObjectToUpdate = { ...addedProduct };
             productListObjectToUpdate.quantity += quantity;
+            productListObjectToUpdate.finalAmount += (quantity * product.sellingPrice)
             return productListObjectToUpdate;
           }
           return addedProduct;
