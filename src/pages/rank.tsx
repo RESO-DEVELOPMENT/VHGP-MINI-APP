@@ -57,8 +57,8 @@ const RankInfo: React.FunctionComponent = () => {
         </div>
       </div>
 
-      <Text size="large">{memberLevel.name}</Text>
-      <Text size="large" className="col-span-1 text-right">
+      <Text size="xLarge">{memberLevel.name}</Text>
+      <Text size="xLarge" className="col-span-1 text-right">
         {memberLevel.nextLevelName}
       </Text>
     </Box>
