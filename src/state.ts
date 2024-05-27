@@ -75,13 +75,23 @@ export const phoneTokenState = selector({
 
 export const userState = selector({
   key: "user",
-  get: () => getUserInfo({}).then((res) => res.userInfo),
+  get: async ({ get }) => {
+    try {
+      const data = await getUserInfo();
+      console.log(data);
+      return data.userInfo;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 });
 
 export const memberState = selector({
   key: "member",
   get: async ({ get }) => {
     const requested = get(requestPhoneTriesState);
+    // console.log(requested);
     if (requested) {
       // const accessToken = await getAccessToken();
       // const user = get(userState);
@@ -92,13 +102,15 @@ export const memberState = selector({
       //   },
       // });
       const user = get(userState);
-      // console.log("Để ý");
-      // console.log(user);
+      console.log("Để ý");
+      // console.log(user.name);
       const phone = get(phoneState);
-      // console.log(phone);
+      console.log(phone);
       if (phone !== undefined && user != null) {
+        console.log(user);
+        console.log(phone);
         var response = await userApi.userLogin(phone, user.name);
-        // console.log(response);
+        console.log(response);
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
           var member = await userApi.getUserInfo(
@@ -167,7 +179,7 @@ export const listOrderState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
-      // console.log(member);
+      console.log("lấy id member để check lịch sử ", member);
       if (member !== null) {
         const listOrder = await orderApi.getListOrder(
           member?.membershipId ?? "",
@@ -176,6 +188,7 @@ export const listOrderState = selector({
             size: 100,
           }
         );
+        console.log("danh sách trả về", listOrder);
         return listOrder.data.items;
       }
     }
@@ -239,7 +252,7 @@ export const listPromotionState = selector({
   key: "listPromotion",
   get: async ({ get }) => {
     const member = get(memberState);
-    console.log("Xin chào", member);
+    // console.log("Xin chào", member);
     if (member) {
       const listOrder = await userApi.getListPromotion(
         member?.membershipId ?? ""

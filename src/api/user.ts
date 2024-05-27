@@ -17,7 +17,7 @@ const getListStore = (params?: any) =>
 const userLogin = (phone: string, name: string) => {
   const data = {
     phone: phone,
-    brandCode: "VHGP",
+    brandCode: null,
     fullName: name,
   };
   //Cái cần chạy
@@ -37,7 +37,9 @@ const userLogin = (phone: string, name: string) => {
 //     params,
 //   });
 const getListPromotion = (id: string) =>
-  requestPomotion.get<Promotion[]>(`memberships/${id}/promotions?apiKey=${apiKey}`);
+  requestPomotion.get<Promotion[]>(
+    `memberships/${id}/promotions?apiKey=${apiKey}`
+  );
 
 const getUserInfo = (id: string, params?: any) =>
   requestPomotion.get<UserInfo>(`memberships/${id}`, {

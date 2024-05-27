@@ -27,7 +27,7 @@ const getUserPhone = async (code: string, accessToken: string) => {
     {
       headers: {
         access_token: accessToken,
-        secret_key: "SICH83B5BLqUOxHU53Tx",
+        secret_key: "B5NBw7U5gOoYWHbWXSck",
         code: code,
       },
     }
@@ -40,7 +40,7 @@ const getUserLocation = async (code: string, accessToken: string) => {
     {
       headers: {
         access_token: accessToken,
-        secret_key: "SICH83B5BLqUOxHU53Tx",
+        secret_key: "B5NBw7U5gOoYWHbWXSck",
         code: code,
       },
     }
