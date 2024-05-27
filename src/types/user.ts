@@ -5,6 +5,9 @@ export interface User {
 }
 
 export interface UserInfo {
+  picUrl: string;
+  fullname: string;
+  memberLevel: any;
   membershipId: string;
   // id: string;
   phoneNumber: string;

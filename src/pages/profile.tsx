@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { openSupportChat } from "utils/config";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { memberState, requestPhoneTriesState } from "state";
+import RankInfo from "./rank";
 
 export const Subscription: FC = () => {
   const retry = useSetRecoilState(requestPhoneTriesState);
@@ -38,6 +39,7 @@ const Personal: FC = () => {
 
   return (
     <Box className="m-4">
+      <RankInfo />
       <ListRenderer
         title="Cá nhân"
         onClick={(item) => {

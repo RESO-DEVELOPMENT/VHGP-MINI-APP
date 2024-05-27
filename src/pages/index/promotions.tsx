@@ -14,7 +14,7 @@ const Promtions = () => {
   const promotionListData = useRecoilValueLoadable(listPromotionState);
 
   const promotionListMockData = useRecoilValueLoadable(listPromotionMockState);
-  console.log(promotionListData);
+  // console.log(promotionListData);
   const [cart, setCart] = useRecoilState(cartState);
   if (
     promotionListData.state === "hasValue" &&

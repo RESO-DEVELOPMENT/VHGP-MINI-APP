@@ -10,7 +10,7 @@ import { Box, Page, Text } from "zmp-ui";
 import { WelcomeUser } from "./hello";
 const WalletScreen: React.FunctionComponent = () => {
   const member = useRecoilValueLoadable(memberState);
-  console.log(member);
+  // console.log(member);
   const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
   const flexContainerStyle: React.CSSProperties = {
     display: "flex",
