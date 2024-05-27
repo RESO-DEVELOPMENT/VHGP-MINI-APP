@@ -17,6 +17,7 @@ import { QuantityPicker } from "./quantity-picker";
 import { SingleOptionPicker } from "./single-option-picker";
 
 export interface ProductPickerProps {
+  storeId?: string | null;
   product: Product;
   isUpdate: false;
   children: (methods: { open: () => void; close: () => void }) => ReactNode;
@@ -25,10 +26,11 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   children,
   isUpdate,
   product,
+  storeId
 }) => {
   const [cart, setCart] = useRecoilState(cartState);
   // const childProducts = useRecoilValue(childrenProductState);
-  const childProducts = useRecoilValue(currentStoreChildrenProductState);
+  const childProducts = useRecoilValue(currentStoreChildrenProductState(storeId ?? ""));
   let currentChild = childProducts
     .filter(
       (p) =>

@@ -40,6 +40,7 @@ import { BlogDetails } from "types/blog";
 import categories from "../mock/categories.json";
 import CategoriesApi from "api/category";
 import promotions from "../mock/promotions.json";
+import { Store } from "types/store";
 
 export const accessTokenState = selector({
   key: "accessToken",
@@ -485,18 +486,16 @@ export const keywordState = atom({
   default: "",
 });
 
-export const resultState = selector<Product[]>({
+export const resultState = selector<Map<Store, Product[]>>({
   key: "result",
   get: async ({ get }) => {
     const keyword = get(keywordState);
     if (!keyword.trim()) {
-      return [];
+      return new Map<Store, Product[]>();
     }
-    const products = get(productsState);
+    const resMap = get(searchedProductsByKeywordState(keyword));
     await wait(500);
-    return products.filter((product) =>
-      product.name.trim().toLowerCase().includes(keyword.trim().toLowerCase())
-    );
+    return resMap as Map<Store, Product[]>;
   },
 });
 
@@ -719,10 +718,12 @@ export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
 );
 
 //lấy children product của store được chọn
-export const currentStoreChildrenProductState = selector<Product[]>({
+export const currentStoreChildrenProductState = selectorFamily<Product[], string>({
   key: "currentStoreChildrenProduct",
-  get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+  get: (storeId : string) => async ({ get }) => {
+    if(storeId.length == 0)
+      return [];
+    const menu = get(storeMenuByInputIdState(storeId));
     return menu.products.filter(
       (product) => product.type === ProductTypeEnum.CHILD
     );
@@ -733,4 +734,36 @@ export const currentStoreChildrenProductState = selector<Product[]>({
 export const isAddedProductState = atom({
   key: "isAddedProductState",
   default: false,
+});
+
+//trả về các cửa hàng trùng với món ăn được tra cứu
+export const searchedProductsByKeywordState = selectorFamily<
+  Map<Store, Product[]>,
+  string
+>({
+  key: "searchedProductsByKeyword",
+  get:
+    (keyword: string) =>
+    async ({ get }) => {
+      const stores = get(listStoreState);
+      // console.log(stores);
+      //nơi lưu trữ kết quả trả về
+      const res: Map<Store, Product[]> = new Map();
+      stores.map((store) => {
+        let menu = get(storeMenuByInputIdState(store.id));
+        let products = menu.products.filter(p => p.type == ProductTypeEnum.PARENT || p.type == ProductTypeEnum.SINGLE);
+        let avaiProducts: Product[] = products.filter((product) =>
+          product.name
+            .trim()
+            .toLowerCase()
+            .includes(keyword.trim().toLowerCase())
+        );
+        if (avaiProducts.length >= 2) {
+          res.set(store, [avaiProducts[0], avaiProducts[1]]);
+        }else if (avaiProducts.length == 1) {
+          res.set(store, [avaiProducts[0]]);
+        }
+      });
+      return res;
+    },
 });

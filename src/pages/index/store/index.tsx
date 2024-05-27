@@ -44,7 +44,7 @@ const StorePage: FC = () => {
   };
   // const selectedStoreName = useRecoilValue(selectedStoreNameState);
  
- console.log("current cart no click ",cart);
+//  console.log("current cart no click ",cart);
   return (
     <Page className="flex flex-col ">
       <Box>
