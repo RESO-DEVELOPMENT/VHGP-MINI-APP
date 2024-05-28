@@ -12,7 +12,7 @@ import productSkeleton from "../../static/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
   const result: Map<TStore, Product[]> = useRecoilValue(resultState);
-  console.log(result.entries());
+  // console.log(result.entries());
   return (
     <Box flex flexDirection="column" className="bg-background flex-1 min-h-0">
       <Text.Title className="p-4 pt-0" size="small">

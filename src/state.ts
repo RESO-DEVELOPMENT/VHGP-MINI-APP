@@ -292,7 +292,7 @@ export const prepareCartState = selector<Cart>({
   key: "prepareCart",
   get: async ({ get }) => {
     const cart = get(cartState);
-    console.log(cart);
+    console.log("check cart", cart);
     var res = await orderApi.prepareOrder(cart);
     return res.data;
   },
@@ -717,7 +717,7 @@ export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
   }
 );
 
-//lấy children product của store được chọn
+//lấy children product của store được chọn bằng storeId đưa vào
 export const currentStoreChildrenProductState = selectorFamily<Product[], string>({
   key: "currentStoreChildrenProduct",
   get: (storeId : string) => async ({ get }) => {
@@ -729,7 +729,15 @@ export const currentStoreChildrenProductState = selectorFamily<Product[], string
     );
   },
 });
-
+//lấy children product của store được chọn
+export const currentStoreChildrenProductNoParamState = selector<Product[]>({
+    key: "currentStoreChildrenProduct",
+    get: async ({ get }) => {
+      const menu = get(currentStoreMenuState);
+      return menu.products.filter(
+        (product) => product.type === ProductTypeEnum.CHILD
+      );
+    }});
 //lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
 export const isAddedProductState = atom({
   key: "isAddedProductState",
