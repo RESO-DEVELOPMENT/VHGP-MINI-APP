@@ -295,10 +295,11 @@ export const CartPreview: FC = () => {
               className="text-gray text-transform: uppercase;"
               size="small"
             >
-              <PaymentPicker />
-              {/* {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
+              {/* <PaymentPicker /> */}
+              {/* tạm thời để false để ra tiền mặt */}
+              {cartPrepare.state === "hasValue" && cartPrepare.contents !== null && false
                 ? showPaymentType(cartPrepare.contents.paymentType)
-                : "TIỀN MẶT"} */}
+                : "TIỀN MẶT"}
             </Text.Title>
           </Box>
           <Button

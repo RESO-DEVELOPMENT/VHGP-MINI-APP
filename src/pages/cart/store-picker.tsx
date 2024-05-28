@@ -30,7 +30,7 @@ export const StorePicker: FC = () => {
   const nearbyStores = useRecoilValueLoadable(nearbyStoresState);
   // const setSelectedStoreIndex = useSetRecoilState(selectedStoreIndexState);
   const selectedStore = useRecoilValueLoadable(selectedStoreState);
-  // const setCart = useSetRecoilState(cartState);
+  const setCart = useSetRecoilState(cartState);
   const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
   const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
   const navigate = useNavigate();
@@ -39,27 +39,27 @@ export const StorePicker: FC = () => {
     setSelectedStoreIdState(store.id);
     setSelectedStoreNameState(store.name);
     navigate("/store");
-    setVisible(false)
-  }
+    setVisible(false);
+  };
 
-  // const member = useRecoilValue(memberState);
+  const member = useRecoilValue(memberState);
   const snackbar = useSnackbar();
-  // useEffect(
-  //   () => {
-  //     setCart((prevCart) => {
-  //       let res = { ...prevCart };
-  //       res = {
-  //         ...prevCart,
-  //         storeId: selectedStore?.contents.id,
-  //         customerId: member?.id ?? undefined,
-  //       };
-  //       return res;
-  //     });
-  //     // setCart(cart);
-  //   },
-  //   //eslint-disable-next-line
-  //   [selectedStore]
-  // );
+  useEffect(
+    () => {
+      setCart((prevCart) => {
+        let res = { ...prevCart };
+        res = {
+          ...prevCart,
+          storeId: selectedStore?.contents.id,
+          customerId: member?.membershipId ?? undefined,
+        };
+        return res;
+      });
+      // setCart(cart);
+    },
+    //eslint-disable-next-line
+    [selectedStore]
+  );
   return (
     <>
       <ListItem
@@ -126,7 +126,7 @@ export const StorePicker: FC = () => {
                   // },
                   onClick: () => {
                     goNearbyStoreClick(store);
-                  }
+                  },
                 })
               ),
               [{ text: "Đóng", close: true, danger: true }],
