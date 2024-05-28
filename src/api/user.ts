@@ -17,8 +17,8 @@ const getListStore = (params?: any) =>
 const userLogin = (phone: string, name: string) => {
   const data = {
     phone: phone,
-    brandCode: null,
-    fullName: name,
+    // brandCode: null,
+    name: name,
   };
   //Cái cần chạy
   return requestPomotion.post<UserLogin>(
