@@ -13,7 +13,7 @@ const InformationPage = () => {
   const navigate = useNavigate();
   // const user = useRecoilValueLoadable(userState);
   const member = useRecoilValueLoadable(memberState);
-  console.log(member);
+  // console.log(member);
   const handleBackClick = () => {
     navigate(-1);
   };

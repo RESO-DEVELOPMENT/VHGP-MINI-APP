@@ -23,7 +23,7 @@ const WalletScreen: React.FunctionComponent = () => {
       keys: ["storeIndex"],
       success: (data) => {
         const { storeIndex } = data;
-        console.log("store index", storeIndex);
+        // console.log("store index", storeIndex);
         setStoreIdx(storeIndex ?? 0);
       },
       fail: (error) => {

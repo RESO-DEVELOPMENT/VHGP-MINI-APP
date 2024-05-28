@@ -43,7 +43,7 @@ const HistoryPicker: FC = () => {
     retry((r) => r + 1);
   }, []);
   const gotoPage = (id: string) => {
-    console.log("đi tới trang chi tiết đơn hàng");
+    // console.log("đi tới trang chi tiết đơn hàng");
     navigate("/order-detail", { state: { id } });
   };
   return (

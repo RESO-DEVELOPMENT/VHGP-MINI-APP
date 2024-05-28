@@ -14,6 +14,7 @@ import {
   requestLocationTriesState,
   selectedStoreState,
 } from "state";
+import { PaymentType } from "types/order";
 import { showPaymentType } from "utils/product";
 import { Box, Icon, Text } from "zmp-ui";
 
@@ -37,8 +38,10 @@ export const PaymentPicker: FC = () => {
           setVisible(true);
         }}
       >
+
         <Text size="xLarge" className="font-medium text-sm text-primary">
-          {showPaymentType(cart.paymentType)}
+          {showPaymentType(cart.paymentType )}
+          {/* {"TIỀN MẶT"} */}
         </Text>
         <Icon className="bottom-0.5" icon="zi-chevron-up" />
       </Box>
@@ -49,21 +52,36 @@ export const PaymentPicker: FC = () => {
             visible={visible}
             onClose={() => setVisible(false)}
             actions={[
-              paymentList.contents.map((e) => ({
-                text: e.name,
-                highLight: e.type === cart?.paymentType,
-                onClick: () => {
-                  setCart((prevCart) => {
-                    let res = { ...prevCart };
-                    res = {
+              // paymentList.contents.map((e) => ({
+              //   text: e.name,
+              //   highLight: e.type === cart?.paymentType,
+              //   onClick: () => {
+              //     setCart((prevCart) => {
+              //       let res = { ...prevCart };
+              //       res = {
+              //         ...prevCart,
+              //         paymentType: e.type,
+              //       };
+              //       return res;
+              //     });
+              //     setVisible(false);
+              //   },
+              // })),
+              //chỉnh sửa để hiển thị mỗi tiền mặt
+              paymentList.contents
+                .filter((e) => e.type === PaymentType.CASH)
+                .map((e) => ({
+                  text: e.name,
+                  highLight: e.type === cart?.paymentType,
+                  onClick: () => {
+                    setCart((prevCart) => ({
                       ...prevCart,
                       paymentType: e.type,
-                    };
-                    return res;
-                  });
-                  setVisible(false);
-                },
-              })),
+                    }));
+                    setVisible(false);
+                  },
+                })),
+
               [{ text: "Đóng", close: true, danger: true }],
             ]}
           ></ActionSheet>,

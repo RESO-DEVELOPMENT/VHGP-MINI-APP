@@ -60,7 +60,7 @@ export const phoneTokenState = selector({
   get: () =>
     getPhoneNumber({
       success: async (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.token !== undefined) {
           return data.token;
         } else {
@@ -79,7 +79,7 @@ export const userState = selector({
   get: async ({ get }) => {
     try {
       const data = await getUserInfo();
-      console.log(data);
+      // console.log(data);
       return data.userInfo;
     } catch (error) {
       console.error(error);
@@ -103,15 +103,15 @@ export const memberState = selector({
       //   },
       // });
       const user = get(userState);
-      console.log("Để ý");
+      // console.log("Để ý");
       // console.log(user.name);
       const phone = get(phoneState);
-      console.log(phone);
+      // console.log(phone);
       if (phone !== undefined && user != null) {
-        console.log(user);
-        console.log(phone);
+        // console.log(user);
+        // console.log(phone);
         var response = await userApi.userLogin(phone, user.name);
-        console.log(response);
+        // console.log(response);
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
           var member = await userApi.getUserInfo(
@@ -156,7 +156,7 @@ export const memberState = selector({
       ...cart,
       customerId: member?.membershipId,
     };
-    console.log("cart set", res);
+    // console.log("cart set", res);
     set(cartState, res);
   },
 });
@@ -180,7 +180,7 @@ export const listOrderState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
-      console.log("lấy id member để check lịch sử ", member);
+      // console.log("lấy id member để check lịch sử ", member);
       if (member !== null) {
         const listOrder = await orderApi.getListOrder(
           member?.membershipId ?? "",
@@ -189,7 +189,7 @@ export const listOrderState = selector({
             size: 100,
           }
         );
-        console.log("danh sách trả về", listOrder);
+        // console.log("danh sách trả về", listOrder);
         return listOrder.data.items;
       }
     }
@@ -232,6 +232,7 @@ export const listTransactionState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
+      // console.log(member?.membershipId)
       const listOrder = await orderApi.getListTransactions(
         member?.membershipId ?? "",
         {
@@ -292,7 +293,7 @@ export const prepareCartState = selector<Cart>({
   key: "prepareCart",
   get: async ({ get }) => {
     const cart = get(cartState);
-    console.log("check cart", cart);
+    // console.log("check cart", cart);
     var res = await orderApi.prepareOrder(cart);
     return res.data;
   },
@@ -342,9 +343,9 @@ export const childCategoriesState = selector<Category[]>({
     const listChild = menu.categories.filter(
       (cate) => cate.type === CategoryType.CHILD
     );
-    console.log("select category id ", cateId);
-    console.log("select category ", selectedCategory);
-    console.log("list category child", listChild);
+    // console.log("select category id ", cateId);
+    // console.log("select category ", selectedCategory);
+    // console.log("list category child", listChild);
     if (selectedCategory?.childCategoryIds === [] || listChild == null) {
       return [];
     }
@@ -423,7 +424,8 @@ export const cartState = atom<Cart>({
   default: {
     storeId: "",
     orderType: OrderType.EATIN,
-    paymentType: PaymentType.POINTIFY,
+    // paymentType: PaymentType.POINTIFY,
+    paymentType: PaymentType.CASH,
     productList: [],
     totalAmount: 0,
     shippingFee: 0,
@@ -552,10 +554,10 @@ export const phoneState = selector<string | undefined>({
         },
       });
       if (token !== undefined) {
-        console.log("token", token);
-        console.log("accessToken", accessToken);
+        // console.log("token", token);
+        // console.log("accessToken", accessToken);
         await zaloApi.getUserPhone(token, accessToken).then((value) => {
-          console.log("phone", value.data.data.number);
+          // console.log("phone", value.data.data.number);
           phone = value.data.data.number.replace(/^\84/, "0");
         });
       }

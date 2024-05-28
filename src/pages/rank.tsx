@@ -27,7 +27,7 @@ const SkeletonLoader: React.FunctionComponent = () => {
 
 const RankInfo: React.FunctionComponent = () => {
   const memberResponse = useRecoilValueLoadable(memberState);
-  console.log(memberResponse);
+  // console.log(memberResponse);
   if (memberResponse.state === "loading") {
     return <SkeletonLoader />;
   }

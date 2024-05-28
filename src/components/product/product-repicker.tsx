@@ -104,7 +104,7 @@ export const ProductRePicker: FC<ProductPickerProps> = ({
             storeId : store!.id
           };
         }
-        console.log(res)
+        // console.log(res)
         return prepareCart(res);
       });
     });

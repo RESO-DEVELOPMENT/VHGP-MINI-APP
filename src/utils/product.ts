@@ -30,7 +30,7 @@ export const pay = (cart: Cart) =>
     item: [],
     amount: cart.finalAmount,
     success: (data) => {
-      console.log("Payment success: ", data);
+      // console.log("Payment success: ", data);
       events.on(EventName.OpenApp, async (data) => {
         const params = data?.path;
       });

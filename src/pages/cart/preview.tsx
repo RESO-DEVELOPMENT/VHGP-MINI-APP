@@ -27,7 +27,7 @@ import { PaymentPicker } from "./payment-picker";
 export const CartPreview: FC = () => {
   const setCart = useSetRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
-  console.log(cartPrepare);
+  // console.log(cartPrepare);
   const member = useRecoilValueLoadable(memberState);
   // console.log(member);
   const snackbar = useSnackbar();
@@ -47,11 +47,11 @@ export const CartPreview: FC = () => {
         item: [],
         amount: cartPrepare.contents.finalAmount,
         success: async (data) => {
-          console.log("Payment success: ", data);
+          // console.log("Payment success: ", data);
           let { orderId } = data;
           const res = await orderApi.createNewOrder(body);
           if (res.status == 200) {
-            console.log(res.data);
+            // console.log(res.data);
             snackbar.openSnackbar({
               duration: 2000,
               type: "success",
@@ -78,7 +78,7 @@ export const CartPreview: FC = () => {
               state: { id: res.data },
             });
           } else {
-            console.log(" log eror", res);
+            // console.log(" log eror", res);
             snackbar.openSnackbar({
               duration: 3000,
               type: "error",
@@ -87,7 +87,7 @@ export const CartPreview: FC = () => {
           }
         },
         fail: (err) => {
-          console.log("Payment error: ", err);
+          // console.log("Payment error: ", err);
           snackbar.openSnackbar({
             duration: 3000,
             type: "error",
@@ -159,7 +159,7 @@ export const CartPreview: FC = () => {
         const res = await orderApi.createNewOrder(body);
         // console.log("response for createNewOrder", res);
         if (res.status == 200) {
-          console.log(res.data);
+          // console.log(res.data);
           snackbar.openSnackbar({
             type: "success",
             text: "Đặt hàng thành công",
@@ -187,14 +187,14 @@ export const CartPreview: FC = () => {
             state: { id: res.data },
           });
         } else if (res.status == 400) {
-          console.log(" log eror", res);
+          // console.log(" log eror", res);
           snackbar.openSnackbar({
             type: "error",
             text: "Đặt hàng thất bại, " + res.data.Error,
           });
         }
       } catch (error: any) {
-        console.log(" log eror", error);
+        // console.log(" log eror", error);
         snackbar.openSnackbar({
           type: "error",
           text: "Đặt hàng thất bại, " + error.Error,
@@ -208,7 +208,7 @@ export const CartPreview: FC = () => {
       const body = { ...cartPrepare.contents };
       const res = await orderApi.createNewOrder(body);
       if (res.status == 200) {
-        console.log(res.data);
+        // console.log(res.data);
         snackbar.openSnackbar({
           type: "success",
           text: "Đặt hàng thành công",
@@ -236,14 +236,14 @@ export const CartPreview: FC = () => {
           state: { id: res.data },
         });
       } else if (res.status == 400) {
-        console.log(" log eror", res);
+        // console.log(" log eror", res);
         snackbar.openSnackbar({
           type: "error",
           text: "Đặt hàng thất bại, " + res.data.Error,
         });
       }
     } catch (error: any) {
-      console.log(" log eror", error);
+      // console.log(" log eror", error);
       snackbar.openSnackbar({
         type: "error",
         text: "Đặt hàng thất bại, " + error.Error,
@@ -295,11 +295,11 @@ export const CartPreview: FC = () => {
               className="text-gray text-transform: uppercase;"
               size="small"
             >
-              {/* <PaymentPicker /> */}
-              {/* tạm thời để false để ra tiền mặt */}
-              {cartPrepare.state === "hasValue" && cartPrepare.contents !== null && false
+              <PaymentPicker />
+        
+              {/* {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
                 ? showPaymentType(cartPrepare.contents.paymentType)
-                : "TIỀN MẶT"}
+                : "TIỀN MẶT"} */}
             </Text.Title>
           </Box>
           <Button

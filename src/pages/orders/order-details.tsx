@@ -16,7 +16,7 @@ const OrderDetailsPage: FC = () => {
   const location = useLocation();
   const id = location.state?.id;
   const orderDetail = useRecoilValueLoadable(getOrderDetailstate(id));
-  console.log(orderDetail);
+  // console.log(orderDetail);
   const [showCancellationOptions, setShowCancellationOptions] = useState(false);
   const [cancellationReason, setCancellationReason] = useState("");
 
@@ -27,7 +27,7 @@ const OrderDetailsPage: FC = () => {
     "Đặt nhầm địa chỉ",
   ];
   const handleCancelOrder = () => {
-    console.log("Order cancelled for reason:", cancellationReason);
+    // console.log("Order cancelled for reason:", cancellationReason);
     navigate("/");
     setShowCancellationOptions(false);
     setCancellationReason("");
