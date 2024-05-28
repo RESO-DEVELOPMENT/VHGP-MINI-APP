@@ -1,9 +1,17 @@
 import storeApi from "api/store";
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
+import { selectedCategoryIdState } from "./category.state";
+import menuApi from "api/menu";
+import { currentStoreMenuState } from "./menu.state";
 
 export const selectedStoreIdState = atom<string>({
   key: "selectedStoreId",
   default: "",
+});
+
+export const selectedStoreNameState = atom<string>({
+  key: "selectedStoreName",
+  default: "Tên Quán",
 });
 
 export const listStoreState = selector({
@@ -32,5 +40,47 @@ export const selectedStoreByIdState = selector({
     const id = get(selectedStoreIdState);
     const stores = get(listStoreState);
     return stores.filter((s) => s.id === id)[0];
+  },
+});
+
+export const storeMenuByInputIdState = selectorFamily({
+  key: "storeMenuByInputId",
+  get:
+    (storeId: string) =>
+    async ({ get }) => {
+      const menu = await menuApi.getMenu(storeId);
+      return menu.data;
+    },
+});
+
+export const storeIdsByCategoryState = selector({
+  key: "storeIdsByCategory",
+  get: async ({ get }) => {
+    const categoryId = get(selectedCategoryIdState);
+
+    const stores = get(listStoreState);
+
+    const res = stores.map((store) => {
+      const menu = get(storeMenuByInputIdState(store.id));
+      return menu.categories.some((c) => c.id === categoryId) ? store : null;
+    });
+    const filteredRes = res.filter((store) => store !== null);
+    return filteredRes;
+  },
+});
+
+export const storeCollectionsByIdState = selector({
+  key: "storeCollectionsById",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.collections;
+  },
+});
+
+export const selectedStoreCategoriesState = selector({
+  key: "selectedStoreCategories",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.categories;
   },
 });

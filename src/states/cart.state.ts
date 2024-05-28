@@ -30,3 +30,14 @@ export const cartState = atom<Cart>({
     promotionCode: null,
   },
 });
+
+export const totalPriceState = selector({
+  key: "totalPrice",
+  get: ({ get }) => {
+    const cart = get(cartState);
+    return cart.productList.reduce(
+      (total, item) => total + item.totalAmount,
+      0
+    );
+  },
+});

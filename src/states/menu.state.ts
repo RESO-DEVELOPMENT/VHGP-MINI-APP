@@ -16,3 +16,19 @@ export const menuByStoreState = selector({
     }
   },
 });
+
+export const currentStoreMenuState = selector({
+  key: "currentStoreMenu",
+  get: async ({ get }) => {
+    const currentStore = get(selectedStoreIdState);
+    if (currentStore === null || currentStore === undefined) {
+      const store = get(listStoreState);
+      const menu = await menuApi.getMenu(store[0].id);
+      return menu.data;
+    } else {
+      const menu = await menuApi.getMenu(currentStore);
+      console.log(menu.data);
+      return menu.data;
+    }
+  },
+});

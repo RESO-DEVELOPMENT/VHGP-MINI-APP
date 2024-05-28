@@ -1,7 +1,8 @@
 import orderApi from "api/order";
 import { atom, selector, selectorFamily } from "recoil";
 import { memberState } from "./user.state";
-import { OrderDetails } from "types/order";
+import { OrderDetails, PaymentType } from "types/order";
+import { Payment } from "types/payment";
 
 export const requestOrderTransactionTriesState = atom({
   key: "requestOrderTransactionTries",
@@ -33,3 +34,34 @@ export const getOrderDetailstate = selectorFamily<OrderDetails, string>({
     return order.data;
   },
 });
+
+export const paymentTypeState = atom<Payment[]>({
+  key: "paymentType",
+  default: [
+    {
+      type: PaymentType.POINTIFY,
+      name: "Điểm Bean",
+    },
+    {
+      type: PaymentType.CASH,
+      name: "Tiền mặt",
+    },
+  ],
+});
+
+export const selectLocationState = atom<string>({
+  key: "selectLocationState",
+  default: "",
+});
+
+export const selectedDeliveryTimeState = atom({
+  key: "selectedDeliveryTime",
+  default: +new Date(),
+});
+
+export const requestLocationTriesState = atom({
+  key: "requestLocationTries",
+  default: 0,
+});
+
+
