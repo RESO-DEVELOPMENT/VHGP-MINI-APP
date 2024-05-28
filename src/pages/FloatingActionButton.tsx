@@ -15,7 +15,7 @@ const FloatingActionButton: FC<FloatingActionButtonProps> = ({
   const defaultStyle: CSSProperties = {
     position: "fixed",
     right: "20px",
-    bottom: "70px",
+    bottom: "100px",
     backgroundColor: "white",
     color: "black",
     border: "none",
