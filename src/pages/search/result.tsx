@@ -2,17 +2,26 @@ import { FinalPrice } from "components/display/final-price";
 import { ProductPicker } from "components/product/product-picker";
 import { ProductSearchResultSkeleton } from "components/skeletons";
 import React, { FC, Suspense } from "react";
-import { useRecoilValue } from "recoil";
-import { resultState, searchedProductsByKeywordState } from "state";
-import { TStore } from "types/store";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { resultState, searchedProductsByKeywordState, selectedStoreIdState, selectedStoreNameState } from "state";
+import { Store, TStore } from "types/store";
 import { Product } from "types/store-menu";
-import { Box, Text } from "zmp-ui";
+import { Box, Text, useNavigate } from "zmp-ui";
 
 import productSkeleton from "../../static/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
   const result: Map<TStore, Product[]> = useRecoilValue(resultState);
   // console.log(result.entries());
+  const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
+  const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
+  const navigate = useNavigate();
+
+  const gotoStore = (store: Store) => {
+    setSelectedStoreIdState(store.id);
+    setSelectedStoreNameState(store.name);
+    navigate("/store");
+  };
   return (
     <Box flex flexDirection="column" className="bg-background flex-1 min-h-0">
       <Text.Title className="p-4 pt-0" size="small">
@@ -25,8 +34,12 @@ const SearchResultContent: FC = () => {
               <Box
                p={2}
                 className="bg-primary rounded-t-lg flex items-center"
+                
               >
+                <div onClick={() => gotoStore(store)}>
+
                 <Text className="text-white font-semibold">{store.name}</Text>
+                </div>
               </Box>
 
               {products.map((product) => (
