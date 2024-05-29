@@ -37,9 +37,9 @@ const HomePage: React.FunctionComponent = () => {
 };
 export const ContentFallback: FC = () => {
   return (
-    <Page className="flex items-center justify-center h-screen">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <Spinner visible logo={vhgpLogo} />
-    </Page>
+    </div>
   );
 };
 export default HomePage;
