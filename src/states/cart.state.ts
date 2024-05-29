@@ -17,7 +17,7 @@ export const cartState = atom<Cart>({
   default: {
     storeId: "",
     orderType: OrderType.EATIN,
-    paymentType: PaymentType.POINTIFY,
+    paymentType: PaymentType.CASH,
     productList: [],
     totalAmount: 0,
     shippingFee: 0,

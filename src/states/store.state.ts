@@ -6,7 +6,7 @@ import { currentStoreMenuState } from "./menu.state";
 import { TStore } from "types/store";
 
 export const selectedStoreObjState = atom<TStore>({
-  key: "selectedStore",
+  key: "selectedStoreObj",
   default: {
     id: "",
     brandId: "",
@@ -39,10 +39,10 @@ export const selectedStoreIndexState = atom<number>({
   key: "selectedStoreIndex",
   default: 0,
 });
-export const selectLocationState = atom<string>({
-  key: "selectLocationState",
-  default: "",
-});
+// export const selectLocationState = atom<string>({
+//   key: "selectLocationState",
+//   default: "",
+// });
 
 export const selectedStoreState = selector({
   key: "selectedStore",
