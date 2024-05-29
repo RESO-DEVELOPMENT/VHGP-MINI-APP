@@ -15,11 +15,16 @@ export const listOrderState = selector({
     const request = get(requestOrderTransactionTriesState);
     if (request) {
       const member = get(memberState);
+      // console.log("lấy id member để check lịch sử ", member);
       if (member !== null) {
-        const listOrder = await orderApi.getListOrder(member?.id ?? "", {
-          page: 1,
-          size: 100,
-        });
+        const listOrder = await orderApi.getListOrder(
+          member.membershipId || "67c3bab8-91bb-4828-9f3a-d87c87957209",
+          {
+            page: 1,
+            size: 100,
+          }
+        );
+        console.log("danh sách trả về", listOrder);
         return listOrder.data.items;
       }
     }
@@ -63,5 +68,3 @@ export const requestLocationTriesState = atom({
   key: "requestLocationTries",
   default: 0,
 });
-
-

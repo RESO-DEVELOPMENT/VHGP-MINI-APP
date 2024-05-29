@@ -7,7 +7,7 @@ import { BottomNavigation, Icon } from "zmp-ui";
 import { CartIcon } from "./cart-icon";
 import { OrderIcon } from "./order-icon";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cartState } from "state";
+import { cartState } from "states/cart.state";
 
 const tabs: Record<string, MenuItem> = {
   "/": {

@@ -4,18 +4,14 @@ import { Sheet } from "components/fullscreen-sheet";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRecoilValue, useRecoilState } from "recoil";
-import {
-  cartState,
-  childrenProductState,
-  currentStoreChildrenProductNoParamState,
-  currentStoreChildrenProductState,
-} from "state";
 import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
 import product, { prepareCart } from "utils/product";
 import { Box, Button, Text } from "zmp-ui";
 import { QuantityPicker } from "./quantity-picker";
 import { SingleOptionPicker } from "./single-option-picker";
+import { cartState } from "states/cart.state";
+import { currentStoreChildrenProductState, currentStoreChildrenProductNoParamState } from "states/product.state";
 
 export interface ProductPickerProps {
   storeId?: string | null;
@@ -39,7 +35,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   else
     childProducts = useRecoilValue(
       currentStoreChildrenProductNoParamState);
-    
+
   let currentChild = childProducts
     .filter(
       (p) =>
@@ -61,8 +57,8 @@ export const ProductPicker: FC<ProductPickerProps> = ({
       product.type == ProductTypeEnum.SINGLE
         ? product.menuProductId
         : currentChild != null && currentChild != undefined
-        ? currentChild[0].menuProductId
-        : null
+          ? currentChild[0].menuProductId
+          : null
     );
     setQuantity(1);
   }, []);
@@ -225,9 +221,9 @@ export const ProductPicker: FC<ProductPickerProps> = ({
                   >
                     {quantity > 0
                       ? //  existed
-                        //   ? "Cập nhật giỏ hàng"
-                        //   :
-                        "Thêm vào giỏ hàng"
+                      //   ? "Cập nhật giỏ hàng"
+                      //   :
+                      "Thêm vào giỏ hàng"
                       : "Xoá"}
                   </Button>
                 ) : (
