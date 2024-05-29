@@ -106,7 +106,9 @@ export const qrState = selector({
     if (request) {
       const member = get(memberState);
       if (member !== null) {
-        const listOrder = await userApi.generateQrCode(member?.id ?? "");
+        const listOrder = await userApi.generateQrCode(
+          member?.membershipId ?? ""
+        );
         return listOrder.data;
       }
     }
