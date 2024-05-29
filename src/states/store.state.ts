@@ -3,6 +3,27 @@ import { atom, selector, selectorFamily } from "recoil";
 import { selectedCategoryIdState } from "./category.state";
 import menuApi from "api/menu";
 import { currentStoreMenuState } from "./menu.state";
+import { TStore } from "types/store";
+
+export const selectedStoreObjState = atom<TStore>({
+  key: "selectedStore",
+  default: {
+    id: "",
+    brandId: "",
+    name: "",
+    shortName: "",
+    code: "",
+    email: "",
+    address: "",
+    status: "",
+    wifiName: "",
+    wifiPassword: "",
+    lat: "",
+    long: "",
+    locationNearby: "",
+    distance: 0,
+  },
+});
 
 export const selectedStoreIdState = atom<string>({
   key: "selectedStoreId",
