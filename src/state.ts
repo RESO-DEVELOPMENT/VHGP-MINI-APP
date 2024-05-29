@@ -831,68 +831,8 @@ import { Product, ProductTypeEnum } from "types/store-menu";
 
 // //lấy blog
 //lấy children product của store được chọn bằng storeId đưa vào
-export const currentStoreChildrenProductState = selectorFamily<
-  Product[],
-  string
->({
-  key: "currentStoreChildrenProduct",
-  get:
-    (storeId: string) =>
-    async ({ get }) => {
-      if (storeId.length == 0) return [];
-      const menu = get(storeMenuByInputIdState(storeId));
-      return menu.products.filter(
-        (product) => product.type === ProductTypeEnum.CHILD
-      );
-    },
-});
-//lấy children product của store được chọn
-export const currentStoreChildrenProductNoParamState = selector<Product[]>({
-  key: "currentStoreChildrenProduct",
-  get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
-    return menu.products.filter(
-      (product) => product.type === ProductTypeEnum.CHILD
-    );
-  },
-});
-//lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
-export const isAddedProductState = atom({
-  key: "isAddedProductState",
-  default: false,
-});
 
+//lấy children product của store được chọn
+
+//lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
 //trả về các cửa hàng trùng với món ăn được tra cứu
-export const searchedProductsByKeywordState = selectorFamily<
-  Map<Store, Product[]>,
-  string
->({
-  key: "searchedProductsByKeyword",
-  get:
-    (keyword: string) =>
-    async ({ get }) => {
-      const stores = get(listStoreState);
-      // console.log(stores);
-      //nơi lưu trữ kết quả trả về
-      const res: Map<Store, Product[]> = new Map();
-      stores.map((store) => {
-        let menu = get(storeMenuByInputIdState(store.id));
-        let products = menu.products.filter(
-          (p) =>
-            p.type == ProductTypeEnum.PARENT || p.type == ProductTypeEnum.SINGLE
-        );
-        let avaiProducts: Product[] = products.filter((product) =>
-          product.name
-            .trim()
-            .toLowerCase()
-            .includes(keyword.trim().toLowerCase())
-        );
-        if (avaiProducts.length >= 2) {
-          res.set(store, [avaiProducts[0], avaiProducts[1]]);
-        } else if (avaiProducts.length == 1) {
-          res.set(store, [avaiProducts[0]]);
-        }
-      });
-      return res;
-    },
-});

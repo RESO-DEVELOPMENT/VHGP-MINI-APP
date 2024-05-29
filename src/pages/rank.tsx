@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilValueLoadable } from "recoil";
-import { memberState } from "state";
+import { memberState } from "states/user.state";
 import { Box, Progress, Text } from "zmp-ui";
 
 const SkeletonLoader: React.FunctionComponent = () => {

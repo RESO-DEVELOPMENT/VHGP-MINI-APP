@@ -9,6 +9,7 @@ import { TStore } from "types/store";
 import { Product } from "types/store-menu";
 import { Store } from "zmp-framework/types/core";
 import { Box, Text, useNavigate } from "zmp-ui";
+import productSkeleton from "static/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
   const result: Map<TStore, Product[]> = useRecoilValue(resultState);
@@ -32,13 +33,13 @@ const SearchResultContent: FC = () => {
           {Array.from(result.entries()).map(([store, products]) => (
             <div key={store.id} className="space-y-4">
               <Box
-               p={2}
+                p={2}
                 className="bg-primary rounded-t-lg flex items-center"
-                
+
               >
                 <div onClick={() => gotoStore(store)}>
 
-                <Text className="text-white font-semibold">{store.name}</Text>
+                  <Text className="text-white font-semibold">{store.name}</Text>
                 </div>
               </Box>
 
