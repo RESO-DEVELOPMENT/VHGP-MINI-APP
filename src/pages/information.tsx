@@ -15,15 +15,21 @@ const InformationPage = () => {
   };
   return member.state === "hasValue" && member.contents !== null ? (
     <div className="flex-1  p-3">
-
       <div className="mt-40 mb-8 ">
-        <img
-          src={member.contents?.picUrl || userSkeleton}
-          alt="User Avatar"
-          className="w-50 h-40 object-none mx-auto rounded-full bg-zinc-200"
-        />
+        {member?.contents?.picUrl ? (
+          <>
+            <img
+              src={member.contents?.picUrl}
+              alt="User Avatar"
+              className="w-50 h-40 object-none mx-auto rounded-full bg-zinc-50"
+            />
+          </>
+        ) : (
+          <div className="w-full flex justify-center">
+            <Icon icon="zi-user-circle-solid" className="text-primary" size={160} />
+          </div>
+        )}
       </div>
-
 
       <ListRenderer
         items={[

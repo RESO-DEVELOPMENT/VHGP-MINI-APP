@@ -41,6 +41,7 @@ const RankInfo: React.FunctionComponent = () => {
 
     return (
       <Box
+      mb={4}
         p={4}
         height={150}
         className="bg-primary rounded-lg grid grid-cols-2"
