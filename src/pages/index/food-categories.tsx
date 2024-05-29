@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { foodCategoriesListState, selectedCategoryIdState } from "state";
 import { Category } from "types/store-menu";
 import { Box, useNavigate, Text } from "zmp-ui";
 
 import foodCateSkeleton from "../../static/food-categories-skeleton.png";
+import { foodCategoriesListState, selectedCategoryIdState } from "states/category.state";
 
 export const Categories: FC = () => {
   const foodCategoriesLoadable = useRecoilValueLoadable(

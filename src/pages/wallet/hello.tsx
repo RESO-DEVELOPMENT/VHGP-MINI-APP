@@ -10,7 +10,7 @@ import iconWallet from "../../static/icons8-wallet-50.png";
 import iconUser from "../../static/icons8-user-60.png";
 
 import { UserInfo } from "types/user";
-import { userState } from "state";
+import { userState } from "states/user.state";
 
 import { DisplayValue } from "components/display/value";
 export interface MemberBalanceProps {

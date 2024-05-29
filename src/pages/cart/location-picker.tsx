@@ -4,7 +4,9 @@ import { ListItem } from "components/list-item";
 import React, { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
-import { addressState, cartState, selectedStoreState } from "state";
+import { addressState } from "states/address.state";
+import { cartState } from "states/cart.state";
+import { selectedStoreState } from "states/store.state";
 import { OrderType } from "types/order";
 import { Box, Button, Input } from "zmp-ui";
 
@@ -16,8 +18,8 @@ export const LocationPicker: FC = () => {
   const locations =
     selectedStore.contents.locationNearby != null
       ? selectedStore.contents.locationNearby
-          .split("_")
-          .map((item: string) => item.trim())
+        .split("_")
+        .map((item: string) => item.trim())
       : [];
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);

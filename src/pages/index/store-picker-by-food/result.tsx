@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import { FC } from "react";
 import { useNavigate } from "react-router";
 import { Box, Button, Icon, Text } from "zmp-ui";
-import { storeIdsByCategoryState, selectedStoreIdState } from "state";
 import {
   useRecoilValue,
   useRecoilValueLoadable,
@@ -11,6 +10,7 @@ import {
 //TODO: design
 import logo from "../../../static/logo.png";
 import { TStore } from "types/store";
+import { selectedStoreIdState, storeIdsByCategoryState } from "states/store.state";
 
 export const StorePickerbyFoodResult: FC = (foodKey: string) => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);

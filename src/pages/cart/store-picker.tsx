@@ -10,14 +10,10 @@ import {
   useResetRecoilState,
   useSetRecoilState,
 } from "recoil";
-import {
-  cartState,
-  memberState,
-  nearbyStoresState,
-  requestLocationTriesState,
-  selectedStoreIndexState,
-  selectedStoreState,
-} from "state";
+import { cartState } from "states/cart.state";
+import { requestLocationTriesState } from "states/order.state";
+import { nearbyStoresState, selectedStoreIndexState, selectedStoreState } from "states/store.state";
+import { memberState } from "states/user.state";
 import { OrderType, PaymentType } from "types/order";
 import { TStore } from "types/store";
 import { displayDistance } from "utils/location";

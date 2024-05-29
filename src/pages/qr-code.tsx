@@ -10,10 +10,10 @@ import {
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
-import { qrState, memberState, requestRetriveQRstate } from "state";
 import { DisplayPrice } from "components/display/price";
 import { DisplayValue } from "components/display/value";
 import { Subscription } from "./profile";
+import { qrState, memberState, requestRetriveQRstate } from "states/user.state";
 
 const QRCodePage: React.FC = () => {
   const [countdown, setCountdown] = useState(120);

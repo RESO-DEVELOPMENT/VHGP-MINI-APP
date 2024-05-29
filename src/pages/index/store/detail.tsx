@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { useRecoilValueLoadable } from "recoil";
-import { selectedStoreByIdState } from "state";
 import { Hours } from "types/hours";
 import { Box, Text } from "zmp-ui";
 
@@ -8,6 +7,7 @@ import { Box, Text } from "zmp-ui";
 import logo from "../../../static/logo.png";
 //TODO: skeleton for error || null url image
 import storeSkeleton from "../../../static/store-skeleton.jpg";
+import { selectedStoreByIdState } from "states/store.state";
 // const { Title } = Text;
 
 //thông tin chi tiết của cửa hàng đang chpn

@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { cartState, selectedDeliveryTimeState } from "state";
+import { cartState } from "states/cart.state";
+import { selectedDeliveryTimeState } from "states/order.state";
 import { Cart } from "types/cart";
 import { displayDate, displayHalfAnHourTimeRange } from "utils/date";
 import { matchStatusBarColor } from "utils/device";

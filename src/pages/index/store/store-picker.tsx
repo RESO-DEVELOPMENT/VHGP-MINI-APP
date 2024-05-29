@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Store } from "../../../types/store";
 import { Box, Text, useNavigate } from "zmp-ui";
 import { useSetRecoilState } from "recoil";
-import { selectedStoreIdState, selectedStoreNameState } from "state";
+import { selectedStoreIdState, selectedStoreNameState } from "states/store.state";
 
 export interface StorePickerProps {
   store: Store;

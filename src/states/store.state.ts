@@ -14,6 +14,24 @@ export const selectedStoreNameState = atom<string>({
   default: "Tên Quán",
 });
 
+export const selectedStoreIndexState = atom<number>({
+  key: "selectedStoreIndex",
+  default: 0,
+});
+export const selectLocationState = atom<string>({
+  key: "selectLocationState",
+  default: "",
+});
+
+export const selectedStoreState = selector({
+  key: "selectedStore",
+  get: async ({ get }) => {
+    const index = get(selectedStoreIndexState);
+    const stores = get(listStoreState);
+    return stores[index];
+  },
+});
+
 export const listStoreState = selector({
   key: "listStore",
   get: async () => {

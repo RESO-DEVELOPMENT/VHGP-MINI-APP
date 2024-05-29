@@ -2,7 +2,7 @@ import { DisplayPrice } from "components/display/price";
 import { ListRenderer } from "components/list-renderer";
 import React, { FC } from "react";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
-import { cartState, prepareCartState } from "state";
+import { prepareCartState } from "states/cart.state";
 import { prepareCart, showPaymentType } from "utils/product";
 import { Box, Text } from "zmp-ui";
 
@@ -22,7 +22,7 @@ export const PaymentInfo: FC = () => {
                 <Text size="small">
                   <DisplayPrice>
                     {cartPrepare.state == "hasValue" &&
-                    cartPrepare.contents !== null
+                      cartPrepare.contents !== null
                       ? cartPrepare.contents.totalAmount
                       : 0}
                   </DisplayPrice>
@@ -34,16 +34,16 @@ export const PaymentInfo: FC = () => {
             left: (
               <Box className="flex-1 space-y-[1px]">
                 {cartPrepare.state == "hasValue" &&
-                cartPrepare.contents !== null
+                  cartPrepare.contents !== null
                   ? cartPrepare.contents.promotionList!.map((p) => (
-                      <Text size="xxSmall">{p.name}</Text>
-                    ))
+                    <Text size="xxSmall">{p.name}</Text>
+                  ))
                   : ""}
               </Box>
             ),
             right:
               cartPrepare.state == "hasValue" &&
-              cartPrepare.contents !== null ? (
+                cartPrepare.contents !== null ? (
                 cartPrepare.contents.promotionList!.map((p) =>
                   p.effectType == "setDiscount" ? (
                     <Box flex className="space-x-1">
@@ -75,7 +75,7 @@ export const PaymentInfo: FC = () => {
                 <Text.Title size="small">
                   <DisplayPrice>
                     {cartPrepare.state == "hasValue" &&
-                    cartPrepare.contents !== null
+                      cartPrepare.contents !== null
                       ? cartPrepare.contents.finalAmount
                       : 0}
                   </DisplayPrice>

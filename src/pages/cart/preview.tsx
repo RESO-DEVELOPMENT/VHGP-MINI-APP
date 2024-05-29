@@ -10,12 +10,6 @@ import {
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
-import {
-  cartState,
-  memberState,
-  prepareCartState,
-  selectedStoreState,
-} from "state";
 import { OrderType, PaymentType } from "types/order";
 import { getConfig } from "utils/config";
 import pay, { showPaymentType } from "utils/product";
@@ -23,6 +17,8 @@ import { Payment } from "zmp-sdk";
 import { EventName, events } from "zmp-sdk/apis";
 import { Box, Button, Icon, Text, useSnackbar } from "zmp-ui";
 import { PaymentPicker } from "./payment-picker";
+import { cartState, prepareCartState } from "states/cart.state";
+import { memberState } from "states/user.state";
 
 export const CartPreview: FC = () => {
   const setCart = useSetRecoilState(cartState);

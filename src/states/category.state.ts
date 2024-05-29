@@ -16,6 +16,14 @@ export const currentCateState = selector({
   },
 });
 
+export const categoriesState = selector<Category[]>({
+  key: "categories",
+  get: async ({ get }) => {
+    const menu = get(menuByStoreState);
+    return menu.categories.filter((cate) => cate.type === CategoryType.NORMAL);
+  },
+});
+
 export const childCategoriesState = selector<Category[]>({
   key: "childCategories",
   get: async ({ get }) => {
@@ -28,7 +36,7 @@ export const childCategoriesState = selector<Category[]>({
     console.log("select category id ", cateId);
     console.log("select category ", selectedCategory);
     console.log("list category child", listChild);
-    if (selectedCategory?.childCategoryIds === [] || listChild == null) {
+    if (selectedCategory?.childCategoryIds.length === 0 || listChild == null) {
       return [];
     }
     const listChildofParentCate: Category[] = [];

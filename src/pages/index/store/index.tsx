@@ -1,6 +1,5 @@
 import React, { FC, Suspense, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { cartState, selectedStoreIdState, selectedStoreNameState } from "state";
 import { Box, Header, Page, useNavigate } from "zmp-ui";
 import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
@@ -12,6 +11,8 @@ import FloatingActionButton from "pages/FloatingActionButton";
 import { Divider } from "components/divider";
 import cart from "pages/cart";
 import { prepareCart } from "utils/product";
+import { cartState } from "states/cart.state";
+import { selectedStoreIdState } from "states/store.state";
 
 const StorePage: FC = () => {
   const [cart, setCart] = useRecoilState(cartState);

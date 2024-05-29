@@ -3,10 +3,10 @@ import { ProductSlideSkeleton } from "components/skeletons";
 import { RecommendStorePicker } from "pages/index/store/store-picker";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
-import { nearbyStoresState } from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text, useNavigate } from "zmp-ui";
 import storeSkeleton from "./../../static/store-skeleton.jpg";
+import { nearbyStoresState } from "states/store.state";
 
 export const RecommendContent: FC = () => {
   //state: nơi gọi api lấy danh sách sản phẩm bán, cần sửa lại cho nó có thể lấy ra các cửa hàng

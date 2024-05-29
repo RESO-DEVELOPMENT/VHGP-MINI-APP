@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { FC } from "react";
 import { useRecoilState } from "recoil";
-import { keywordState } from "state";
 import { Box, Input } from "zmp-ui";
 import { debounce } from "lodash";
+import { keywordState } from "states/product.state";
 
 const SearchInput: FC<{ placeholder: string }> = ({ placeholder }) => {
   const [keyword, setKeyword] = useRecoilState(keywordState);

@@ -1,7 +1,6 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router";
 import { useRecoilValueLoadable, useResetRecoilState } from "recoil";
-import { listBlogState, memberState } from "state";
 // import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getDummyImage } from "utils/product";
@@ -12,6 +11,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Barcode from "react-barcode";
 import QRCode from "react-qr-code";
+import { memberState } from "states/user.state";
 
 export const Banner: FC = () => {
   // const blogList = useRecoilValueLoadable(listBlogState);

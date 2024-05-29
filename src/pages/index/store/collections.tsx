@@ -1,15 +1,13 @@
 import { Section } from "components/section";
 import React, { FC } from "react";
 import { useRecoilValue } from "recoil";
-import {
-  storeCollectionsByIdState,
-  storeProductsByCollectionIdState,
-} from "state";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
 import { ProductPicker } from "components/product/product-picker";
 import drinkSekeleton from "../../../static/drink-skeleton.jpg";
 import { DisplayPrice } from "components/display/price";
+import { storeCollectionsByIdState } from "states/store.state";
+import { storeProductsByCollectionIdState } from "states/product.state";
 
 export const Collections: FC = (collectionId: string) => {
   const collections = useRecoilValue(storeCollectionsByIdState);

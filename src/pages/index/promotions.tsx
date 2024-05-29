@@ -2,12 +2,13 @@ import { Section } from "components/section";
 import VoucherCard from "pages/card-voucher";
 import React, { Suspense } from "react";
 import { useRecoilValueLoadable, useRecoilState } from "recoil";
-import { listPromotionState, cartState, listPromotionMockState } from "state";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { prepareCart } from "utils/product";
 import { useNavigate, Box, Tabs, Text } from "zmp-ui";
 import { RecommendStorePicker } from "./store/store-picker";
 import storeSkeleton from "../../static/store-skeleton.jpg";
+import { listPromotionMockState, listPromotionState } from "states/promotion.state";
+import { cartState } from "states/cart.state";
 
 const Promtions = () => {
   const navigate = useNavigate();

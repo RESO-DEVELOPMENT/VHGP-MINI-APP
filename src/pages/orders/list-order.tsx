@@ -7,15 +7,6 @@ import {
   useSetRecoilState,
 } from "recoil";
 import "./orders.css";
-import {
-  categoriesState,
-  listOrderState,
-  listTransactionState,
-  memberState,
-  productsByCategoryState,
-  requestOrderTransactionTriesState,
-  selectedCategoryIdState,
-} from "state";
 import { Box, Header, Icon, Page, Tabs, Text } from "zmp-ui";
 import OrderCard from "./card-order";
 import TransactionCard from "./card-transaction";
@@ -26,6 +17,10 @@ import { showOrderStatus } from "utils/product";
 import { OrderStatus } from "types/order";
 import { useNavigate } from "react-router-dom";
 import { Subscription } from "pages/profile";
+import { selectedCategoryIdState } from "states/category.state";
+import { listOrderState, requestOrderTransactionTriesState } from "states/order.state";
+import { listTransactionState } from "states/transaction.state";
+import { memberState } from "states/user.state";
 const HistoryPicker: FC = () => {
   const selectedCategory = useRecoilValue(selectedCategoryIdState);
   const orderListData = useRecoilValueLoadable(listOrderState);
@@ -57,7 +52,7 @@ const HistoryPicker: FC = () => {
           <Tabs.Tab key={0} label="Đơn hàng">
             <Suspense>
               {orderListData.state === "hasValue" &&
-              orderListData.contents !== null ? (
+                orderListData.contents !== null ? (
                 <div
                   style={{
                     overflowY: "auto",
@@ -82,10 +77,10 @@ const HistoryPicker: FC = () => {
                               order.status == OrderStatus.NEW
                                 ? "font-bold bg-gray p-1 rounded-md text-white"
                                 : order.status == OrderStatus.PENDING
-                                ? "font-bold bg-blue-400 p-1 rounded-md text-white"
-                                : order.status == OrderStatus.PAID
-                                ? "font-bold bg-emerald-400 p-1 rounded-md text-white"
-                                : "font-bold bg-red-400 p-1 rounded-md text-white"
+                                  ? "font-bold bg-blue-400 p-1 rounded-md text-white"
+                                  : order.status == OrderStatus.PAID
+                                    ? "font-bold bg-emerald-400 p-1 rounded-md text-white"
+                                    : "font-bold bg-red-400 p-1 rounded-md text-white"
                             }
                           >
                             {showOrderStatus(order.status)}
@@ -192,7 +187,7 @@ const HistoryPicker: FC = () => {
           <Tabs.Tab key={1} label="Giao dịch">
             <Suspense>
               {transactionListData.state === "hasValue" &&
-              transactionListData.contents !== null ? (
+                transactionListData.contents !== null ? (
                 <div
                   style={{
                     overflowY: "auto",

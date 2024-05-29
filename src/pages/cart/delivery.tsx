@@ -1,11 +1,12 @@
 import React, { useState, FC } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
-import { cartState, selectedStoreByIdState, selectedStoreState } from "state";
 import { Box, Icon, Text, Modal, Input } from "zmp-ui";
 import { ListRenderer } from "components/list-renderer";
 import { StorePicker } from "./store-picker";
 import { TimePicker } from "./time-picker";
 import { LocationPicker } from "./location-picker";
+import { cartState } from "states/cart.state";
+import { selectedStoreByIdState } from "states/store.state";
 
 const AddressPopup = ({ onConfirm, address, setAddress }) => {
   const handleClose = () => {

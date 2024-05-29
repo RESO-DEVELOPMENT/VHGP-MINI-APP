@@ -1,15 +1,11 @@
 import React, { FC, Suspense } from "react";
 import { Section } from "components/section";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
-import {
-  cartState,
-  productsState,
-  selectedStoreCategoriesState,
-  storeProductsByCategoryIdState,
-} from "state";
 import { Box } from "zmp-ui";
 import { ProductItem } from "components/product/item";
 import { ProductItemSkeleton } from "components/skeletons";
+import { selectedStoreCategoriesState } from "states/store.state";
+import { storeProductsByCategoryIdState } from "states/product.state";
 
 export const ProductListContent: FC = () => {
   // const products = useRecoilValue(productsState);
