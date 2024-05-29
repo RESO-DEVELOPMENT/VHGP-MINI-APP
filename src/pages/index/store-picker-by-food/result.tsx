@@ -3,14 +3,12 @@ import { FC } from "react";
 import { useNavigate } from "react-router";
 import { Box, Button, Icon, Text } from "zmp-ui";
 import {
-  useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
 //TODO: design
-import logo from "../../../static/logo.png";
-import { TStore } from "types/store";
 import { selectedStoreIdState, storeIdsByCategoryState } from "states/store.state";
+import storeSkeleton from "../../../static/store-skeleton.jpg";
 
 export const StorePickerbyFoodResult: FC = (foodKey: string) => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);
@@ -25,7 +23,7 @@ export const StorePickerbyFoodResult: FC = (foodKey: string) => {
     storeIdsByCategoryState
   );
   // console.log(storesByCategoryIdResponse);
-  if(storesByCategoryIdResponse.state === "hasValue"){
+  if (storesByCategoryIdResponse.state === "hasValue") {
     const stores = storesByCategoryIdResponse.contents;
     // console.log(stores);
     return (
@@ -41,7 +39,7 @@ export const StorePickerbyFoodResult: FC = (foodKey: string) => {
               >
                 <div className="flex-none aspect-card relative w-3/12">
                   <img
-                    src={logo}
+                    src={storeSkeleton}
                     className="absolute w-full h-full object-cover rounded-xl"
                   />
                 </div>
@@ -71,5 +69,5 @@ export const StorePickerbyFoodResult: FC = (foodKey: string) => {
       </Box>
     );
   }
- return <></>
+  return <></>
 };

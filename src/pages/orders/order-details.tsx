@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
 import { DisplayPrice } from "components/display/price";
 import { showOrderType, showPaymentType } from "utils/product";
-import { displayDate, displayTime } from "utils/date";
+import { adjustDeliveryTime, displayDate, displayTime } from "utils/date";
 import { ListRenderer } from "components/list-renderer";
 import { OrderStatus, OrderType } from "types/order";
 import { showOrderStatus } from "utils/product";
@@ -16,6 +16,7 @@ const OrderDetailsPage: FC = () => {
   const location = useLocation();
   const id = location.state?.id;
   const orderDetail = useRecoilValueLoadable(getOrderDetailstate(id));
+  // console.log(orderDetail);
   const [showCancellationOptions, setShowCancellationOptions] = useState(false);
   const [cancellationReason, setCancellationReason] = useState("");
 
@@ -26,7 +27,7 @@ const OrderDetailsPage: FC = () => {
     "Đặt nhầm địa chỉ",
   ];
   const handleCancelOrder = () => {
-    console.log("Order cancelled for reason:", cancellationReason);
+    // console.log("Order cancelled for reason:", cancellationReason);
     navigate("/");
     setShowCancellationOptions(false);
     setCancellationReason("");
@@ -263,13 +264,32 @@ const OrderDetailsPage: FC = () => {
                           orderDetail.contents !== null
                             ? orderDetail.contents.orderType ==
                               OrderType.DELIVERY
-                              ? orderDetail.contents.customerInfo.address
+                              ? orderDetail.contents.customerInfo?.address
                               : orderDetail.contents.storeName
                             : ""}
                         </Text>
                       </Box>
                     ),
                   },
+                  {
+                    left: (
+                      <Box flex className="space-x-1">
+                        <Text size="small">Địa chỉ giao hàng</Text>
+                      </Box>
+                    ),
+                    right: (
+                      <Box flex className="space-x-1">
+                        <Box className="flex-1 space-y-[2px]"></Box>
+                        <Text.Title size="small">
+                          {orderDetail.state == "hasValue" &&
+                          orderDetail.contents !== null
+                            ? orderDetail.contents.customerInfo?.address
+                            : ""}
+                        </Text.Title>
+                      </Box>
+                    ),
+                  },
+
                   {
                     left: (
                       <Box flex className="space-x-1">
@@ -282,7 +302,16 @@ const OrderDetailsPage: FC = () => {
                         <Text size="small">
                           {orderDetail.state == "hasValue" &&
                           orderDetail.contents !== null
-                            ? orderDetail.contents.customerInfo.deliTime
+                            ? displayTime(
+                              adjustDeliveryTime(
+                                  orderDetail.contents.checkInDate,
+                                  10
+                                )
+                              ) +
+                              " " +
+                              displayDate(
+                                new Date(orderDetail.contents.checkInDate)
+                              )
                             : ""}
                         </Text>
                       </Box>
@@ -323,7 +352,7 @@ const OrderDetailsPage: FC = () => {
                       <Box flex className="space-x-1">
                         <Box className="flex-1 space-y-[1px]"></Box>
                         <Text size="small">
-                          {orderDetail.contents.customerInfo.name}
+                          {orderDetail.contents.customerInfo?.name}
                         </Text>
                       </Box>
                     ),
@@ -338,7 +367,22 @@ const OrderDetailsPage: FC = () => {
                       <Box flex className="space-x-1">
                         <Box className="flex-1 space-y-[1px]"></Box>
                         <Text size="small">
-                          {orderDetail.contents.customerInfo.phone}
+                          {orderDetail.contents.customerInfo?.phone}
+                        </Text>
+                      </Box>
+                    ),
+                  },
+                  {
+                    left: (
+                      <Box className="flex-1 space-y-[1px]">
+                        <Text size="small">Ghi chú</Text>
+                      </Box>
+                    ),
+                    right: (
+                      <Box flex className="space-x-1">
+                        <Box className="flex-1 space-y-[1px]"></Box>
+                        <Text size="small">
+                          {orderDetail.contents.notes}
                         </Text>
                       </Box>
                     ),

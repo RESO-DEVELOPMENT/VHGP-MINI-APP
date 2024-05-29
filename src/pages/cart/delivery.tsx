@@ -8,14 +8,14 @@ import { LocationPicker } from "./location-picker";
 import { cartState } from "states/cart.state";
 import { selectedStoreByIdState } from "states/store.state";
 
-const AddressPopup = ({ onConfirm, address, setAddress }) => {
+export const AddressPopup = ({ title, onConfirm, address, setAddress }) => {
   const handleClose = () => {
     onConfirm(address);
   };
   return (
     <Modal
       visible={true}
-      title="Ghi chú"
+      title={title}
       onClose={handleClose}
       actions={[
         {
@@ -29,7 +29,7 @@ const AddressPopup = ({ onConfirm, address, setAddress }) => {
         type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        placeholder="Nhập ghi chú"
+        placeholder={`Nhập ${title}`}
         className="w-full border rounded"
       />
     </Modal>
@@ -65,7 +65,7 @@ export const Delivery: FC = () => {
                 <React.Suspense fallback={<div>Loading...</div>}>
                   <Box>
                     <Text size="small" className="text-primary">
-                      {store.contents.name || "Cửa hàng"}
+                      {store.contents?.name || "Cửa hàng"}
                     </Text>
                     <Text size="xSmall" className="text-gray">
                       {"Cửa hàng"}
@@ -117,6 +117,7 @@ export const Delivery: FC = () => {
       </Box>
       {showPopup && (
         <AddressPopup
+          title={"Ghi chú"}
           onConfirm={handleNotesChange}
           address={notes}
           setAddress={setNotes}

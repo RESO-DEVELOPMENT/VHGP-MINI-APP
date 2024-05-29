@@ -30,7 +30,7 @@ export const pay = (cart: Cart) =>
     item: [],
     amount: cart.finalAmount,
     success: (data) => {
-      console.log("Payment success: ", data);
+      // console.log("Payment success: ", data);
       events.on(EventName.OpenApp, async (data) => {
         const params = data?.path;
       });
@@ -45,7 +45,7 @@ export function prepareCart(cart: Cart) {
   cart.discountAmount = 0;
   cart.totalQuantity = 0;
   cart.productList.map((item) => {
-    cart.totalAmount += item.totalAmount * item.quantity;
+    cart.totalAmount += item.sellingPrice * item.quantity;
     cart.totalQuantity += item.quantity;
   });
   cart.finalAmount = cart.totalAmount - cart.discountAmount!;

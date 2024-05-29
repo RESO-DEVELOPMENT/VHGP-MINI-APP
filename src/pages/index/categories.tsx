@@ -7,7 +7,7 @@ import { categoriesState, selectedCategoryIdState } from "states/category.state"
 
 export const Categories: FC = () => {
   const categories = useRecoilValue(categoriesState);
-  console.log(categories);
+  // console.log(categories);
   const navigate = useNavigate();
   const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
 

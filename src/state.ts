@@ -40,6 +40,15 @@
 // import categories from "../mock/categories.json";
 // import CategoriesApi from "api/category";
 // import promotions from "../mock/promotions.json";
+//TODO: mock data
+import categories from "../mock/categories.json";
+import CategoriesApi from "api/category";
+import promotions from "../mock/promotions.json";
+import { Store } from "types/store";
+import { selectorFamily, selector, atom } from "recoil";
+import { currentStoreMenuState } from "states/menu.state";
+import { storeMenuByInputIdState, listStoreState } from "states/store.state";
+import { Product, ProductTypeEnum } from "types/store-menu";
 
 // export const accessTokenState = selector({
 //   key: "accessToken",
@@ -144,6 +153,111 @@
 //       customerId: member?.id,
 //     };
 //     console.log("cart set", res);
+//     set(cartState, res);
+//   },
+// });
+// export const phoneTokenState = selector({
+//   key: "phoneToken",
+//   get: () =>
+//     getPhoneNumber({
+//       success: async (data) => {
+//         // console.log(data);
+//         if (data.token !== undefined) {
+//           return data.token;
+//         } else {
+//           return null;
+//         }
+//       },
+//       fail: (error) => {
+//         console.log(error);
+//         return null;
+//       },
+//     }),
+// });
+
+// export const userState = selector({
+//   key: "user",
+//   get: async ({ get }) => {
+//     try {
+//       const data = await getUserInfo();
+//       // console.log(data);
+//       return data.userInfo;
+//     } catch (error) {
+//       console.error(error);
+//       return null;
+//     }
+//   },
+// });
+
+// export const memberState = selector({
+//   key: "member",
+//   get: async ({ get }) => {
+//     const requested = get(requestPhoneTriesState);
+//     // console.log(requested);
+//     if (requested) {
+//       // const accessToken = await getAccessToken();
+//       // const user = get(userState);
+//       // let phone = "0337076898";
+//       // const { token } = await getPhoneNumber({
+//       //   fail: (err) => {
+//       //     console.log("Lỗi đăng nhập: ", err);
+//       //   },
+//       // });
+//       const user = get(userState);
+//       // console.log("Để ý");
+//       // console.log(user.name);
+//       const phone = get(phoneState);
+//       // console.log(phone);
+//       if (phone !== undefined && user != null) {
+//         // console.log(user);
+//         // console.log(phone);
+//         var response = await userApi.userLogin(phone, user.name);
+//         // console.log(response);
+//         if (response.status == 200) {
+//           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+//           var member = await userApi.getUserInfo(
+//             response.data.data.userId ?? ""
+//           );
+//           // console.log(member.data);
+//           return member.data;
+//         }
+//       }
+
+//       // if (token !== undefined && user != null) {
+//       //   console.log("token", token);
+//       //   console.log("accessToken", accessToken);
+//       //   var response = await userApi.userLogin(accessToken, token, user.name);
+//       //   if (response.status == 200) {
+//       //     axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+//       //     setStorage({
+//       //       data: {
+//       //         token: response.data.data.token,
+//       //         userId: response.data.data.userId,
+//       //       },
+//       //       success: (data) => {
+//       //         console.log("set ok", data);
+//       //       },
+//       //       fail: (error) => {
+//       //         console.log("set error", error);
+//       //       },
+//       //     });
+//       //     var member = await userApi.getUserInfo(response.data.data.userId ?? "");
+//       //     return member.data;
+//       //   }
+//       // }
+//       return null;
+//     }
+//     return null;
+//   },
+//   set: ({ set, get }) => {
+//     const cart = get(cartState);
+//     const member = get(memberState);
+//     let res = { ...cart };
+//     res = {
+//       ...cart,
+//       customerId: member?.membershipId,
+//     };
+//     // console.log("cart set", res);
 //     set(cartState, res);
 //   },
 // });
@@ -716,3 +830,69 @@
 // });
 
 // //lấy blog
+//lấy children product của store được chọn bằng storeId đưa vào
+export const currentStoreChildrenProductState = selectorFamily<
+  Product[],
+  string
+>({
+  key: "currentStoreChildrenProduct",
+  get:
+    (storeId: string) =>
+    async ({ get }) => {
+      if (storeId.length == 0) return [];
+      const menu = get(storeMenuByInputIdState(storeId));
+      return menu.products.filter(
+        (product) => product.type === ProductTypeEnum.CHILD
+      );
+    },
+});
+//lấy children product của store được chọn
+export const currentStoreChildrenProductNoParamState = selector<Product[]>({
+  key: "currentStoreChildrenProduct",
+  get: async ({ get }) => {
+    const menu = get(currentStoreMenuState);
+    return menu.products.filter(
+      (product) => product.type === ProductTypeEnum.CHILD
+    );
+  },
+});
+//lưu lại trạng thái sản phẩm trong cart: xem đã có chưa
+export const isAddedProductState = atom({
+  key: "isAddedProductState",
+  default: false,
+});
+
+//trả về các cửa hàng trùng với món ăn được tra cứu
+export const searchedProductsByKeywordState = selectorFamily<
+  Map<Store, Product[]>,
+  string
+>({
+  key: "searchedProductsByKeyword",
+  get:
+    (keyword: string) =>
+    async ({ get }) => {
+      const stores = get(listStoreState);
+      // console.log(stores);
+      //nơi lưu trữ kết quả trả về
+      const res: Map<Store, Product[]> = new Map();
+      stores.map((store) => {
+        let menu = get(storeMenuByInputIdState(store.id));
+        let products = menu.products.filter(
+          (p) =>
+            p.type == ProductTypeEnum.PARENT || p.type == ProductTypeEnum.SINGLE
+        );
+        let avaiProducts: Product[] = products.filter((product) =>
+          product.name
+            .trim()
+            .toLowerCase()
+            .includes(keyword.trim().toLowerCase())
+        );
+        if (avaiProducts.length >= 2) {
+          res.set(store, [avaiProducts[0], avaiProducts[1]]);
+        } else if (avaiProducts.length == 1) {
+          res.set(store, [avaiProducts[0]]);
+        }
+      });
+      return res;
+    },
+});

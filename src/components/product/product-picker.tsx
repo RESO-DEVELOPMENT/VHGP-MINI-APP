@@ -7,16 +7,18 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import {
   cartState,
   childrenProductState,
+  currentStoreChildrenProductNoParamState,
   currentStoreChildrenProductState,
 } from "state";
 import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
-import { prepareCart } from "utils/product";
+import product, { prepareCart } from "utils/product";
 import { Box, Button, Text } from "zmp-ui";
 import { QuantityPicker } from "./quantity-picker";
 import { SingleOptionPicker } from "./single-option-picker";
 
 export interface ProductPickerProps {
+  storeId?: string | null;
   product: Product;
   isUpdate: false;
   children: (methods: { open: () => void; close: () => void }) => ReactNode;
@@ -25,10 +27,19 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   children,
   isUpdate,
   product,
+  storeId,
 }) => {
   const [cart, setCart] = useRecoilState(cartState);
   // const childProducts = useRecoilValue(childrenProductState);
-  const childProducts = useRecoilValue(currentStoreChildrenProductState);
+  let childProducts;
+  if (storeId)
+    childProducts = useRecoilValue(
+      currentStoreChildrenProductState(storeId ?? "")
+    );
+  else
+    childProducts = useRecoilValue(
+      currentStoreChildrenProductNoParamState);
+    
   let currentChild = childProducts
     .filter(
       (p) =>
@@ -58,6 +69,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
 
   const addToCart = async () => {
     if (product) {
+      // console.log(product);
       setCart((prevCart) => {
         // console.log(prevCart)
         //lấy thông tin object đưa vào res - những cái đã có trong đó
@@ -78,20 +90,21 @@ export const ProductPicker: FC<ProductPickerProps> = ({
             const productListObjectToUpdate = { ...addedProduct };
             // Cập nhật thuộc tính quantity trong bản sao
             productListObjectToUpdate.quantity += quantity;
+
+            productListObjectToUpdate.finalAmount +=
+              quantity * productToAdd.sellingPrice;
             // Trả về bản sao đã được cập nhật
             return productListObjectToUpdate;
           }
           // Trả về phần tử đã được cập nhật hoặc không thay đổi
           return addedProduct;
         });
-        
-        
-        
+
         // console.log(updatedProductList)
         if (isProductInCart) {
           res = {
             ...prevCart,
-            productList: updatedProductList
+            productList: updatedProductList,
           };
           // console.log("Có rồi nè");
         } else {

@@ -15,7 +15,7 @@ const Promtions = () => {
   const promotionListData = useRecoilValueLoadable(listPromotionState);
 
   const promotionListMockData = useRecoilValueLoadable(listPromotionMockState);
-  console.log(promotionListData);
+  // console.log(promotionListData);
   const [cart, setCart] = useRecoilState(cartState);
   if (
     promotionListData.state === "hasValue" &&
@@ -25,8 +25,7 @@ const Promtions = () => {
     return (
       <Section title="Deal xịn lấy ngay" padding="title-only">
         <Swiper slidesPerView={1.25} spaceBetween={16} className="">
-          {/* chỗ này data mocking, khi có data thì thay vào promotionListData lại */}
-          {promotionListMockData.contents
+          {promotionListData.contents
             .filter((e) => e.promotionType === 2)
             .map((promotion, index) => (
               <SwiperSlide key={index}>

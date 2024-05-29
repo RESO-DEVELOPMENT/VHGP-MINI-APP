@@ -11,13 +11,13 @@ import {
 import { cartState } from "states/cart.state";
 import { paymentTypeState } from "states/order.state";
 import { selectedStoreState } from "states/store.state";
+import { PaymentType } from "types/order";
 import { showPaymentType } from "utils/product";
 import { Box, Icon, Text } from "zmp-ui";
 
 export const PaymentPicker: FC = () => {
   const [visible, setVisible] = useState(false);
   const paymentList = useRecoilValueLoadable(paymentTypeState);
-  const selectedStore = useRecoilValue(selectedStoreState);
   const [cart, setCart] = useRecoilState(cartState);
   return (
     <>
@@ -35,8 +35,10 @@ export const PaymentPicker: FC = () => {
           setVisible(true);
         }}
       >
+
         <Text size="xLarge" className="font-medium text-sm text-primary">
           {showPaymentType(cart.paymentType)}
+          {/* {"TIỀN MẶT"} */}
         </Text>
         <Icon className="bottom-0.5" icon="zi-chevron-up" />
       </Box>
@@ -47,21 +49,36 @@ export const PaymentPicker: FC = () => {
             visible={visible}
             onClose={() => setVisible(false)}
             actions={[
-              paymentList.contents.map((e) => ({
-                text: e.name,
-                highLight: e.type === cart?.paymentType,
-                onClick: () => {
-                  setCart((prevCart) => {
-                    let res = { ...prevCart };
-                    res = {
+              // paymentList.contents.map((e) => ({
+              //   text: e.name,
+              //   highLight: e.type === cart?.paymentType,
+              //   onClick: () => {
+              //     setCart((prevCart) => {
+              //       let res = { ...prevCart };
+              //       res = {
+              //         ...prevCart,
+              //         paymentType: e.type,
+              //       };
+              //       return res;
+              //     });
+              //     setVisible(false);
+              //   },
+              // })),
+              //chỉnh sửa để hiển thị mỗi tiền mặt
+              paymentList.contents
+                .filter((e) => e.type === PaymentType.CASH)
+                .map((e) => ({
+                  text: e.name,
+                  highLight: e.type === cart?.paymentType,
+                  onClick: () => {
+                    setCart((prevCart) => ({
                       ...prevCart,
                       paymentType: e.type,
-                    };
-                    return res;
-                  });
-                  setVisible(false);
-                },
-              })),
+                    }));
+                    setVisible(false);
+                  },
+                })),
+
               [{ text: "Đóng", close: true, danger: true }],
             ]}
           ></ActionSheet>,

@@ -5,8 +5,10 @@ export interface User {
 }
 
 export interface UserInfo {
+  picUrl: string;
+  fullname: string;
+  memberLevel: any;
   membershipId: string;
-  id: string;
   phoneNumber: string;
   fullName: string;
   gender: string;
@@ -56,19 +58,18 @@ export interface MembershipCardType {
   cardImg: string;
 }
 
-
 export interface UserLogin {
-  status: number
-  message: string
-  data: Data
+  status: number;
+  message: string;
+  data: Data;
 }
 
 export interface Data {
-  userId: string
-  username: string
-  fullName: string
-  token: string
-  brandCode: string
-  brandId: string
-  roleName: string
+  userId: string;
+  username: string;
+  fullName: string;
+  token: string;
+  brandCode: string;
+  brandId: string;
+  roleName: string;
 }

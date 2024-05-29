@@ -8,10 +8,13 @@ import { getStorage } from "zmp-sdk";
 import { Box, Page, Text } from "zmp-ui";
 import { WelcomeUser } from "./hello";
 import { memberState } from "states/user.state";
+import { selectedStoreIndexState } from "states/store.state";
 const WalletScreen: React.FunctionComponent = () => {
   const member = useRecoilValueLoadable(memberState);
   console.log(member);
   // const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
+  // console.log(member);
+  const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
   const flexContainerStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
@@ -32,6 +35,20 @@ const WalletScreen: React.FunctionComponent = () => {
   //     },
   //   });
   // }, []);
+  useEffect(() => {
+    getStorage({
+      keys: ["storeIndex"],
+      success: (data) => {
+        const { storeIndex } = data;
+        // console.log("store index", storeIndex);
+        setStoreIdx(storeIndex ?? 0);
+      },
+      fail: (error) => {
+        setStoreIdx(0);
+        console.log(error);
+      },
+    });
+  }, []);
 
   return (
     <Page className="relative flex-1 flex flex-col bg-white">
@@ -58,7 +75,7 @@ const WalletScreen: React.FunctionComponent = () => {
             <Subscription />
             <SwiperItem />
             <Box className="mx-4 mt-4" style={flexContainerStyle}>
-              <Text.Title size="normal">Chương trình</Text.Title>
+              {/* <Text.Title size="normal">Chương trình</Text.Title> */}
             </Box>
             <SwiperEn />
           </>

@@ -2,42 +2,80 @@ import { FinalPrice } from "components/display/final-price";
 import { ProductPicker } from "components/product/product-picker";
 import { ProductSearchResultSkeleton } from "components/skeletons";
 import React, { FC, Suspense } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { resultState } from "states/product.state";
-import { Box, Text } from "zmp-ui";
+import { selectedStoreIdState, selectedStoreNameState } from "states/store.state";
+import { TStore } from "types/store";
+import { Product } from "types/store-menu";
+import { Store } from "zmp-framework/types/core";
+import { Box, Text, useNavigate } from "zmp-ui";
 
 const SearchResultContent: FC = () => {
-  const result = useRecoilValue(resultState);
+  const result: Map<TStore, Product[]> = useRecoilValue(resultState);
+  // console.log(result.entries());
+  const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
+  const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
+  const navigate = useNavigate();
+
+  const gotoStore = (store: Store) => {
+    setSelectedStoreIdState(store.id);
+    setSelectedStoreNameState(store.name);
+    navigate("/store");
+  };
   return (
     <Box flex flexDirection="column" className="bg-background flex-1 min-h-0">
       <Text.Title className="p-4 pt-0" size="small">
-        Kết quả ({result.length})
+        Kết quả ({result.size})
       </Text.Title>
-      {result.length > 0 ? (
-        <Box className="p-4 pt-0 space-y-4 flex-1 overflow-y-auto">
-          {result.map((product) => (
-            <ProductPicker key={product.id} product={product} isUpdate={false}>
-              {({ open }) => (
-                <div onClick={open} className="flex items-center space-x-4">
-                  <img
-                    className="w-[88px] h-[88px] rounded-lg"
-                    src={product.picUrl}
-                  />
-                  <Box className="space-y-2">
-                    <Text>{product.name}</Text>
-                    <Text size="xSmall" className="text-gray">
-                      <FinalPrice>{product}</FinalPrice>
-                    </Text>
-                  </Box>
+      {result.size > 0 ? (
+        <Box className="px-4 py-0 space-y-4 flex-1 overflow-y-auto rounded">
+          {Array.from(result.entries()).map(([store, products]) => (
+            <div key={store.id} className="space-y-4">
+              <Box
+               p={2}
+                className="bg-primary rounded-t-lg flex items-center"
+                
+              >
+                <div onClick={() => gotoStore(store)}>
+
+                <Text className="text-white font-semibold">{store.name}</Text>
                 </div>
-              )}
-            </ProductPicker>
+              </Box>
+
+              {products.map((product) => (
+                <ProductPicker
+                  key={product.id}
+                  product={product}
+                  isUpdate={false}
+                  storeId={store.id}
+                >
+                  {({ open }) => (
+                    <div
+                      onClick={open}
+                      className="flex items-center space-x-4 p-2 bg-slate-400- rounded-lg shadow hover:bg-gray-50 transition-colors cursor-pointer m-0"
+                    >
+                      <img
+                        className="w-[50px] h-[50px] rounded-lg object-cover"
+                        src={product.picUrl || productSkeleton}
+                        alt={product.name}
+                      />
+                      <Box className="">
+                        <Text className="font-medium">{product.name}</Text>
+                        <Text size="xSmall" className="text-gray-500">
+                          <FinalPrice>{product}</FinalPrice>
+                        </Text>
+                      </Box>
+                    </div>
+                  )}
+                </ProductPicker>
+              ))}
+            </div>
           ))}
         </Box>
       ) : (
         <Box className="flex-1 flex justify-center items-center pb-24">
           <Text size="xSmall" className="text-gray">
-            Không tìm thấy kết quả. Vui lòng thử lại
+            Không tìm thấy kết quả. Vui lòng thử lại.
           </Text>
         </Box>
       )}

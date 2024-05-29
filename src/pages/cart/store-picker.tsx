@@ -12,19 +12,30 @@ import {
 } from "recoil";
 import { cartState } from "states/cart.state";
 import { requestLocationTriesState } from "states/order.state";
-import { nearbyStoresState, selectedStoreIndexState, selectedStoreState } from "states/store.state";
+import { nearbyStoresState, selectedStoreIdState, selectedStoreNameState, selectedStoreState } from "states/store.state";
 import { memberState } from "states/user.state";
 import { OrderType, PaymentType } from "types/order";
-import { TStore } from "types/store";
+import { Store, TStore } from "types/store";
 import { displayDistance } from "utils/location";
 import { setStorage } from "zmp-sdk";
-import { useSnackbar } from "zmp-ui";
+import { useNavigate, useSnackbar } from "zmp-ui";
 export const StorePicker: FC = () => {
   const [visible, setVisible] = useState(false);
   const nearbyStores = useRecoilValueLoadable(nearbyStoresState);
-  const setSelectedStoreIndex = useSetRecoilState(selectedStoreIndexState);
+  // const setSelectedStoreIndex = useSetRecoilState(selectedStoreIndexState);
   const selectedStore = useRecoilValueLoadable(selectedStoreState);
   const setCart = useSetRecoilState(cartState);
+  const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
+  const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
+  const navigate = useNavigate();
+
+  const goNearbyStoreClick = (store: Store) => {
+    setSelectedStoreIdState(store.id);
+    setSelectedStoreNameState(store.name);
+    navigate("/store");
+    setVisible(false);
+  };
+
   const member = useRecoilValue(memberState);
   const snackbar = useSnackbar();
   useEffect(
@@ -34,7 +45,7 @@ export const StorePicker: FC = () => {
         res = {
           ...prevCart,
           storeId: selectedStore?.contents.id,
-          customerId: member?.id ?? undefined,
+          customerId: member?.membershipId ?? undefined,
         };
         return res;
       });
@@ -62,7 +73,7 @@ export const StorePicker: FC = () => {
       {nearbyStores.state === "hasValue" &&
         createPortal(
           <ActionSheet
-            title="Các cửa hàng ở gần bạn"
+            title="Các cửa hàng trong khu vực"
             visible={visible}
             onClose={() => setVisible(false)}
             actions={[
@@ -72,40 +83,43 @@ export const StorePicker: FC = () => {
                     ? `${store.name} - ${displayDistance(store.distance)}`
                     : store.name,
                   highLight: store.id === selectedStore?.contents.id,
-                  onClick: () => {
-                    setSelectedStoreIndex(i);
-                    setStorage({
-                      data: {
-                        storeIndex: i,
-                      },
-                      success: (data) => {
-                        // xử lý khi gọi api thành công
-                        console.log("set ok", data);
-                      },
-                      fail: (error) => {
-                        // xử lý khi gọi api thất bại
-                        console.log("set error", error);
-                      },
-                    });
-                    setCart((prevCart) => {
-                      let res = { ...prevCart };
-                      res = {
-                        ...prevCart,
-                        productList: [],
-                        orderType: OrderType.EATIN,
-                        paymentType: PaymentType.POINTIFY,
-                        totalAmount: 0,
-                        shippingFee: 0,
-                        bonusPoint: 0,
-                        discountAmount: 0,
-                        finalAmount: 0,
-                        promotionList: [],
-                        totalQuantity: 0,
-                      };
+                  // onClick: () => {
+                  //   setSelectedStoreIndex(i);
+                  //   setStorage({
+                  //     data: {
+                  //       storeIndex: i,
+                  //     },
+                  //     success: (data) => {
+                  //       // xử lý khi gọi api thành công
+                  //       console.log("set ok", data);
+                  //     },
+                  //     fail: (error) => {
+                  //       // xử lý khi gọi api thất bại
+                  //       console.log("set error", error);
+                  //     },
+                  //   });
+                  //   setCart((prevCart) => {
+                  //     let res = { ...prevCart };
+                  //     res = {
+                  //       ...prevCart,
+                  //       productList: [],
+                  //       orderType: OrderType.EATIN,
+                  //       paymentType: PaymentType.POINTIFY,
+                  //       totalAmount: 0,
+                  //       shippingFee: 0,
+                  //       bonusPoint: 0,
+                  //       discountAmount: 0,
+                  //       finalAmount: 0,
+                  //       promotionList: [],
+                  //       totalQuantity: 0,
+                  //     };
 
-                      return res;
-                    });
-                    setVisible(false);
+                  //     return res;
+                  //   });
+                  //   setVisible(false);
+                  // },
+                  onClick: () => {
+                    goNearbyStoreClick(store);
                   },
                 })
               ),

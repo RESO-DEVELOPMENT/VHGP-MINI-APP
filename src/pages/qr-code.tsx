@@ -18,8 +18,8 @@ import { qrState, memberState, requestRetriveQRstate } from "states/user.state";
 const QRCodePage: React.FC = () => {
   const [countdown, setCountdown] = useState(120);
   const qrCode = useRecoilValueLoadable(qrState);
+  // console.log( qrCode.contents);
   const member = useRecoilValueLoadable(memberState);
-
   const [retry, setRetry] = useRecoilState(requestRetriveQRstate);
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -61,7 +61,7 @@ const QRCodePage: React.FC = () => {
                 <QRCode
                   value={
                     member.state === "hasValue" && qrCode.contents !== null
-                      ? qrCode.contents
+                      ? qrCode.contents.toString()
                       : ""
                   }
                   size={220}
