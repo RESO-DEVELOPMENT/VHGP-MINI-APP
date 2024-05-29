@@ -1,5 +1,5 @@
-import React, { Suspense, useEffect } from "react";
-import { Box, Page } from "zmp-ui";
+import React, { FC, Suspense, useEffect } from "react";
+import { Box, Page, Spinner } from "zmp-ui";
 import { Inquiry } from "./inquiry";
 import { Welcome } from "./welcome";
 import { Banner } from "./banner";
@@ -14,24 +14,31 @@ import FloatingActionButton from "pages/FloatingActionButton";
 import { useNavigate } from "react-router";
 import Promtions from "./promotions";
 
+import vhgpLogo from "static/logo-vhgp.jpg";
+
 const HomePage: React.FunctionComponent = () => {
   return (
-    <Page className="relative flex-1 flex flex-col bg-white">
-      <Welcome />
-      <Box className="flex-1 overflow-auto">
-        <Inquiry />
-
-        {/* <Banner /> */}
-
-        <Categories />
-
-        <Divider />
-        <Promtions />
-        <Divider />
-
-        <Recommend />
-        <Divider />
-      </Box>
+    // <Suspense fallback={<ContentFallback />}>
+      <Page className="relative flex-1 flex flex-col bg-white">
+        <Welcome />
+        <Box className="flex-1 overflow-auto">
+          <Inquiry />
+          {/* <Banner /> */}
+          <Categories />
+          <Divider />
+          <Promtions />
+          <Divider />
+          <Recommend />
+          <Divider />
+        </Box>
+      </Page>
+    // </Suspense>
+  );
+};
+export const ContentFallback: FC = () => {
+  return (
+    <Page className="flex items-center justify-center h-screen">
+      <Spinner visible logo={vhgpLogo} />
     </Page>
   );
 };

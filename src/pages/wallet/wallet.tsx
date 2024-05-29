@@ -9,7 +9,8 @@ import { Box, Page, Spinner, Text } from "zmp-ui";
 import { WelcomeUser } from "./hello";
 import { memberState } from "states/user.state";
 import { selectedStoreIndexState } from "states/store.state";
-import vhgpLogo from "static/logo-vhgp.jpg";
+
+import { ContentFallback } from "pages/index";
 
 const WalletScreen: React.FunctionComponent = () => {
   const member = useRecoilValueLoadable(memberState);
@@ -39,9 +40,7 @@ const WalletScreen: React.FunctionComponent = () => {
     <Page className="relative flex-1 flex flex-col bg-white">
       <Box className="flex-1 overflow-auto">
         {member.state === "loading" ? ( // Show the spinner when loading
-          <div className="flex items-center justify-center h-screen">
-            <Spinner visible logo={vhgpLogo} />
-          </div>
+          <ContentFallback />
         ) : member.state === "hasValue" && member.contents !== null ? (
           <>
             <WelcomeUser memberInfo={member.contents} />
