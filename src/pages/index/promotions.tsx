@@ -10,7 +10,7 @@ import storeSkeleton from "../../static/store-skeleton.jpg";
 import { listPromotionMockState, listPromotionState } from "states/promotion.state";
 import { cartState } from "states/cart.state";
 
-const Promtions = () => {
+const Promotions = () => {
   const navigate = useNavigate();
   const promotionListData = useRecoilValueLoadable(listPromotionState);
 
@@ -63,4 +63,4 @@ const Promtions = () => {
   else return <Box />;
 };
 
-export default Promtions;
+export default Promotions;

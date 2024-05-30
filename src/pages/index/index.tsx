@@ -5,7 +5,7 @@ import { Welcome } from "./welcome";
 import { Recommend } from "./store-recommend";
 import { Divider } from "components/divider";
 import { Categories } from "./food-categories";
-import Promtions from "./promotions";
+import Promotions from "./promotions";
 
 
 const HomePage: FC = () => {
@@ -16,7 +16,7 @@ const HomePage: FC = () => {
           <Inquiry />
           <Categories />
           <Divider />
-          <Promtions />
+          <Promotions />
           <Divider />
           <Recommend />
           <Divider />
