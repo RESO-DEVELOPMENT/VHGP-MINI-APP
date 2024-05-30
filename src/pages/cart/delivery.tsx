@@ -2,13 +2,16 @@ import React, { useState, FC } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { Box, Icon, Text, Modal, Input } from "zmp-ui";
 import { ListRenderer } from "components/list-renderer";
-import { StorePicker } from "./store-picker";
-import { TimePicker } from "./time-picker";
 import { LocationPicker } from "./location-picker";
 import { cartState } from "states/cart.state";
 import { selectedStoreByIdState } from "states/store.state";
 
-export const AddressPopup = ({ title, onConfirm, address, setAddress }) => {
+export const AddressPopup: FC<{
+  title: string;
+  onConfirm: (address: string) => void;
+  address: string;
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ title, onConfirm, address, setAddress }) => {
   const handleClose = () => {
     onConfirm(address);
   };
@@ -38,13 +41,11 @@ export const AddressPopup = ({ title, onConfirm, address, setAddress }) => {
 
 export const Delivery: FC = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const store = useRecoilValueLoadable(selectedStoreByIdState);
-  // console.log(store);
-  // console.log(selectedStoreByIdState)
+  const storeLoadable = useRecoilValueLoadable(selectedStoreByIdState);
   const [showPopup, setShowPopup] = useState(false);
   const [notes, setNotes] = useState(cart.notes || "");
 
-  const handleNotesChange = (notes) => {
+  const handleNotesChange = (notes: string) => {
     setCart((prevCart) => ({
       ...prevCart,
       notes: notes,
@@ -63,14 +64,18 @@ export const Delivery: FC = () => {
               left: <Icon icon="zi-home" className="my-auto" />,
               right: (
                 <React.Suspense fallback={<div>Loading...</div>}>
-                  <Box>
-                    <Text size="small" className="text-primary">
-                      {store.contents?.name || "Cửa hàng"}
-                    </Text>
-                    <Text size="xSmall" className="text-gray">
-                      {"Cửa hàng"}
-                    </Text>
-                  </Box>
+                  {storeLoadable.state === "hasValue" ? (
+                    <Box>
+                      <Text size="small" className="text-primary">
+                        {storeLoadable.contents?.name || "Cửa hàng"}
+                      </Text>
+                      <Text size="xSmall" className="text-gray">
+                        {"Cửa hàng"}
+                      </Text>
+                    </Box>
+                  ) : (
+                    <div>Loading...</div>
+                  )}
                 </React.Suspense>
               ),
             },
@@ -82,20 +87,6 @@ export const Delivery: FC = () => {
                 </React.Suspense>
               ),
             },
-            // {
-            //   left: <Icon icon="zi-clock-1" className="my-auto" />,
-            //   right: (
-            //     <Box flex className="space-x-2">
-            //       <Box className="flex-1 space-y-[2px]">
-            //         <TimePicker />
-            //         <Text size="xSmall" className="text-gray">
-            //           Thời gian nhận hàng
-            //         </Text>
-            //       </Box>
-            //       <Icon icon="zi-chevron-right" />
-            //     </Box>
-            //   ),
-            // },
             {
               left: <Icon icon="zi-note" className="my-auto" />,
               right: (

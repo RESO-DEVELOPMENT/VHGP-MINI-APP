@@ -1,10 +1,9 @@
 import { ListRenderer } from "components/list-renderer";
-import React, { ReactNode } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValueLoadable } from "recoil";
-import { userState, memberState } from "states/user.state";
+import {  memberState } from "states/user.state";
 import { Box, Text } from "zmp-react";
-import userSkeleton from "../static/icons8-user-60.png";
 import { Icon } from "zmp-ui";
 
 const InformationPage = () => {

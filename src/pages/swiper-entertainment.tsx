@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from "react";
+import React from "react";
 import { FC } from "react";
 import { useNavigate } from "react-router";
 import { useRecoilValueLoadable } from "recoil";
@@ -36,7 +36,6 @@ const NextButton = () => {
 };
 
 export const SwiperEn: FC = () => {
-  const swiper = useSwiper();
   const blogList = useRecoilValueLoadable(listBlogState);
   const navigate = useNavigate();
   const gotoPage = (id: string) => {
