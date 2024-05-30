@@ -14,7 +14,7 @@ import { showOrderStatus } from "utils/product";
 import { OrderStatus } from "types/order";
 import { useNavigate } from "react-router-dom";
 import { Subscription } from "pages/profile";
-import { ProductRePicker } from "components/product/product-repicker";
+import { ProductRePicker } from "components/product/repicker";
 import { selectedCategoryIdState } from "states/category.state";
 import { listOrderState, requestOrderTransactionTriesState } from "states/order.state";
 import { listTransactionState } from "states/transaction.state";

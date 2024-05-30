@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
-import { ProductPicker } from "components/product/product-picker";
+import { ProductPicker } from "components/product/picker";
 import drinkSekeleton from "../../../static/drink-skeleton.jpg";
 import { DisplayPrice } from "components/display/price";
 import { storeCollectionsByIdState } from "states/store.state";

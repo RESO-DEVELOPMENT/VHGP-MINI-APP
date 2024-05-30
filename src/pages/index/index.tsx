@@ -1,11 +1,12 @@
 import React, { FC } from "react";
-import { Box, Page, Spinner } from "zmp-ui";
+import { Box, Page } from "zmp-ui";
 import { Inquiry } from "./inquiry";
 import { Welcome } from "./welcome";
 import { Recommend } from "./store-recommend";
 import { Divider } from "components/divider";
 import { Categories } from "./food-categories";
 import Promotions from "./promotions";
+import { ProductsRecommend } from "./recommend";
 
 
 const HomePage: FC = () => {
@@ -17,6 +18,8 @@ const HomePage: FC = () => {
           <Categories />
           <Divider />
           <Promotions />
+          <Divider />
+          <ProductsRecommend />
           <Divider />
           <Recommend />
           <Divider />
