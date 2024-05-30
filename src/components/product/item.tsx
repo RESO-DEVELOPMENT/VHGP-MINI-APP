@@ -22,7 +22,7 @@ export const ProductItem: FC<{
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 30 30"
-              className="w-9 absolute bottom-0 right-0"
+              className="absolute bottom-0 right-0 w-9"
             >
               <circle
                 cx="15"
@@ -44,19 +44,26 @@ export const ProductItem: FC<{
               </text>
             </svg>
           )}
-          <Box className="w-full aspect-square relative">
-            <img
-              loading="lazy"
-              src={product.picUrl || drinkSekeleton}
-              className="absolute left-0 right-0 top-0 bottom-0 w-full h-full object-cover object-center rounded-lg bg-skeleton"
-            />
+          <Box className="flex items-stretch w-full h-full overflow-hidden">
+            <Box className="w-1/4 h-full flex-shrink-0">
+              <img
+                loading="lazy"
+                src={product.picUrl || drinkSekeleton}
+                className="object-cover object-center rounded-lg"
+                style={{ aspectRatio: "1" }}
+              />
+            </Box>
+            <Box className="w-2/3 pl-4 flex flex-1 flex-col m-2">
+              <Text className="text-lg">{product.name}</Text>
+              <Text className="text-sm">{product.description}</Text>
+              <Text className="text-gray text-sm mt-6">
+                <DisplayPrice>{product.sellingPrice}</DisplayPrice>
+              </Text>
+            </Box>
           </Box>
-          <Text>{product.name}</Text>
-          <Text size="xxSmall" className="text-gray pb-2">
-            <DisplayPrice>{product.sellingPrice}</DisplayPrice>
-          </Text>
         </div>
       )}
     </ProductPicker>
   );
 };
+

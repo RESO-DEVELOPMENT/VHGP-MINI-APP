@@ -33,7 +33,7 @@ export const ProductListContent: FC = () => {
         // console.log(productsByCategoryId)
         return (
           <Section key={categorie.id} title={categorie.name}>
-            <Box className="grid grid-cols-2 gap-4">
+            <Box className="grid grid-cols-1 gap-4">
               {productsByCategoryId.contents.length > 0 ? (
                 <>
                   {productsByCategoryId.state === "hasValue" &&
