@@ -1,18 +1,20 @@
-import { FinalPrice } from "components/display/final-price";
-import { ProductPicker } from "components/product/picker";
-import { ProductSearchResultSkeleton } from "components/skeletons";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { resultState } from "states/product.state";
-import { selectedStoreIdState, selectedStoreNameState } from "states/store.state";
+import {
+  selectedStoreIdState,
+  selectedStoreNameState,
+} from "states/store.state";
 import { Store } from "types/store";
 import { Product } from "types/store-menu";
 import { Box, Text, useNavigate } from "zmp-ui";
+import { FinalPrice } from "components/display/final-price";
+import { ProductPicker } from "components/product/picker";
+import { ProductSearchResultSkeleton } from "components/skeletons";
 import productSkeleton from "static/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
   const result: Map<Store, Product[]> = useRecoilValue(resultState);
-  // console.log(result.entries());
   const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
   const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const SearchResultContent: FC = () => {
     setSelectedStoreNameState(store.name);
     navigate("/store");
   };
+
   return (
     <Box flex flexDirection="column" className="bg-background flex-1 min-h-0">
       <Text.Title className="p-4 pt-0" size="small">
@@ -33,13 +36,13 @@ const SearchResultContent: FC = () => {
             <div key={store.id} className="space-y-4">
               <Box
                 p={2}
-                className="bg-primary rounded-t-lg flex items-center"
-
+                className="bg-primary rounded-t-lg flex justify-between items-center relative"
+                
               >
-                <div onClick={() => gotoStore(store)}>
-
-                  <Text className="text-white font-semibold">{store.name}</Text>
-                </div>
+                <Text  className="text-white font-semibold">{store.name}</Text>
+                <Text size="small"  className="text-sm text-white absolute right-4 text-opacity-70" onClick={() => gotoStore(store)}>
+                  Xem thêm
+                </Text>
               </Box>
 
               {products.map((product) => (
@@ -52,16 +55,16 @@ const SearchResultContent: FC = () => {
                   {({ open }) => (
                     <div
                       onClick={open}
-                      className="flex items-center space-x-4 p-2 bg-slate-400- rounded-lg shadow hover:bg-gray-50 transition-colors cursor-pointer m-0"
+                      className="flex items-center gap-4 p-2 pt-0 bg-white rounded-lg shadow-md transition-colors duration-300 hover:bg-gray-200"
                     >
                       <img
-                        className="w-[50px] h-[50px] rounded-lg object-cover"
+                        className="w-16 h-16 rounded-lg object-cover"
                         src={product.picUrl || productSkeleton}
                         alt={product.name}
                       />
-                      <Box className="">
-                        <Text className="font-medium">{product.name}</Text>
-                        <Text size="xSmall" className="text-gray-500">
+                      <Box className="flex flex-col">
+                        <Text size="xLarge">{product.name}</Text>
+                        <Text size="small">
                           <FinalPrice>{product}</FinalPrice>
                         </Text>
                       </Box>
@@ -100,9 +103,19 @@ const SearchResultFallback: FC = () => {
 };
 
 export const SearchResult: FC = () => {
+  const navigate = useNavigate();
+
   return (
     <Suspense fallback={<SearchResultFallback />}>
       <SearchResultContent />
+      <Box className="p-4 pt-0">
+        <Text
+          className="text-right text-blue-500 "
+          onClick={() => navigate("/see-more")} // Add onClick event to navigate to see more
+        >
+          See More
+        </Text>
+      </Box>
     </Suspense>
   );
 };

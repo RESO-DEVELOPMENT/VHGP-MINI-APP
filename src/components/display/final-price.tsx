@@ -1,12 +1,13 @@
 import React, { FC, useMemo } from "react";
-import { SelectedOptions } from "types/cart";
+// import { SelectedOptions } from "types/cart";
 import { Product } from "types/store-menu";
 import { calcFinalPrice } from "utils/product";
 import { DisplayPrice } from "./price";
 
 export const FinalPrice: FC<{
   children: Product;
-  options?: SelectedOptions;
+  // options?: SelectedOptions;
+  options?: any;
 }> = ({ children, options }) => {
   const finalPrice = useMemo(
     () => calcFinalPrice(children),

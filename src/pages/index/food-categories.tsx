@@ -51,7 +51,7 @@ export const Categories: FC = () => {
             <div
               key={category.code}
               onClick={() => gotoCategory(category.id, category.name)}
-              className="flex flex-col space-y-2 items-center cursor-pointer"
+              className="flex flex-col space-y-2 items-center"
             >
               <img
                 className="w-12 h-12"
