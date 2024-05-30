@@ -9,8 +9,9 @@ import { Box, Page, Spinner, Text } from "zmp-ui";
 import { WelcomeUser } from "./hello";
 import { memberState } from "states/user.state";
 import { selectedStoreIndexState } from "states/store.state";
+import { ContentFallback } from "components/content-fallback";
 
-import { ContentFallback } from "pages/index";
+
 
 const WalletScreen: React.FunctionComponent = () => {
   const member = useRecoilValueLoadable(memberState);

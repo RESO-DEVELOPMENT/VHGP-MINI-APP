@@ -1,5 +1,3 @@
-import { ListRenderer } from "components/list-renderer";
-import { ProductItem } from "components/product/item";
 import React, { FC, Suspense, useEffect } from "react";
 import {
   useRecoilValue,
@@ -8,7 +6,6 @@ import {
 } from "recoil";
 import "./orders.css";
 import { Box, Button, Header, Icon, Page, Tabs, Text } from "zmp-ui";
-import OrderCard from "./card-order";
 import TransactionCard from "./card-transaction";
 import { Card } from "react-bootstrap";
 import { displayDate, displayTime } from "utils/date";
@@ -22,7 +19,8 @@ import { selectedCategoryIdState } from "states/category.state";
 import { listOrderState, requestOrderTransactionTriesState } from "states/order.state";
 import { listTransactionState } from "states/transaction.state";
 import { memberState } from "states/user.state";
-import { ContentFallback } from "pages/index";
+import { ContentFallback } from "components/content-fallback";
+
 
 const HistoryPicker: FC = () => {
   const selectedCategory = useRecoilValue(selectedCategoryIdState);

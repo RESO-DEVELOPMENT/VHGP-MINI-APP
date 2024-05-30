@@ -14,7 +14,6 @@ import FloatingActionButton from "pages/FloatingActionButton";
 import { useNavigate } from "react-router";
 import Promtions from "./promotions";
 
-import vhgpLogo from "static/logo-vhgp.jpg";
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -33,13 +32,6 @@ const HomePage: React.FunctionComponent = () => {
         </Box>
       </Page>
     // </Suspense>
-  );
-};
-export const ContentFallback: FC = () => {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <Spinner visible logo={vhgpLogo} />
-    </div>
   );
 };
 export default HomePage;
