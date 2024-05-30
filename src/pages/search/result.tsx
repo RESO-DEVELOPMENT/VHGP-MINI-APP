@@ -5,14 +5,13 @@ import React, { FC, Suspense } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { resultState } from "states/product.state";
 import { selectedStoreIdState, selectedStoreNameState } from "states/store.state";
-import { TStore } from "types/store";
+import { Store } from "types/store";
 import { Product } from "types/store-menu";
-import { Store } from "zmp-framework/types/core";
 import { Box, Text, useNavigate } from "zmp-ui";
 import productSkeleton from "static/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
-  const result: Map<TStore, Product[]> = useRecoilValue(resultState);
+  const result: Map<Store, Product[]> = useRecoilValue(resultState);
   // console.log(result.entries());
   const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
   const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);

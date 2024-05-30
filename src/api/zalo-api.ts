@@ -1,4 +1,3 @@
-import { TStore } from "types/store";
 import requestZaloApi from "utils/axios";
 import {
   BaseReponse,

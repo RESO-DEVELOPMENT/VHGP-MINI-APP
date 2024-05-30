@@ -1,11 +1,8 @@
-import { add } from "lodash";
 import React, { FC, ReactNode, useEffect, useState } from "react";
-import { atom, useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { TStore } from "types/store";
-import { Product, ProductTypeEnum } from "types/store-menu";
-import product, { prepareCart } from "utils/product";
-import { ProductPicker } from "./product-picker";
-import { ProductList } from "types/cart";
+import {  useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { Product } from "types/store-menu";
+import  { prepareCart } from "utils/product";
+import { Cart, ProductList } from "types/cart";
 import { useNavigate } from "react-router-dom";
 import { cartState } from "states/cart.state";
 import { getOrderDetailstate } from "states/order.state";
@@ -61,7 +58,7 @@ export const ProductRePicker: FC<ProductPickerProps> = ({
     reOrderProducts?.forEach(({ product, quantity }) => {
       setCart((prevCart) => {
         // console.log("thêm");
-        var res = (cart.storeId == store!.id) ? { ...prevCart, storeId: store!.id } : { ...prevCart, storeId: store!.id, productList: [] };
+        var res : Cart = (cart.storeId == store!.id) ? { ...prevCart, storeId: store!.id } : { ...prevCart, storeId: store!.id, productList: [] };
         // console.log("check");
         let isProductInCart = false;
         const updatedProductList = res.productList.map((addedProduct) => {

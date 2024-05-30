@@ -1,9 +1,9 @@
-import { TStore } from "types/store";
+import { Store } from "types/store";
 import requestWebAdmin from "utils/axios";
 import { BaseReponse } from "types/response";
 
 const getListStore = (params?: any) =>
-  requestWebAdmin.get<BaseReponse<TStore>>(`brands/stores`, {
+  requestWebAdmin.get<BaseReponse<Store>>(`brands/stores`, {
     params,
   });
 

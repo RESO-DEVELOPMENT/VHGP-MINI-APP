@@ -15,7 +15,7 @@ import { requestLocationTriesState } from "states/order.state";
 import { nearbyStoresState, selectedStoreIdState, selectedStoreNameState, selectedStoreState } from "states/store.state";
 import { memberState } from "states/user.state";
 import { OrderType, PaymentType } from "types/order";
-import { Store, TStore } from "types/store";
+import { Store } from "types/store";
 import { displayDistance } from "utils/location";
 import { setStorage } from "zmp-sdk";
 import { useNavigate, useSnackbar } from "zmp-ui";
@@ -78,7 +78,7 @@ export const StorePicker: FC = () => {
             onClose={() => setVisible(false)}
             actions={[
               nearbyStores.contents.map(
-                (store: TStore & { distance?: number }, i) => ({
+                (store: Store & { distance?: number }, i) => ({
                   text: store.distance
                     ? `${store.name} - ${displayDistance(store.distance)}`
                     : store.name,

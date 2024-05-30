@@ -1,4 +1,4 @@
-import { TStore } from "types/store";
+import { Store } from "types/store";
 import requestWebAdmin from "utils/axios";
 import { BaseReponse } from "types/response";
 import { User, UserInfo, UserLogin } from "types/user";
@@ -10,7 +10,7 @@ const apiKey = "34519997-3D4B-4B31-857F-D6612082C11B";
 
 const requestPomotion = axiosInstances.promotion;
 const getListStore = (params?: any) =>
-  requestWebAdmin.get<BaseReponse<TStore>>(`brands/stores`, {
+  requestWebAdmin.get<BaseReponse<Store>>(`brands/stores`, {
     params,
   });
 

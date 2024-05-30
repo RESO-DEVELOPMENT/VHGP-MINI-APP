@@ -1,4 +1,3 @@
-import { TStore } from "types/store";
 import requestWebAdmin from "utils/axios";
 import { BaseReponse } from "types/response";
 import { Cart } from "types/cart";

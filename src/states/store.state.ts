@@ -3,9 +3,9 @@ import { atom, selector, selectorFamily } from "recoil";
 import { selectedCategoryIdState } from "./category.state";
 import menuApi from "api/menu";
 import { currentStoreMenuState } from "./menu.state";
-import { TStore } from "types/store";
+import { Store } from "types/store";
 
-export const selectedStoreObjState = atom<TStore>({
+export const selectedStoreObjState = atom<Store>({
   key: "selectedStoreObj",
   default: {
     id: "",
