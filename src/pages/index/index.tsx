@@ -19,7 +19,7 @@ const HomePage: FC = () => {
           <Divider />
           <Promotions />
           <Divider />
-          <ProductsRecommend />
+          {/* <ProductsRecommend /> */}
           <Divider />
           <Recommend />
           <Divider />

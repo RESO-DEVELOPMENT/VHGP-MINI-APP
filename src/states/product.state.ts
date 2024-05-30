@@ -32,9 +32,6 @@ export const recommendProductsState = selector<Product[]>({
   get: ({ get }) => {
     const products = get(productsState);
     return products
-      .filter(
-        (product) => product.type === "SINGLE" || product.type === "PARENT"
-      )
       .sort((a, b) => b.displayOrder - a.displayOrder);
   },
 });
@@ -47,8 +44,7 @@ export const productsByCategoryState = selectorFamily<Product[], string>({
       const allProducts = get(productsState);
       return allProducts.filter(
         (product) =>
-          product.categoryId.includes(categoryId) &&
-          (product.type === "SINGLE" || product.type === "PARENT")
+          product.categoryId.includes(categoryId)
       );
     },
 });
