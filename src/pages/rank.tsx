@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import { useRecoilValueLoadable } from "recoil";
 import { memberState } from "states/user.state";
 import { Box, Progress, Text } from "zmp-ui";
 
-const SkeletonLoader: React.FunctionComponent = () => {
+const SkeletonLoader: FC = () => {
   return (
     <Box
       p={4}
@@ -25,7 +25,7 @@ const SkeletonLoader: React.FunctionComponent = () => {
   );
 };
 
-const RankInfo: React.FunctionComponent = () => {
+const RankInfo: FC = () => {
   const memberResponse = useRecoilValueLoadable(memberState);
   // console.log(memberResponse);
   if (memberResponse.state === "loading") {

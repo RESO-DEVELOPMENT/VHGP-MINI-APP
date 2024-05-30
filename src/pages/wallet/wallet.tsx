@@ -2,7 +2,7 @@ import { Banner } from "pages/index/banner";
 import { Subscription } from "pages/profile";
 import { SwiperEn } from "pages/swiper-entertainment";
 import { SwiperItem } from "pages/swiper-items";
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { getStorage } from "zmp-sdk";
 import { Box, Page, Spinner, Text } from "zmp-ui";
@@ -13,7 +13,7 @@ import { ContentFallback } from "components/content-fallback";
 
 
 
-const WalletScreen: React.FunctionComponent = () => {
+const WalletScreen: FC = () => {
   const member = useRecoilValueLoadable(memberState);
   const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
 
