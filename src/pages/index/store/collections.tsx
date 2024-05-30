@@ -41,7 +41,7 @@ export const Collections: FC = (collectionId: string) => {
                           <DisplayPrice>{product.sellingPrice}</DisplayPrice>
                         </Text>
                         <Box className="space-y-1">
-                          <Text size="normal">{product.name}</Text>
+                          <Text size="xLarge">{product.name}</Text>
                         </Box>
                       </div>
                     )}

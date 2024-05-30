@@ -54,9 +54,9 @@ export const ProductItem: FC<{
               />
             </Box>
             <Box className="w-2/3 pl-4 flex flex-1 flex-col m-2">
-              <Text className="text-lg">{product.name}</Text>
-              <Text className="text-sm">{product.description}</Text>
-              <Text className="text-gray text-sm mt-6">
+              <Text size="xLarge">{product.name}</Text>
+              <Text size="normal" className="text-gray">{product.description}</Text>
+              <Text size="xLarge" className=" mt-6 font-semibold">
                 <DisplayPrice>{product.sellingPrice}</DisplayPrice>
               </Text>
             </Box>
