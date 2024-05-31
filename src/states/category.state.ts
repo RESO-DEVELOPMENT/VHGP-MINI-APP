@@ -2,6 +2,7 @@ import { atom, selector } from "recoil";
 import { menuByStoreState } from "./menu.state";
 import { Category, CategoryType } from "types/store-menu";
 import CategoriesApi from "api/category";
+import { FoodCategoryResponse } from "types/category";
 
 export const currentCateState = selector({
   key: "category",
@@ -60,7 +61,7 @@ export const foodCategoriesListState = selector({
   key: "foodCategoriesList",
   get: async () => {
     const brandCode = "VHGP";
-    const foodCategoriesResponse = (
+    const foodCategoriesResponse: FoodCategoryResponse = (
       await CategoriesApi.getCategories(brandCode)
     ).data;
     const res = foodCategoriesResponse.items.sort(
