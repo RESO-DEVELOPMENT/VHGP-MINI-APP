@@ -3,11 +3,9 @@ import { ListItem } from "components/list-item";
 import React, { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
-import { addressState } from "states/address.state";
+import { addressState } from "states/order.state";
 import { cartState } from "states/cart.state";
 import { selectedStoreState } from "states/store.state";
-import { OrderType } from "types/order";
-import { Box, Button, Input } from "zmp-ui";
 import { AddressPopup } from "./delivery";
 
 export const LocationPicker: FC = () => {
