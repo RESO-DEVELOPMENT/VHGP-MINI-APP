@@ -3,7 +3,7 @@ import { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import { Box } from "zmp-ui";
-import { IoTicketSharp } from "react-icons/io5";
+import { IoTicket } from "react-icons/io5";
 import { FaCartPlus } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +37,7 @@ export const SwiperItem: FC = () => {
     </SwiperSlide>,
     <SwiperSlide key={3} onClick={() => navigate("/voucher")}>
       <div style={containerStyle}>
-        <IoTicketSharp className="icon-color" size={iconSize} />
+        <IoTicket className="icon-color" size={iconSize} />
       </div>
       <div className="text-center text-sm w-full">Khuyến mãi</div>
     </SwiperSlide>,
