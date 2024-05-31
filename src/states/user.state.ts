@@ -1,8 +1,14 @@
 import userApi from "api/user";
 import zaloApi from "api/zalo-api";
 import { atom, selector } from "recoil";
+import { UserInfo } from "types/user";
 import axios from "utils/axios";
 import { getAccessToken, getPhoneNumber, getUserInfo } from "zmp-sdk";
+
+export const membershipState = atom<UserInfo | null>({
+  key: "membership",
+  default: null,
+});
 
 export const requestRetriveQRstate = atom({
   key: "requestRetriveQR",
@@ -27,7 +33,6 @@ export const phoneTokenState = selector({
   get: () =>
     getPhoneNumber({
       success: async (data) => {
-        console.log(data);
         if (data.token !== undefined) {
           return data.token;
         } else {
@@ -63,10 +68,7 @@ export const phoneState = selector<string | undefined>({
         },
       });
       if (token !== undefined) {
-        console.log("token", token);
-        console.log("accessToken", accessToken);
         await zaloApi.getUserPhone(token, accessToken).then((value) => {
-          console.log("phone", value.data.data.number);
           phone = value.data.data.number.replace(/^\84/, "0");
         });
       }
@@ -107,7 +109,7 @@ export const qrState = selector({
       const member = get(memberState);
       if (member !== null) {
         const listOrder = await userApi.generateQrCode(
-          member?.membershipId ?? ""
+          member?.membershipId || ""
         );
         return listOrder.data;
       }

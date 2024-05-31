@@ -10,10 +10,3 @@ export interface FoodCategory {
   brandId: string;
 }
 
-export interface FoodCategoryResponse {
-  size: number;
-  page: number;
-  total: number;
-  totalPages: number;
-  items: FoodCategory[];
-}
