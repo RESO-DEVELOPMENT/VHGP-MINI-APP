@@ -1,31 +1,27 @@
 import React, { FC } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { Category } from "types/store-menu";
 import { Box, useNavigate, Text } from "zmp-ui";
-
 import foodCateSkeleton from "../../static/food-categories-skeleton.png";
-import { foodCategoriesListState, selectedCategoryIdState } from "states/category.state";
+import { foodCategoriesListState, foodCategoryState, selectedCategoryIdState } from "states/category.state";
+import { FoodCategory } from "types/category";
 
-export const Categories: FC = () => {
+export const FoodCategories: FC = () => {
   const foodCategoriesLoadable = useRecoilValueLoadable(
     foodCategoriesListState
   );
   const navigate = useNavigate();
-  const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
+  const setFoodCategory = useSetRecoilState(foodCategoryState);
 
-  const gotoCategory = (categoryId: string, categoryName: string) => {
-    setSelectedCategoryId(categoryId);
-    navigate("/stores-picker-by-food", {
-      state: { foodCategoryName: categoryName },
-    });
+  const gotoCategory = (foodCategory: FoodCategory) => {
+    setFoodCategory(foodCategory);
+    navigate("/stores-picker-by-food");
   };
 
   switch (foodCategoriesLoadable.state) {
     case "loading":
       return (
         <Box className="bg-white grid grid-cols-4 gap-4 p-4">
-          {/* Skeleton loading state */}
-          {[...Array(8)].map((_, index) => (
+          {[...Array(4)].map((_, index) => (
             <div key={index} className="flex flex-col space-y-2 items-center">
               <img className="w-12 h-12" src={foodCateSkeleton} alt="Loading" />
               <Text size="xxSmall" className="text-gray">
@@ -44,13 +40,13 @@ export const Categories: FC = () => {
         </Box>
       );
     case "hasValue":
-      const categories: Category[] = foodCategoriesLoadable.contents;
+      const categories: FoodCategory[] = foodCategoriesLoadable.contents;
       return (
         <Box className="bg-white grid grid-cols-4 gap-4 p-4">
           {categories.map((category) => (
             <div
               key={category.code}
-              onClick={() => gotoCategory(category.id, category.name)}
+              onClick={() => gotoCategory(category)}
               className="flex flex-col space-y-2 items-center"
             >
               <img

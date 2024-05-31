@@ -1,14 +1,8 @@
 import userApi from "api/user";
 import zaloApi from "api/zalo-api";
 import { atom, selector } from "recoil";
-import { UserInfo } from "types/user";
 import axios from "utils/axios";
 import { getAccessToken, getPhoneNumber, getUserInfo } from "zmp-sdk";
-
-export const membershipState = atom<UserInfo | null>({
-  key: "membership",
-  default: null,
-});
 
 export const requestRetriveQRstate = atom({
   key: "requestRetriveQR",
@@ -89,9 +83,8 @@ export const memberState = selector({
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
           var member = await userApi.getUserInfo(
-            response.data.data.userId ?? ""
+            response.data.data.userId || ""
           );
-          console.log(member.data);
           return member.data;
         }
       }

@@ -1,6 +1,6 @@
 import storeApi from "api/store";
 import { atom, selector, selectorFamily } from "recoil";
-import { selectedCategoryIdState } from "./category.state";
+import { foodCategoryState, selectedCategoryIdState } from "./category.state";
 import menuApi from "api/menu";
 import { currentStoreMenuState } from "./menu.state";
 import { Store } from "types/store";
@@ -90,6 +90,22 @@ export const storeMenuByInputIdState = selectorFamily({
       const menu = await menuApi.getMenu(storeId);
       return menu.data;
     },
+});
+
+export const storesByFoodCategoryState = selector({
+  key: "storesByFoodCategory",
+  get: async ({ get }) => {
+    const currentFoodCategoryState = get(foodCategoryState);
+    const stores = get(listStoreState);
+    const res = stores.map((store) => {
+      const menu = get(storeMenuByInputIdState(store.id));
+      console.log("menu", menu);
+      return menu.categories.some((c) => c.id === currentFoodCategoryState.id)
+        ? store
+        : null;
+    });
+    return res.filter((store) => store !== null);
+  },
 });
 
 export const storeIdsByCategoryState = selector({

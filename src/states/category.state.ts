@@ -2,6 +2,22 @@ import { atom, selector } from "recoil";
 import { menuByStoreState } from "./menu.state";
 import { Category, CategoryType } from "types/store-menu";
 import CategoriesApi from "api/category";
+import { FoodCategory } from "types/category";
+
+export const foodCategoryState = atom<FoodCategory>({
+  key: "foodCategory",
+  default: {
+    id: "",
+    code: "",
+    name: "",
+    type: "",
+    displayOrder: 0,
+    description: "",
+    picUrl: "",
+    status: "",
+    brandId: "",
+  },
+});
 
 export const currentCateState = selector({
   key: "category",
