@@ -1,6 +1,6 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { Product, ProductTypeEnum } from "types/store-menu";
-import { currentStoreMenuState, menuByStoreState } from "./menu.state";
+import { menuByStore } from "./menu.state";
 import { wait } from "utils/async";
 import { Store } from "types/store";
 import { listStoreState, storeMenuByInputIdState } from "./store.state";
@@ -8,7 +8,7 @@ import { listStoreState, storeMenuByInputIdState } from "./store.state";
 export const productsState = selector<Product[]>({
   key: "products",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     return menu.products.filter(
       (product) =>
         product.type === ProductTypeEnum.SINGLE ||
@@ -20,7 +20,7 @@ export const productsState = selector<Product[]>({
 export const childrenProductState = selector<Product[]>({
   key: "childProducts",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     return menu.products.filter(
       (product) => product.type === ProductTypeEnum.CHILD
     );
@@ -31,8 +31,7 @@ export const recommendProductsState = selector<Product[]>({
   key: "recommendProducts",
   get: ({ get }) => {
     const products = get(productsState);
-    return products
-      .sort((a, b) => b.displayOrder - a.displayOrder);
+    return products.sort((a, b) => b.displayOrder - a.displayOrder);
   },
 });
 
@@ -42,9 +41,8 @@ export const productsByCategoryState = selectorFamily<Product[], string>({
     (categoryId) =>
     ({ get }) => {
       const allProducts = get(productsState);
-      return allProducts.filter(
-        (product) =>
-          product.categoryId.includes(categoryId)
+      return allProducts.filter((product) =>
+        product.categoryId.includes(categoryId)
       );
     },
 });
@@ -72,7 +70,7 @@ export const storeProductsByCollectionIdState = selectorFamily({
   get:
     (collectionId: string) =>
     async ({ get }) => {
-      const menu = get(currentStoreMenuState);
+      const menu = get(menuByStore);
       const productsByCollectionId = menu.products.filter(
         (p) => p.collectionIds.includes(collectionId) && p.type === "PARENT"
       );
@@ -86,7 +84,7 @@ export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
     get:
       (categoryId: string) =>
       async ({ get }) => {
-        const menu = get(currentStoreMenuState);
+        const menu = get(menuByStore);
         const result = menu.products.filter(
           (p) =>
             p.categoryId == categoryId &&
@@ -140,7 +138,7 @@ export const searchedProductsByKeywordState = selectorFamily<
 export const currentStoreChildrenProductNoParamState = selector<Product[]>({
   key: "currentStoreChildrenProduct",
   get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+    const menu = get(menuByStore);
     return menu.products.filter(
       (product) => product.type === ProductTypeEnum.CHILD
     );

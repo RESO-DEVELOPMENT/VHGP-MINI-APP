@@ -6,12 +6,12 @@ import { Box, Text } from "zmp-ui";
 import { ProductPicker } from "components/product/picker";
 import drinkSekeleton from "../../../static/drink-skeleton.jpg";
 import { DisplayPrice } from "components/display/price";
-import { storeCollectionsByIdState } from "states/store.state";
 import { storeProductsByCollectionIdState } from "states/product.state";
+import { collectionsByStore } from "states/menu.state";
 
-export const Collections: FC = (collectionId: string) => {
-  const collections = useRecoilValue(storeCollectionsByIdState);
-  // console.log(collections)
+export const Collections: FC = () => {
+  const collections = useRecoilValue(collectionsByStore);
+  console.log("collections", collections);
   return (
     <>
       {collections.map((collection, index) => {

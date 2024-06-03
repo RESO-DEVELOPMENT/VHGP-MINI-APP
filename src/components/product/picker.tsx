@@ -1,12 +1,10 @@
-import orderApi from "api/order";
-import { DisplayPrice } from "components/display/price";
 import { Sheet } from "components/fullscreen-sheet";
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
-import product, { prepareCart } from "utils/product";
+import { prepareCart } from "utils/product";
 import { Box, Button, Text } from "zmp-ui";
 import { QuantityPicker } from "./quantity-picker";
 import { SingleOptionPicker } from "./single-option-picker";
@@ -29,7 +27,6 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   storeId,
 }) => {
   const [cart, setCart] = useRecoilState(cartState);
-  // const childProducts = useRecoilValue(childrenProductState);
   let childProducts;
   if (storeId)
     childProducts = useRecoilValue(
@@ -58,8 +55,8 @@ export const ProductPicker: FC<ProductPickerProps> = ({
       product.type == ProductTypeEnum.SINGLE
         ? product.menuProductId
         : currentChild != null && currentChild != undefined
-        ? currentChild[0].menuProductId
-        : null
+          ? currentChild[0].menuProductId
+          : null
     );
     setQuantity(1);
   }, []);
@@ -96,16 +93,12 @@ export const ProductPicker: FC<ProductPickerProps> = ({
           // Trả về phần tử đã được cập nhật hoặc không thay đổi
           return addedProduct;
         });
-
-        // console.log(updatedProductList)
         if (isProductInCart) {
           res = {
             ...prevCart,
             productList: updatedProductList,
           };
-          // console.log("Có rồi nè");
         } else {
-          //tạo 1 đối tượng productList để thêm vào
           const cartItem: ProductList = {
             productInMenuId: productToAdd!.menuProductId,
             parentProductId: productToAdd!.parentProductId,
@@ -194,9 +187,9 @@ export const ProductPicker: FC<ProductPickerProps> = ({
                   >
                     {quantity > 0
                       ? //  existed
-                        //   ? "Cập nhật giỏ hàng"
-                        //   :
-                        "Thêm vào giỏ hàng"
+                      //   ? "Cập nhật giỏ hàng"
+                      //   :
+                      "Thêm vào giỏ hàng"
                       : "Xoá"}
                   </Button>
                 ) : (

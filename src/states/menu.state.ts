@@ -1,34 +1,29 @@
 import menuApi from "api/menu";
 import { selector } from "recoil";
-import { listStoreState, selectedStoreIdState } from "./store.state";
+import { storeState } from "./store.state";
+import { Category, Collection, TMenu } from "types/store-menu";
 
-export const menuByStoreState = selector({
+export const menuByStore = selector<TMenu>({
   key: "menuByStore",
   get: async ({ get }) => {
-    const currentStore = get(selectedStoreIdState);
-    if (currentStore === null || currentStore === undefined) {
-      const store = get(listStoreState);
-      const menu = await menuApi.getMenu(store[0].id);
-      return menu.data;
-    } else {
-      const menu = await menuApi.getMenu(get(selectedStoreIdState));
-      return menu.data;
-    }
+    const store = get(storeState);
+    const menu = await menuApi.getMenu(store.id);
+    return menu.data;
   },
 });
 
-export const currentStoreMenuState = selector({
-  key: "currentStoreMenu",
+export const collectionsByStore = selector<Collection[]>({
+  key: "collections",
   get: async ({ get }) => {
-    const currentStore = get(selectedStoreIdState);
-    if (currentStore === null || currentStore === undefined) {
-      const store = get(listStoreState);
-      const menu = await menuApi.getMenu(store[0].id);
-      return menu.data;
-    } else {
-      const menu = await menuApi.getMenu(currentStore);
-      console.log(menu.data);
-      return menu.data;
-    }
+    const menu = get(menuByStore);
+    return menu.collections;
+  },
+});
+
+export const categoriesByStore = selector<Category[]>({
+  key: "categories",
+  get: async ({ get }) => {
+    const menu = get(menuByStore);
+    return menu.categories;
   },
 });

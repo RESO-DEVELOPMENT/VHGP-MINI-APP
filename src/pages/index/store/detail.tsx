@@ -6,13 +6,8 @@ import storeSkeleton from "../../../static/store-skeleton.jpg";
 import { selectedStoreByIdState, storeState } from "states/store.state";
 
 export const StoreDetail: FC = () => {
-  //lấy store infor từ selectedStoreByIdState
-  const currentStoreLoadable = useRecoilValueLoadable(selectedStoreByIdState);
   const currentStoreState = useRecoilValue(storeState);
-  // console.log(currentStoreLoadable);
 
-  if (currentStoreLoadable.state === "hasValue") {
-    const currentStore = currentStoreLoadable.contents;
     return (
       <Box className="flex flex-col ">
         <Box m={5}>
@@ -34,7 +29,6 @@ export const StoreDetail: FC = () => {
         </Box>
       </Box>
     );
-  } else return (<>Không thể tải dữ liệu của quán</>);
 };
 
 

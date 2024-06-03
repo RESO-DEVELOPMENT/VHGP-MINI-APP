@@ -2,7 +2,7 @@ import storeApi from "api/store";
 import { atom, selector, selectorFamily } from "recoil";
 import { foodCategoryState, selectedCategoryIdState } from "./category.state";
 import menuApi from "api/menu";
-import { currentStoreMenuState } from "./menu.state";
+import { menuByStore } from "./menu.state";
 import { Store } from "types/store";
 
 export const storeState = atom<Store>({
@@ -123,7 +123,7 @@ export const storeIdsByCategoryState = selector({
 export const storeCollectionsByIdState = selector({
   key: "storeCollectionsById",
   get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+    const menu = get(menuByStore);
     return menu.collections;
   },
 });
@@ -131,7 +131,7 @@ export const storeCollectionsByIdState = selector({
 export const selectedStoreCategoriesState = selector({
   key: "selectedStoreCategories",
   get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+    const menu = get(menuByStore);
     return menu.categories;
   },
 });
