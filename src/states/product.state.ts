@@ -16,13 +16,26 @@ export const productsByStore = selector<Product[]>({
 export const productsByCollectionId = selectorFamily<Product[], string>({
   key: "productsByCollectionId",
   get:
-    (collectionId) =>
+    (collectionId: string) =>
     async ({ get }) => {
       const products = get(productsByStore);
       return products.filter(
         (product) =>
           product.collectionIds.includes(collectionId) &&
           product.type !== "CHILD"
+      );
+    },
+});
+
+export const productsByCategoryId = selectorFamily<Product[], string>({
+  key: "productsByCategoryId",
+  get:
+    (categoryId: string) =>
+    async ({ get }) => {
+      const products = get(productsByStore);
+      return products.filter(
+        (product) =>
+          product.categoryId === categoryId && product.type !== "CHILD"
       );
     },
 });
@@ -86,24 +99,6 @@ export const resultState = selector<Map<Store, Product[]>>({
     return resMap as Map<Store, Product[]>;
   },
 });
-
-export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
-  {
-    key: "storeProductsByCategoryId",
-    get:
-      (categoryId: string) =>
-      async ({ get }) => {
-        const menu = get(menuByStore);
-        const result = menu.products.filter(
-          (p) =>
-            p.categoryId == categoryId &&
-            (p.type === ProductTypeEnum.SINGLE ||
-              p.type === ProductTypeEnum.PARENT)
-        );
-        return result;
-      },
-  }
-);
 
 export const isAddedProductState = atom({
   key: "isAddedProductState",
