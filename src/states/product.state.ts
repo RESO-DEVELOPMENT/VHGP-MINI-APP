@@ -5,6 +5,28 @@ import { wait } from "utils/async";
 import { Store } from "types/store";
 import { listStoreState, storeMenuByInputIdState } from "./store.state";
 
+export const productsByStore = selector<Product[]>({
+  key: "productsByStore",
+  get: async ({ get }) => {
+    const menu = get(menuByStore);
+    return menu.products;
+  },
+});
+
+export const productsByCollectionId = selectorFamily<Product[], string>({
+  key: "productsByCollectionId",
+  get:
+    (collectionId) =>
+    async ({ get }) => {
+      const products = get(productsByStore);
+      return products.filter(
+        (product) =>
+          product.collectionIds.includes(collectionId) &&
+          product.type !== "CHILD"
+      );
+    },
+});
+
 export const productsState = selector<Product[]>({
   key: "products",
   get: async ({ get }) => {
@@ -63,19 +85,6 @@ export const resultState = selector<Map<Store, Product[]>>({
     await wait(500);
     return resMap as Map<Store, Product[]>;
   },
-});
-
-export const storeProductsByCollectionIdState = selectorFamily({
-  key: "storeProductsByCollectionId",
-  get:
-    (collectionId: string) =>
-    async ({ get }) => {
-      const menu = get(menuByStore);
-      const productsByCollectionId = menu.products.filter(
-        (p) => p.collectionIds.includes(collectionId) && p.type === "PARENT"
-      );
-      return productsByCollectionId;
-    },
 });
 
 export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
