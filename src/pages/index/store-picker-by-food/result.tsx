@@ -8,14 +8,17 @@ import {
   useSetRecoilState,
 } from "recoil";
 //TODO: design
-import { selectedStoreIdState, storeIdsByCategoryState, storesByFoodCategoryState } from "states/store.state";
+import { selectedStoreIdState, storeIdsByCategoryState, storeState, storesByFoodCategoryState } from "states/store.state";
 import storeSkeleton from "../../../static/store-skeleton.jpg";
+import { Store } from "types/store";
 
 export const StorePickerbyFoodResult: FC = () => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);
+  const setStoreState = useSetRecoilState(storeState);
   const navigate = useNavigate();
-  const gotoStore = (storeId: string) => {
-    setStoreSelected(storeId);
+  const gotoStore = (store: Store) => {
+    setStoreState(store);
+    setStoreSelected(store.id);
     navigate("/store");
   };
   const storesByFoodCategory = useRecoilValueLoadable(storesByFoodCategoryState);
@@ -33,12 +36,12 @@ export const StorePickerbyFoodResult: FC = () => {
         <Box className="flex-auto bg-background p-4 flex">
           <Suspense fallback={<h1>Chưa có kết quả</h1>}>
             <div className="bg-white rounded-xl overflow-hidden p-0 w-full">
-              {stores.length == 0 ? <Text>Không có kết quả phù hợp</Text> : stores.map((store?) => (
+              {stores.length == 0 ? <Text>Không có kết quả phù hợp</Text> : stores.map((store?) => store != null ? (
                 <Box
                   key={store.id}
                   className="mb-5"
                   flex
-                  onClick={() => gotoStore(store.id)}
+                  onClick={() => gotoStore(store)}
                 >
                   <div className="flex-none aspect-card relative w-3/12">
                     <img
@@ -66,7 +69,7 @@ export const StorePickerbyFoodResult: FC = () => {
                     </Box>
                   </Box>
                 </Box>
-              ))}
+              ) : null)}
             </div>
           </Suspense>
         </Box>

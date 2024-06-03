@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Store } from "../../../types/store";
 import { Box, Text, useNavigate } from "zmp-ui";
 import { useSetRecoilState } from "recoil";
-import { selectedStoreIdState, selectedStoreNameState } from "states/store.state";
+import { selectedStoreIdState, selectedStoreNameState, storeState } from "states/store.state";
 
 export interface StorePickerProps {
   store: Store;
@@ -17,14 +17,11 @@ export const RecommendStorePicker: FC<StorePickerProps> = ({
   store,
 }) => {
   const [visible, setVisible] = useState(false);
-  //set lại Id cho Selected Store -> sử dụng trong hiện StorePage
-  const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
-  const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
+  const setStoreState = useSetRecoilState(storeState);
   const navigate = useNavigate();
 
   const gotoStore = (store: Store) => {
-    setSelectedStoreIdState(store.id);
-    setSelectedStoreNameState(store.name);
+    setStoreState(store);
     navigate("/store");
   };
   return (

@@ -5,7 +5,7 @@ import menuApi from "api/menu";
 import { currentStoreMenuState } from "./menu.state";
 import { Store } from "types/store";
 
-export const selectedStoreObjState = atom<Store>({
+export const storeState = atom<Store>({
   key: "selectedStoreObj",
   default: {
     id: "",
@@ -39,10 +39,6 @@ export const selectedStoreIndexState = atom<number>({
   key: "selectedStoreIndex",
   default: 0,
 });
-// export const selectLocationState = atom<string>({
-//   key: "selectLocationState",
-//   default: "",
-// });
 
 export const selectedStoreState = selector({
   key: "selectedStore",
