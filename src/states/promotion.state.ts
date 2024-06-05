@@ -8,13 +8,9 @@ export const listPromotionState = selector({
   key: "listPromotion",
   get: async ({ get }) => {
     const member = get(memberState);
-    console.log("Xin chào", member);
     if (member) {
       const listOrder = await userApi.getListPromotion(
-        member?.membershipId ?? "",
-        {
-          brandCode: "VHGP",
-        }
+        member?.membershipId || ""
       );
       return listOrder.data;
     }

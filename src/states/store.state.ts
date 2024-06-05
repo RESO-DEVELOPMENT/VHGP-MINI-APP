@@ -1,11 +1,11 @@
 import storeApi from "api/store";
 import { atom, selector, selectorFamily } from "recoil";
-import { selectedCategoryIdState } from "./category.state";
+import { foodCategoryState, selectedCategoryIdState } from "./category.state";
 import menuApi from "api/menu";
-import { currentStoreMenuState } from "./menu.state";
+import { menuByStore } from "./menu.state";
 import { Store } from "types/store";
 
-export const selectedStoreObjState = atom<Store>({
+export const storeState = atom<Store>({
   key: "selectedStoreObj",
   default: {
     id: "",
@@ -39,10 +39,6 @@ export const selectedStoreIndexState = atom<number>({
   key: "selectedStoreIndex",
   default: 0,
 });
-// export const selectLocationState = atom<string>({
-//   key: "selectLocationState",
-//   default: "",
-// });
 
 export const selectedStoreState = selector({
   key: "selectedStore",
@@ -92,6 +88,22 @@ export const storeMenuByInputIdState = selectorFamily({
     },
 });
 
+export const storesByFoodCategoryState = selector({
+  key: "storesByFoodCategory",
+  get: async ({ get }) => {
+    const currentFoodCategoryState = get(foodCategoryState);
+    const stores = get(listStoreState);
+    const res = stores.map((store) => {
+      const menu = get(storeMenuByInputIdState(store.id));
+      console.log("menu", menu);
+      return menu.categories.some((c) => c.id === currentFoodCategoryState.id)
+        ? store
+        : null;
+    });
+    return res.filter((store) => store !== null);
+  },
+});
+
 export const storeIdsByCategoryState = selector({
   key: "storeIdsByCategory",
   get: async ({ get }) => {
@@ -111,7 +123,7 @@ export const storeIdsByCategoryState = selector({
 export const storeCollectionsByIdState = selector({
   key: "storeCollectionsById",
   get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+    const menu = get(menuByStore);
     return menu.collections;
   },
 });
@@ -119,7 +131,7 @@ export const storeCollectionsByIdState = selector({
 export const selectedStoreCategoriesState = selector({
   key: "selectedStoreCategories",
   get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+    const menu = get(menuByStore);
     return menu.categories;
   },
 });

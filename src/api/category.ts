@@ -1,8 +1,9 @@
 import requestWebAdmin from "utils/axios";
 import { FoodCategory } from "../types/category";
+import { BaseReponse } from "types/response";
 
 const getCategories = (brandCode: string) =>
-  requestWebAdmin.get<FoodCategory[]>(`brands/categories`, {
+  requestWebAdmin.get<BaseReponse<FoodCategory>>(`brands/categories`, {
     params: { brandCode },
   });
 

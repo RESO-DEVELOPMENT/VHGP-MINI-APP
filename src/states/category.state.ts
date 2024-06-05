@@ -1,12 +1,28 @@
 import { atom, selector } from "recoil";
-import { menuByStoreState } from "./menu.state";
+import { menuByStore } from "./menu.state";
 import { Category, CategoryType } from "types/store-menu";
 import CategoriesApi from "api/category";
+import { FoodCategory } from "types/category";
+
+export const foodCategoryState = atom<FoodCategory>({
+  key: "foodCategory",
+  default: {
+    id: "",
+    code: "",
+    name: "",
+    type: "",
+    displayOrder: 0,
+    description: "",
+    picUrl: "",
+    status: "",
+    brandId: "",
+  },
+});
 
 export const currentCateState = selector({
   key: "category",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     const cateId = get(selectedCategoryIdState);
     const currentCate = menu.categories.find((cate) => cate.id === cateId);
     if (currentCate !== undefined) {
@@ -19,7 +35,7 @@ export const currentCateState = selector({
 export const categoriesState = selector<Category[]>({
   key: "categories",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     return menu.categories.filter((cate) => cate.type === CategoryType.NORMAL);
   },
 });
@@ -27,7 +43,7 @@ export const categoriesState = selector<Category[]>({
 export const childCategoriesState = selector<Category[]>({
   key: "childCategories",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     const cateId = get(selectedCategoryIdState);
     const selectedCategory = menu.categories.find((cate) => cate.id === cateId);
     const listChild = menu.categories.filter(

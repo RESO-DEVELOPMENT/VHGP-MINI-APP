@@ -27,7 +27,6 @@ export const phoneTokenState = selector({
   get: () =>
     getPhoneNumber({
       success: async (data) => {
-        console.log(data);
         if (data.token !== undefined) {
           return data.token;
         } else {
@@ -63,10 +62,7 @@ export const phoneState = selector<string | undefined>({
         },
       });
       if (token !== undefined) {
-        console.log("token", token);
-        console.log("accessToken", accessToken);
         await zaloApi.getUserPhone(token, accessToken).then((value) => {
-          console.log("phone", value.data.data.number);
           phone = value.data.data.number.replace(/^\84/, "0");
         });
       }
@@ -87,9 +83,8 @@ export const memberState = selector({
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
           var member = await userApi.getUserInfo(
-            response.data.data.userId ?? ""
+            response.data.data.userId || ""
           );
-          console.log(member.data);
           return member.data;
         }
       }
@@ -107,7 +102,7 @@ export const qrState = selector({
       const member = get(memberState);
       if (member !== null) {
         const listOrder = await userApi.generateQrCode(
-          member?.membershipId ?? ""
+          member?.membershipId || ""
         );
         return listOrder.data;
       }

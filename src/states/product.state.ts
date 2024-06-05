@@ -1,14 +1,49 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { Product, ProductTypeEnum } from "types/store-menu";
-import { currentStoreMenuState, menuByStoreState } from "./menu.state";
+import { menuByStore } from "./menu.state";
 import { wait } from "utils/async";
 import { Store } from "types/store";
 import { listStoreState, storeMenuByInputIdState } from "./store.state";
 
+export const productsByStore = selector<Product[]>({
+  key: "productsByStore",
+  get: async ({ get }) => {
+    const menu = get(menuByStore);
+    return menu.products;
+  },
+});
+
+export const productsByCollectionId = selectorFamily<Product[], string>({
+  key: "productsByCollectionId",
+  get:
+    (collectionId: string) =>
+    async ({ get }) => {
+      const products = get(productsByStore);
+      return products.filter(
+        (product) =>
+          product.collectionIds.includes(collectionId) &&
+          product.type !== "CHILD"
+      );
+    },
+});
+
+export const productsByCategoryId = selectorFamily<Product[], string>({
+  key: "productsByCategoryId",
+  get:
+    (categoryId: string) =>
+    async ({ get }) => {
+      const products = get(productsByStore);
+      return products.filter(
+        (product) =>
+          product.categoryId === categoryId && product.type !== "CHILD"
+      );
+    },
+});
+
 export const productsState = selector<Product[]>({
   key: "products",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     return menu.products.filter(
       (product) =>
         product.type === ProductTypeEnum.SINGLE ||
@@ -20,7 +55,7 @@ export const productsState = selector<Product[]>({
 export const childrenProductState = selector<Product[]>({
   key: "childProducts",
   get: async ({ get }) => {
-    const menu = get(menuByStoreState);
+    const menu = get(menuByStore);
     return menu.products.filter(
       (product) => product.type === ProductTypeEnum.CHILD
     );
@@ -31,8 +66,7 @@ export const recommendProductsState = selector<Product[]>({
   key: "recommendProducts",
   get: ({ get }) => {
     const products = get(productsState);
-    return products
-      .sort((a, b) => b.displayOrder - a.displayOrder);
+    return products.sort((a, b) => b.displayOrder - a.displayOrder);
   },
 });
 
@@ -42,9 +76,8 @@ export const productsByCategoryState = selectorFamily<Product[], string>({
     (categoryId) =>
     ({ get }) => {
       const allProducts = get(productsState);
-      return allProducts.filter(
-        (product) =>
-          product.categoryId.includes(categoryId)
+      return allProducts.filter((product) =>
+        product.categoryId.includes(categoryId)
       );
     },
 });
@@ -66,37 +99,6 @@ export const resultState = selector<Map<Store, Product[]>>({
     return resMap as Map<Store, Product[]>;
   },
 });
-
-export const storeProductsByCollectionIdState = selectorFamily({
-  key: "storeProductsByCollectionId",
-  get:
-    (collectionId: string) =>
-    async ({ get }) => {
-      const menu = get(currentStoreMenuState);
-      const productsByCollectionId = menu.products.filter(
-        (p) => p.collectionIds.includes(collectionId) && p.type === "PARENT"
-      );
-      return productsByCollectionId;
-    },
-});
-
-export const storeProductsByCategoryIdState = selectorFamily<Product[], string>(
-  {
-    key: "storeProductsByCategoryId",
-    get:
-      (categoryId: string) =>
-      async ({ get }) => {
-        const menu = get(currentStoreMenuState);
-        const result = menu.products.filter(
-          (p) =>
-            p.categoryId == categoryId &&
-            (p.type === ProductTypeEnum.SINGLE ||
-              p.type === ProductTypeEnum.PARENT)
-        );
-        return result;
-      },
-  }
-);
 
 export const isAddedProductState = atom({
   key: "isAddedProductState",
@@ -140,7 +142,7 @@ export const searchedProductsByKeywordState = selectorFamily<
 export const currentStoreChildrenProductNoParamState = selector<Product[]>({
   key: "currentStoreChildrenProduct",
   get: async ({ get }) => {
-    const menu = get(currentStoreMenuState);
+    const menu = get(menuByStore);
     return menu.products.filter(
       (product) => product.type === ProductTypeEnum.CHILD
     );

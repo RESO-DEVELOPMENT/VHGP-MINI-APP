@@ -5,25 +5,18 @@ export interface User {
 }
 
 export interface UserInfo {
-  picUrl: string;
-  fullname: string;
-  memberLevel: any;
   membershipId: string;
   phoneNumber: string;
-  fullName: string;
-  gender: string;
   email: string;
-  status: string;
-  fireBaseUid: string;
-  fcmtoken: string;
-  brandId: string;
-  createdAt: string;
-  updatedAt: string;
-  urlImg: string;
-  level: Level;
+  fullname: string;
+  delFlg: boolean;
+  gender: string;
+  insDate: Date;
+  updDate: Date;
+  menberLevel: MemberLevel;
 }
 
-export interface Level {
+export interface MemberLevel {
   memberLevelId: string;
   name: string;
   indexLevel: number;
