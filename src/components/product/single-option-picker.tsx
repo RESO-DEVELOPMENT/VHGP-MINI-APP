@@ -27,14 +27,14 @@ export const SingleOptionPicker: FC<{
           <Radio
             key={option.menuProductId}
             value={option.menuProductId}
-            className={value === option.menuProductId ? "font-bold" : ""}
+            className={(value === option.menuProductId ? "font-bold" : "") + "flex items-center"}
           >
-            <Box className="grid justify-between m-1">
+            <Box className="w-[360px] flex justify-between items-center">
               <Text
                 className={
                   value === option.menuProductId
-                    ? "font-bold relative"
-                    : "relative"
+                    ? "font-bold"
+                    : ""
                 }
               >
                 Size {option.size}
@@ -42,8 +42,8 @@ export const SingleOptionPicker: FC<{
               <Text
                 className={
                   value === option.menuProductId
-                    ? "font-bold absolute right-0"
-                    : "absolute right-0"
+                    ? "font-bold"
+                    : ""
                 }
               >
                 <DisplayPrice>{option.sellingPrice}</DisplayPrice>

@@ -1,26 +1,20 @@
 import { Section } from "components/section";
 import VoucherCard from "pages/card-voucher";
-import React, { Suspense } from "react";
+import React from "react";
 import { useRecoilValueLoadable, useRecoilState } from "recoil";
 import { SwiperSlide, Swiper } from "swiper/react";
 import { prepareCart } from "utils/product";
-import { useNavigate, Box, Tabs, Text } from "zmp-ui";
-import { RecommendStorePicker } from "./store/store-picker";
-import storeSkeleton from "../../static/store-skeleton.jpg";
-import { listPromotionMockState, listPromotionState } from "states/promotion.state";
+import { useNavigate, Box } from "zmp-ui";
+import { listPromotionState } from "states/promotion.state";
 import { cartState } from "states/cart.state";
 
 const Promotions = () => {
   const navigate = useNavigate();
   const promotionListData = useRecoilValueLoadable(listPromotionState);
-
-  const promotionListMockData = useRecoilValueLoadable(listPromotionMockState);
-  // console.log(promotionListData);
   const [cart, setCart] = useRecoilState(cartState);
   if (
     promotionListData.state === "hasValue" &&
-    promotionListData.contents !== null &&
-    promotionListData.contents.length > 0
+    promotionListData.contents
   )
     return (
       <Section title="Deal xịn lấy ngay" padding="title-only">
