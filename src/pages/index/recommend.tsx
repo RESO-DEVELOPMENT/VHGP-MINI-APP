@@ -21,19 +21,20 @@ export const RecommendContent: FC = () => {
             <ProductPicker product={product} isUpdate={false}>
               {({ open }) => (
                 <div onClick={open} className="space-y-3 ml-3">
-                  <Box
-                    className="relative aspect-video rounded-lg bg-cover bg-center bg-skeleton"
-                    style={{ backgroundImage: `url(${product.picUrl})` }}
-                  >
+                  <Box className="relative rounded-lg bg-skeleton aspect-w-4 aspect-h-5">
+                    <Box className=" absolute inset-0 w- h-50 object-cover rounded-lg">
+                    <img
+                      src={product.picUrl}
+                      className=""
+                    />
+                    </Box>
+                    
                     <Text
                       size="small"
-                      className="absolute right-2 top-2  bg-primary text-white h-5 px-[8px] rounded-full"
+                      className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-full"
                     >
                       <DisplayPrice>{product.sellingPrice}</DisplayPrice>
                     </Text>
-                  </Box>
-                  <Box className="space-y-1">
-                    <Text size="normal">{product.name}</Text>
                   </Box>
                 </div>
               )}

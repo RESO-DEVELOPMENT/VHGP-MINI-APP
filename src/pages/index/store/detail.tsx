@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { Box, Text } from "zmp-ui";
 
 import storeSkeleton from "../../../static/store-skeleton.jpg";
-import { selectedStoreByIdState, storeState } from "states/store.state";
+import { storeState } from "states/store.state";
 
 export const StoreDetail: FC = () => {
   const currentStoreState = useRecoilValue(storeState);

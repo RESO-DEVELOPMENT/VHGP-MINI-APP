@@ -13,8 +13,7 @@ import { selectedStoreIdState } from "states/store.state";
 
 const StorePage: FC = () => {
   const [cart, setCart] = useRecoilStateLoadable(cartState);
-  const [currentPickedStore, setCurrentPickedStore] =
-    useRecoilState(selectedStoreIdState);
+  const [currentPickedStore, setCurrentPickedStore] = useRecoilState(selectedStoreIdState);
   const ResetCart = () => {
     setCart((prevCart) => {
       let res = { ...prevCart };
@@ -49,10 +48,11 @@ const StorePage: FC = () => {
       <Box>
         <Header className="z-10" />
         <StoreDetail />
-
-        <Collections />
-        <ProductList />
-
+        <Divider />
+        <Suspense>
+          <Collections />
+          <ProductList />
+        </Suspense>
         <Divider />
         <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
       </Box>
