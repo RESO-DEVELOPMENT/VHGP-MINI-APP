@@ -1,3 +1,5 @@
+import { ProductVariant } from "./cart";
+
 export interface TMenu {
   id: string;
   brandId: string;
@@ -31,6 +33,7 @@ export interface Product {
   collectionIds: string[];
   extraCategoryIds: string[];
   menuProductId: string;
+  variants: ProductVariant[];
 }
 
 export interface Collection {

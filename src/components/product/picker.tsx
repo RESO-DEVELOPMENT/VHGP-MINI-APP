@@ -1,40 +1,30 @@
-import { Sheet } from "components/fullscreen-sheet";
-import React, { FC, ReactNode, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import React, { FC, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { childrenProductState } from "states/product.state";
+import { cartState } from "../../states/cart.state";
 import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
-import { prepareCart } from "utils/product";
-import { Box, Button, Text } from "zmp-ui";
-import { QuantityPicker } from "./quantity-picker";
-import { SingleOptionPicker } from "./single-option-picker";
-import { cartState } from "states/cart.state";
-import {
-  currentStoreChildrenProductState,
-  currentStoreChildrenProductNoParamState,
-} from "states/product.state";
+
+import { useProductContext } from "components/context/app-context";
+import { QuantityChangeSection } from "pages/cart/quantity-change";
+
 
 export interface ProductPickerProps {
-  storeId?: string | null;
   product: Product;
   isUpdate: false;
   children: (methods: { open: () => void; close: () => void }) => ReactNode;
 }
+
 export const ProductPicker: FC<ProductPickerProps> = ({
   children,
   isUpdate,
   product,
-  storeId,
 }) => {
   const [cart, setCart] = useRecoilState(cartState);
-  let childProducts;
-  if (storeId)
-    childProducts = useRecoilValue(
-      currentStoreChildrenProductState(storeId ?? "")
-    );
-  else childProducts = useRecoilValue(currentStoreChildrenProductNoParamState);
+  const childProductsInMenu = useRecoilValue(childrenProductState);
+  const {addNewItem, updateCart} = useProductContext();
 
-  let currentChild: Product[] = childProducts
+  const currentChildOfProduct = childProductsInMenu
     .filter(
       (p) =>
         product &&
@@ -43,172 +33,96 @@ export const ProductPicker: FC<ProductPickerProps> = ({
     )
     .sort((a, b) => a.sellingPrice - b.sellingPrice);
 
-  const [visible, setVisible] = useState(false);
+  const productChildren =
+    currentChildOfProduct.length > 0 ? [...currentChildOfProduct] : [product];
 
-  const [menuProductId, setMenuProductId] = useState(
-    childProducts ? null : product?.menuProductId
+  const [productChosen, setProductChosen] = useState<Product>(
+    productChildren.length > 0 ? productChildren[0] : product
   );
 
-  const [quantity, setQuantity] = useState(1);
+  const [visible, setVisible] = useState(false);
+  const [productInCart, setProductInCart] = useState<ProductList | undefined>(
+    cart.productList.find(
+      (p) => p.productInMenuId === productChosen.menuProductId
+    )
+  );
+  const [productInCartList, setProductInCartList] = useState<ProductList[]>(
+    cart.productList.filter(
+      (p) => p.productInMenuId === productChosen.menuProductId
+    )
+  );
+  const [variantChosen, setVariantChosen] = useState<string>("");
+
   useEffect(() => {
-    setMenuProductId(
-      product.type == ProductTypeEnum.SINGLE
-        ? product.menuProductId
-        : currentChild != null && currentChild != undefined
-          ? currentChild[0].menuProductId
-          : null
+    setProductInCartList(
+      cart.productList.filter(
+        (p) => p.productInMenuId === productChosen.menuProductId
+      )
     );
-    setQuantity(1);
-  }, []);
+    setProductInCart(
+      cart.productList.find(
+        (p) => p.productInMenuId === productChosen.menuProductId
+      )
+    );
+  }, [cart, productChosen]);
 
-  const addToCart = async () => {
-    if (product) {
-      // console.log(product);
-      setCart((prevCart) => {
-        // console.log(prevCart)
-        //lấy thông tin object đưa vào res - những cái đã có trong đó
-        let res = { ...prevCart };
-        //kiểm tra trạng thái product dc add
-        //Nếu single -> trả về sản phẩm đó thôi
-        //Nếu Kiểu khác (Parent) -> tìm thằng con nó ở currentChild -> xác định child nào cần dc add
-        const productToAdd =
-          product.type == ProductTypeEnum.SINGLE
-            ? product
-            : currentChild.find((a) => a.menuProductId === menuProductId);
-        // console.log(productToAdd);
-        let isProductInCart = false;
-        const updatedProductList = res.productList.map((addedProduct) => {
-          if (addedProduct.productInMenuId === productToAdd?.menuProductId) {
-            isProductInCart = true;
-            // Tạo một bản sao của addedProduct
-            const productListObjectToUpdate = { ...addedProduct };
-            // Cập nhật thuộc tính quantity trong bản sao
-            productListObjectToUpdate.quantity += quantity;
+  useEffect(() => {
+    const initialVariantChosen = () => {
+      if (!productInCart) {
+        if (product.variants.length === 0 || !product.variants) return "";
+        return `${product.variants[0].name}_${
+          product.variants[0].value.split("_")[0]
+        }`;
+      }
 
-            productListObjectToUpdate.finalAmount +=
-              quantity * productToAdd.sellingPrice;
-            // Trả về bản sao đã được cập nhật
-            return productListObjectToUpdate;
-          }
-          // Trả về phần tử đã được cập nhật hoặc không thay đổi
-          return addedProduct;
-        });
-        if (isProductInCart) {
-          res = {
-            ...prevCart,
-            productList: updatedProductList,
-          };
-        } else {
-          const cartItem: ProductList = {
-            productInMenuId: productToAdd!.menuProductId,
-            parentProductId: productToAdd!.parentProductId,
-            name: productToAdd!.name,
-            type: productToAdd!.type,
-            quantity: quantity,
-            sellingPrice: productToAdd!.sellingPrice,
-            code: productToAdd!.code,
-            categoryCode: productToAdd!.code,
-            totalAmount: productToAdd!.sellingPrice * quantity,
-            discount: 0,
-            finalAmount: productToAdd!.sellingPrice * quantity,
-            picUrl: productToAdd!.picUrl,
-          };
+      if (
+        productInCart.note?.includes(product.name) &&
+        product.variants.length > 0
+      ) {
+        const noteParts = productInCart.note.split(",");
+        const targetNote = noteParts.find((np) => np.includes(product.name));
+        return `${targetNote?.split("_")[1]}_${targetNote?.split("_")[2]}`;
+      }
+      return "";
+    };
 
-          res = {
-            ...prevCart,
+    setVariantChosen(initialVariantChosen());
+  }, [productInCart, product]);
 
-            productList: prevCart.productList.concat(cartItem),
-          };
-        }
+  
 
-        return prepareCart(res);
-      });
-    }
+  
 
-    setVisible(false);
-  };
-  // console.log(cart)
+  
   return (
     <>
       {children({
         open: () => setVisible(true),
         close: () => setVisible(false),
       })}
-      {createPortal(
-        <Sheet visible={visible} onClose={() => setVisible(false)} autoHeight>
-          {product && (
-            <Box className="space-y-6 mt-2" p={4}>
-              <Box className="space-y-4 ml">
-                <Text.Title>{product.name}</Text.Title>
-                {/* <div className="flex justify-center items-center">
-                  {" "}
-                  <img
-                    src={product.picUrl}
-                    alt={product.name}
-                    className="w-32 h-32 object-cover"
-                  />
-                </div> */}
-                <Box className="flex justify-between">
-                  <Text>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: product.description ?? "",
-                      }}
-                    ></div>
-                  </Text>
-                  {/* <Text className="ml-40 font-bold">
-                    <DisplayPrice>{product.sellingPrice}</DisplayPrice>
-                  </Text> */}
-                </Box>
-              </Box>
-              <Box className="space-y-5">
-                {
-                  currentChild != null /*&& currentChild != []*/ && (
-                    <SingleOptionPicker
-                      key={product.menuProductId}
-                      variant={currentChild}
-                      defaultValue={""}
-                      varianName={currentChild.length > 0 ? "Kích cỡ" : ""}
-                      value={menuProductId ?? ""}
-                      onChange={(selectedOption) =>
-                        setMenuProductId(selectedOption)
-                      }
-                    />
-                  )
-                }
-                <QuantityPicker value={quantity} onChange={setQuantity} />
-                {!isUpdate ? (
-                  <Button
-                    disabled={!menuProductId}
-                    variant={quantity > 0 ? "primary" : "secondary"}
-                    type={quantity > 0 ? "highlight" : "neutral"}
-                    fullWidth
-                    onClick={addToCart}
-                  >
-                    {quantity > 0
-                      ? //  existed
-                      //   ? "Cập nhật giỏ hàng"
-                      //   :
-                      "Thêm vào giỏ hàng"
-                      : "Xoá"}
-                  </Button>
-                ) : (
-                  <Button
-                    disabled={!quantity}
-                    variant="primary"
-                    type="highlight"
-                    fullWidth
-                    onClick={addToCart}
-                  >
-                    Thêm vào giỏ hàng
-                  </Button>
-                )}
-              </Box>
-            </Box>
-          )}
-        </Sheet>,
-        document.body
-      )}
+
+      <QuantityChangeSection
+        visible={visible}
+        setVisible={setVisible}
+
+        product={product}
+        productChildren={productChildren}
+        
+        productChosen={productChosen}
+        setProductChosen={setProductChosen}
+
+        productInCart={productInCart!}
+
+        AddNewItem={addNewItem}
+        updateCart={updateCart}
+
+        variantChosen={variantChosen}
+        setVariantChosen={setVariantChosen}
+
+        setProductInCart={setProductInCart}
+        productInCartList={productInCartList}
+      />
     </>
   );
 };
+

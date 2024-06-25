@@ -61,3 +61,8 @@ export interface PromotionList {
   discountAmount: number;
   effectType: string;
 }
+export interface ProductVariant {
+  id: string;
+  name: string;
+  value: string;
+}
