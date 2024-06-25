@@ -7,7 +7,6 @@ import { selectedStoreByIdState, storeState } from "states/store.state";
 
 export const StoreDetail: FC = () => {
   const currentStoreState = useRecoilValue(storeState);
-
     return (
       <Box className="flex flex-col ">
         <Box m={5}>

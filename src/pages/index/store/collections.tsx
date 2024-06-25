@@ -20,25 +20,25 @@ export const Collections: FC = () => {
           <Section key={index} title={collection.name} padding="title-only">
             <Swiper slidesPerView={2} spaceBetween={4} className="">
               {productsByCollection.map((product) => (
-                <SwiperSlide key={product.id} className="p-1">
+                <SwiperSlide key={product.id} className="pl-4">
                   <ProductPicker isUpdate={false} product={product}>
                     {({ open }) => (
-                      <div onClick={open} className="">
-                        <Box className="w-full aspect-square relative">
+                      <div onClick={open}>
+                        <Box >
                           <img
                             loading="lazy"
                             src={product.picUrl || drinkSekeleton}
-                            className="absolute left-0 right-0 w-full h-full object-cover object-center rounded-lg bg-skeleton"
+                            className=" object-cover object-center rounded-lg bg-skeleton "
                           />
                         </Box>
                         <Text
                           size="small"
-                          className="absolute right-3 top-3  bg-primary text-white px-4 py-1 rounded-full"
+                          className="absolute right-2 top-2 bg-primary text-white px-4 py-1 rounded-full border border-white"
                         >
                           <DisplayPrice>{product.sellingPrice}</DisplayPrice>
                         </Text>
-                        <Box className="space-y-1">
-                          <Text size="xLarge">{product.name}</Text>
+                        <Box className="">
+                          <Text size="large">{product.name}</Text>
                         </Box>
                       </div>
                     )}
