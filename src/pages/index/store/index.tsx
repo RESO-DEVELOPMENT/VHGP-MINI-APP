@@ -1,5 +1,5 @@
 import React, { FC, Suspense, useEffect } from "react";
-import { useRecoilState, useRecoilStateLoadable } from "recoil";
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { Box, Header, Page, useNavigate } from "zmp-ui";
 import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
@@ -9,11 +9,16 @@ import FloatingActionButton from "pages/FloatingActionButton";
 import { Divider } from "components/divider";
 import { prepareCart } from "utils/product";
 import { cartState } from "states/cart.state";
-import { selectedStoreIdState } from "states/store.state";
+import { selectedStoreIdState, storeState } from "states/store.state";
+import { collectionsByStore, menuByStore } from "states/menu.state";
+import { ContentFallback } from "components/content-fallback";
 
 const StorePage: FC = () => {
   const [cart, setCart] = useRecoilStateLoadable(cartState);
-  const [currentPickedStore, setCurrentPickedStore] = useRecoilState(selectedStoreIdState);
+  const currentPickedStore = useRecoilValue(storeState);
+  const menu = useRecoilValueLoadable(menuByStore);
+  // console.log(menu)
+
   const ResetCart = () => {
     setCart((prevCart) => {
       let res = { ...prevCart };
@@ -21,43 +26,47 @@ const StorePage: FC = () => {
         ...prevCart,
         productList: [],
         totalQuantity: 0,
-        storeId: currentPickedStore,
+        storeId: currentPickedStore.id,
       };
       return prepareCart(res);
     });
   };
   useEffect(() => {
     if (cart.contents.storeId !== currentPickedStore) {
-      // console.log("store id in carrt", cart.storeId);
-      // console.log("picked store", currentPickedStore);
-      // setCurrentPickedStore(cart.storeId ?? "");
       ResetCart();
     }
   }, [currentPickedStore]);
   const navigate = useNavigate();
   const handleFabClick = () => {
     navigate("/cart");
-    // console.log("FAB Clicked");
-    // Define the action for FAB click, e.g., navigate to a specific route
   };
-  // const selectedStoreName = useRecoilValue(selectedStoreNameState);
+  if(menu.state == "loading" || menu.state == "hasError") {
+    return <ContentFallback/>
+  }
+  if(menu.state == "hasValue" && menu.contents !== null) {
+    return (
+      <Page className="flex flex-col ">
+        <Box>
+          <Header className="z-10" />
+          <StoreDetail />
+          <Divider />
+          <Suspense>
+            <Collections collections={menu.contents.collections} />
+            <ProductList categories={menu.contents.categories}/>
+          </Suspense>
+          <Divider />
+          <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
+        </Box>
+      </Page>
+    );
+  }
+ 
+  return <Page>
 
-  //  console.log("current cart no click ",cart);
-  return (
-    <Page className="flex flex-col ">
-      <Box>
-        <Header className="z-10" />
-        <StoreDetail />
-        <Divider />
-        <Suspense>
-          <Collections />
-          <ProductList />
-        </Suspense>
-        <Divider />
-        <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
-      </Box>
-    </Page>
-  );
+  </Page>
+
+
+ 
 };
 
 export default StorePage;

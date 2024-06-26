@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   FC,
 } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "states/cart.state";
 import { ProductList } from "types/cart";
 import { Product } from "types/store-menu";
@@ -61,7 +61,6 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
     quantity: number,
     variantChosen: string
   ) => {
-    console.log("thêm sản phẩm")
 
     setCart((prevCart) => {
       let anotherCart = { ...prevCart };
@@ -121,8 +120,6 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
           return prepareCart(res);
         }
         let newProductList = anotherCart.productList.map((item) => {
-          console.log(item === productInCart);
-          console.log(prevCart.productList.find((p) => p === productInCart));
 
           if (item === productInCart) {
             return {
@@ -144,7 +141,7 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
       return prepareCart(anotherCart);
     });
   };
-
+  
   return (
     <ProductContext.Provider value={{ addNewItem, updateCart }}>
       {children}

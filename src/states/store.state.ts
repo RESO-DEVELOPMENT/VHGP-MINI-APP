@@ -95,7 +95,6 @@ export const storesByFoodCategoryState = selector({
     const stores = get(listStoreState);
     const res = stores.map((store) => {
       const menu = get(storeMenuByInputIdState(store.id));
-      console.log("menu", menu);
       return menu.categories.some((c) => c.id === currentFoodCategoryState.id)
         ? store
         : null;

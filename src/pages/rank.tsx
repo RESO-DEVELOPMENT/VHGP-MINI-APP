@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useRecoilValueLoadable } from "recoil";
 import { memberState } from "states/user.state";
+import { MemberLevel } from "types/user";
 import { Box, Progress, Text } from "zmp-ui";
 
 const SkeletonLoader: FC = () => {
@@ -27,7 +28,6 @@ const SkeletonLoader: FC = () => {
 
 const RankInfo: FC = () => {
   const memberResponse = useRecoilValueLoadable(memberState);
-  // console.log(memberResponse);
   if (memberResponse.state === "loading") {
     return <SkeletonLoader />;
   }
@@ -37,7 +37,7 @@ const RankInfo: FC = () => {
   }
 
   if (memberResponse.state === "hasValue" && memberResponse.contents != null) {
-    const memberLevel = memberResponse.contents.memberLevel;
+    const memberLevel : MemberLevel = memberResponse.contents.memberLevel;
 
     return (
       <Box

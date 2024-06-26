@@ -13,7 +13,7 @@ export interface UserInfo {
   gender: string;
   insDate: Date;
   updDate: Date;
-  menberLevel: MemberLevel;
+  memberLevel: MemberLevel;
 }
 
 export interface MemberLevel {
@@ -25,6 +25,7 @@ export interface MemberLevel {
   nextLevelName: string;
   memberWallet: MemberWallet[];
   membershipCard: MembershipCard[];
+  point: number;
 }
 
 export interface MemberWallet {

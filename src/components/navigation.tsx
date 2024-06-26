@@ -49,8 +49,6 @@ export const Navigation: FC = () => {
 
   const handleFabClick = () => {
     navigate("cart");
-    // console.log("FAB Clicked");
-    // Define the action for FAB click, e.g., navigate to a specific route
   };
   const shouldShowFAB = useMemo(() => {
     return location.pathname === "/order";

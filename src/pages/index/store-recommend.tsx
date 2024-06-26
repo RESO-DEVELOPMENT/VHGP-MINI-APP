@@ -9,28 +9,7 @@ import storeSkeleton from "./../../static/store-skeleton.jpg";
 import { nearbyStoresState } from "states/store.state";
 
 export const RecommendContent: FC = () => {
-  //state: nơi gọi api lấy danh sách sản phẩm bán, cần sửa lại cho nó có thể lấy ra các cửa hàng
-  //sửa thành lấy danh sách cửa hàng
   const recommendStores = useRecoilValue(nearbyStoresState);
-  // console.log(recommendStores)
-  /*
-    1 cửa hàng gồm các thông tin sau (mẫu)
-  {
-    address : "P. Đông Hòa -TX Dĩ An - Tỉnh Bình Dương"
-    brandId : "e40d5dee-fc46-4ba1-a2f3-e50a8140d1a6"
-    code : "BEAN-NVH"
-    email : "duong.nguyen@reso.vn"
-    id : "21e7e18a-569f-46bf-a926-69c5198d4d78"
-    lat : "10.8753031"
-    locationNearby : "Tầng G_Tầng 2_Tầng 3_Tầng 4_Tầng 5_Tầng 6"
-    long : "106.8004487"
-    name : "Bean Nhà Văn Hóa "
-    shortName : "Bean Nhà văn hoá SV"
-    status : "Active"
-    wifiName : null
-    wifiPassword : null
-  }
-  */
 
   return (
 
@@ -44,7 +23,7 @@ export const RecommendContent: FC = () => {
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box
                     className="relative aspect-video rounded-lg bg-cover bg-center bg-skeleton"
-                    style={{ backgroundImage: `url(${store.picUrl || storeSkeleton})` }}
+                    style={{ backgroundImage: `url(${store?.picUrl || storeSkeleton})` }}
                   >
                     <Text
                       size="small"

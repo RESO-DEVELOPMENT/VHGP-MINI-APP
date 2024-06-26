@@ -7,11 +7,13 @@ import { ProductPicker } from "components/product/picker";
 import drinkSekeleton from "../../../static/drink-skeleton.jpg";
 import { DisplayPrice } from "components/display/price";
 import { productsByCollectionId } from "states/product.state";
-import { collectionsByStore } from "states/menu.state";
+import { Collection } from "types/store-menu";
 
-export const Collections: FC = () => {
-  const collections = useRecoilValue(collectionsByStore);
-  // const [quantity, setQuantity] = useState(0);
+
+interface CollectionProps {
+  collections: Collection[];
+}
+export const Collections: FC<CollectionProps> = ({collections}) => {
   return (
     <>
       {collections.map((collection, index) => {
