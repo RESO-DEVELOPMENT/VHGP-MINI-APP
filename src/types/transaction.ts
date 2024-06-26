@@ -16,4 +16,6 @@ export enum TransactionTypeEnum {
   PAYMENT = "PAYMENT",
   GET_POINT = "GET_POINT",
   TOP_UP = "TOP_UP",
+  SEND_VOUCHER = "SEND_VOUCHER",
+  REDEEM_VOUCHER = "REDEEM_VOUCHER",
 }

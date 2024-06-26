@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { FC } from "react";
-import { useRecoilState } from "recoil";
+import { RecoilState, useRecoilState } from "recoil";
 import { Box, Input } from "zmp-ui";
 import { debounce } from "lodash";
 import { keywordState } from "states/product.state";
@@ -69,6 +69,33 @@ export const SpecialOffers: FC = () => {
       }
     >
       <SearchInput placeholder="Tìm kiếm ưu đãi" />
+    </Box>
+  );
+};
+
+interface Props {
+  placeholder: string;
+  state: RecoilState<string>;
+}
+export const CustomInquiry: FC<Props> = ({ placeholder, state }) => {
+  const [keyword, setKeyword] = useRecoilState(state);
+  const handleChange = useCallback(
+    debounce((newKeyword: string) => {
+      setKeyword(newKeyword);
+    }, 500),
+    []
+  );
+  return (
+    <Box p={2} className="bg-white items-center flex flex-row">
+      <Input.Search
+        defaultValue={""}
+        placeholder={placeholder}
+        onChange={(e) => {
+          handleChange(e.target.value);
+        }}
+        clearable
+       
+      />
     </Box>
   );
 };

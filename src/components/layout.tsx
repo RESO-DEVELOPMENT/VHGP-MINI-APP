@@ -18,10 +18,14 @@ import QRCodePage from "pages/qr-code";
 import InformationPage from "pages/information";
 import FeedbackForm from "pages/feedback";
 import BlogDetail from "pages/wallet/blog-detail";
+import { GiftsPage } from "pages/gifts";
+
 
 import { StoresPickerByFood } from "pages/index/store-picker-by-food";
 import StorePage from "pages/index/store";
 import { StoreDetail } from "pages/index/store/detail";
+import VoucherGroupPage from "pages/gifts/voucher-group-list";
+import { listVoucherForSaleState } from "states/voucher.state";
 
 if (getSystemInfo().platform === "android") {
   const androidSafeTop = Math.round(
@@ -50,12 +54,14 @@ export const Layout: FC = () => {
           <Route path="/history" element={<HistoryPage />}></Route>
           <Route path="/order-detail" element={<OrderDetailsPage />}></Route>
           <Route path="/voucher" element={<VoucherPage />}></Route>
+          <Route path="/gifts-for-sale" element={<VoucherGroupPage state={listVoucherForSaleState} />}/>
           <Route path="/qr" element={<QRCodePage />}></Route>
           <Route path="/info" element={<InformationPage />}></Route>,
           <Route path="/feedback" element={<FeedbackForm />} />
           <Route path="/blog" element={<BlogDetail />}>
             {""}
           </Route>
+          <Route path="/gifts" element={<GiftsPage />}/>
           {/* 
           TODO: Design 
           Đánh dấu đường dẫn store

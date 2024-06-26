@@ -1,7 +1,7 @@
 import { Store } from "types/store";
 import requestWebAdmin from "utils/axios";
 import { BaseReponse } from "types/response";
-import { User, UserInfo, UserLogin } from "types/user";
+import { MembershipCard, User, UserInfo, UserLogin } from "types/user";
 import { Promotion } from "types/promotion";
 
 import { axiosInstances } from "utils/axios";
@@ -40,6 +40,10 @@ const getListPromotion = (id: string) =>
   requestPomotion.get<Promotion[]>(
     `memberships/${id}/promotions?apiKey=${apiKey}`
   );
+  const getMembershipCard = (id: string, params?: any) =>
+    requestPomotion.get<MembershipCard[]>(`/memberships/${id}/membershipcards`, {
+      params,
+    });
 
 const getUserInfo = (id: string, params?: any) =>
   requestPomotion.get<UserInfo>(`memberships/${id}`, {
@@ -54,6 +58,7 @@ const userApi = {
   getListStore,
   userLogin,
   getListPromotion,
+  getMembershipCard,
   generateQrCode,
   getUserInfo,
 };
