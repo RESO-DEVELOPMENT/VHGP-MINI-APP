@@ -123,10 +123,11 @@ const ProfilePage: FC = () => {
   if (memberLoadable.state === "loading") return <ContentFallback />;
   if (memberLoadable.state === "hasValue" && memberLoadable.contents === null)
     return (
-      <>
+      <Page>
+        <Header showBackIcon={false} title="Tài khoản" />
         <Subscription />
         <Other />
-      </>
+      </Page>
     );
 
   return (
