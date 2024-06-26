@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { Box, Header, Icon, Page, Text } from "zmp-ui";
-import subscriptionDecor from "static/subscription-decor.svg";
 import { ListRenderer } from "components/list-renderer";
-// import { useToBeImplemented } from "hooks";
 import { useNavigate } from "react-router-dom";
 import { openSupportChat } from "utils/config";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { requestPhoneTriesState, memberState } from "states/user.state";
+import subscriptionDecor from "static/subscription-decor.svg";
 import RankInfo from "./rank";
+import { ContentFallback } from "components/content-fallback";
 
 export const Subscription: FC = () => {
   const retry = useSetRecoilState(requestPhoneTriesState);
@@ -119,21 +119,27 @@ const Other: FC = () => {
 };
 
 const ProfilePage: FC = () => {
-  const member = useRecoilValueLoadable(memberState);
+  const memberLoadable = useRecoilValueLoadable(memberState);
+  if (memberLoadable.state === "loading") return <ContentFallback />;
+  if (memberLoadable.state === "hasValue" && memberLoadable.contents === null)
+    return (
+      <>
+        <Subscription />
+        <Other />
+      </>
+    );
+
   return (
     <Page>
       <Header showBackIcon={false} title="Tài khoản" />
-      {member.state === "hasValue" && member.contents !== null ? (
-        <>
-          {" "}
-          <Personal />
-          <Other />
-        </>
-      ) : (
-        <>
-          <Subscription /> <Other />
-        </>
-      )}
+      {memberLoadable.state === "hasValue" &&
+        memberLoadable.contents !== null && (
+          <>
+            {" "}
+            <Personal />
+            <Other />
+          </>
+        )}
     </Page>
   );
 };

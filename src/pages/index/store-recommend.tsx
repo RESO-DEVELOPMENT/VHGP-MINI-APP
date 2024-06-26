@@ -22,12 +22,12 @@ export const RecommendContent: FC = () => {
               {({ open }) => (
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box
-                    className="relative aspect-video rounded-lg bg-cover bg-center bg-skeleton"
+                    className="relative aspect-video rounded-lg bg-cover bg-center "
                     style={{ backgroundImage: `url(${store?.picUrl || storeSkeleton})` }}
                   >
                     <Text
                       size="small"
-                      className="absolute right-2 top-2  bg-red-500 text-white h-5 px-[8px] rounded-full"
+                      className="absolute right-2 top-2  bg-primary text-white h-5 px-[8px] rounded-full border border-white"
                     >
                       <h6>HOT</h6>
                     </Text>

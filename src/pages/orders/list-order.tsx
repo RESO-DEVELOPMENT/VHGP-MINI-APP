@@ -102,14 +102,16 @@ const HistoryPicker: FC = () => {
           </Tabs.Tab>
           <Tabs.Tab key={1} label="Giao dịch">
             <Suspense fallback={<ContentFallback />}>
-              {transactionListData.state === "hasValue" && transactionListData.contents !== null ? (
+              {transactionListData.state === "hasValue" && transactionListData.contents !== null && transactionListData.contents.length > 0 ? (
                 <div style={{ overflowY: "auto", flex: 1 }}>
                   {transactionListData.contents.map((order) => (
                     <TransactionCard key={order.id} trans={order} />
                   ))}
                 </div>
               ) : (
-                <Box />
+                <Box className="p-4" >
+                    <Text>Không có giao dịch nào</Text>
+                </Box>
               )}
             </Suspense>
           </Tabs.Tab>

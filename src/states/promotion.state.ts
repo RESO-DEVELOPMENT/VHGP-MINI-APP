@@ -2,7 +2,6 @@ import { selector } from "recoil";
 import { memberState } from "./user.state";
 import userApi from "api/user";
 
-import promotions from "../../mock/promotions.json";
 
 export const listPromotionState = selector({
   key: "listPromotion",
@@ -18,7 +17,4 @@ export const listPromotionState = selector({
   },
 });
 
-export const listPromotionMockState = selector({
-  key: "listPromotionMock",
-  get: () => promotions,
-});
+
