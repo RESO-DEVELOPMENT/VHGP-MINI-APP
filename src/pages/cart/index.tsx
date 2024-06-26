@@ -12,28 +12,11 @@ import { cartState } from "states/cart.state";
 
 const CartPage: FC = () => {
   const keyboardVisible = useVirtualKeyboardVisible();
-  // const [cart, setCart] = useRecoilStateLoadable(cartState);
-  // console.log("current cart", cart.contents);
   return (
     <Page className="flex flex-col">
       <Header title="Giỏ hàng" showBackIcon={true} />
-      {/* {cart.state === "hasValue" && cart.contents !== null ? (
-        <>
-          <CartItems />
-          <PaymentInfo />
-
-          <Delivery />
-          <Divider size={12} />
-          <TermsAndPolicies />
-          <Divider size={32} className="flex-1" />
-          {!keyboardVisible && <CartPreview />}
-        </>
-      ) : (
-        <Box />
-      )} */}
       <CartItems />
       <PaymentInfo />
-
       <Delivery />
       <Divider size={12} />
       <TermsAndPolicies />

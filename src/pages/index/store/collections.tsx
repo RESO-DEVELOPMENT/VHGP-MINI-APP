@@ -11,7 +11,7 @@ import { collectionsByStore } from "states/menu.state";
 
 export const Collections: FC = () => {
   const collections = useRecoilValue(collectionsByStore);
-  const [quantity, setQuantity] = useState(0);
+  // const [quantity, setQuantity] = useState(0);
   return (
     <>
       {collections.map((collection, index) => {
@@ -30,7 +30,7 @@ export const Collections: FC = () => {
                         <Box className="relative w-full h-full">
                           <img
                             loading="lazy"
-                            src={product.picUrl}
+                            src={product.picUrl || drinkSekeleton}
                             className="w-full h-48 md:h-64 lg:h-72 xl:h-80 object-cover rounded-lg bg-skeleton"
                             alt={product.name}
                           />

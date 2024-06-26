@@ -6,18 +6,19 @@ import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
 import { Box, Button, Icon, Sheet, Text } from "zmp-ui";
 import { SingleOptionPicker } from "components/product/single-option-picker";
+import { useProductContext } from "components/context/app-context";
 
 export const QuantityChangeSection: FC<{
-  updateCart: (
-    productInCart: ProductList,
-    quantity: number,
-    variantChosen: string
-  ) => any;
-  AddNewItem: (
-    product: Product,
-    quantity: number,
-    variantChosen: string
-  ) => any;
+  // updateCart: (
+  //   productInCart: ProductList,
+  //   quantity: number,
+  //   variantChosen: string
+  // ) => any;
+  // AddNewItem: (
+  //   product: Product,
+  //   quantity: number,
+  //   variantChosen: string
+  // ) => any;
 
   visible: boolean;
   setVisible: (visible: boolean) => void;
@@ -31,8 +32,6 @@ export const QuantityChangeSection: FC<{
   productInCartList?: ProductList[];
   setProductInCart?: any;
 }> = ({
-  AddNewItem,
-  updateCart,
   visible,
   setVisible,
   product,
@@ -45,6 +44,7 @@ export const QuantityChangeSection: FC<{
   productInCartList,
   setProductInCart,
 }) => {
+  const {addNewItem, updateCart} = useProductContext();
   const [productInCartToUse, setProductInCartToUse] = useState<ProductList>();
   const [updateState, setUpdateState] = useState(
     productInCartToUse !== undefined || Object.keys(product).length === 0
@@ -52,8 +52,8 @@ export const QuantityChangeSection: FC<{
   const [quantity, setQuantity] = useState<number>(1);
   useEffect(() => {
     setQuantity(productInCart ? productInCart.quantity : 1);
-  }, []);
-  console.log("hiện")
+    setUpdateState(productInCart !== undefined);
+  }, [productChosen, productInCart]);
   const handleChangeProductList = (chosenToChange: ProductList) => {
     if (productInCartList && productInCartList.length > 0) {
       const targetProductList = productInCartList.find(
@@ -77,7 +77,7 @@ export const QuantityChangeSection: FC<{
   const handleAddOrUpdate = (update: boolean) => {
     if (update) {
       updateCart(productInCart!, quantity, variantChosen);
-    } else if (productChosen) AddNewItem(productChosen!, quantity, variantChosen);
+    } else if (productChosen) addNewItem(productChosen!, quantity, variantChosen);
 
     if (product.variants?.length === 0 || !product.variants) {
       setVisible(false);

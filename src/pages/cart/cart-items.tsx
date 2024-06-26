@@ -36,8 +36,6 @@ export const CartItems: FC = () => {
     <Box className="py-3 px-4">
       {productInCartChosen && (
         <QuantityChangeSection
-          AddNewItem={addNewItem}
-          updateCart={updateCart}
           visible={visible}
           setVisible={setVisible}
           product={{} as Product}

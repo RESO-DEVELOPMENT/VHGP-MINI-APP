@@ -1,4 +1,11 @@
-import React, { FC, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  FC,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { childrenProductState } from "states/product.state";
 import { cartState } from "../../states/cart.state";
@@ -7,11 +14,12 @@ import { Product, ProductTypeEnum } from "types/store-menu";
 
 import { useProductContext } from "components/context/app-context";
 import { QuantityChangeSection } from "pages/cart/quantity-change";
-
+import { prepareCart } from "utils/product";
 
 export interface ProductPickerProps {
   product: Product;
   isUpdate: false;
+  storeId?: string | null;
   children: (methods: { open: () => void; close: () => void }) => ReactNode;
 }
 
@@ -19,11 +27,19 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   children,
   isUpdate,
   product,
+  storeId,
 }) => {
   const [cart, setCart] = useRecoilState(cartState);
   const childProductsInMenu = useRecoilValue(childrenProductState);
-  const {addNewItem, updateCart} = useProductContext();
 
+  useEffect(() => {
+    if(storeId !== null || storeId!.length > 0) {
+      setCart((precCart) => {
+        let anotherCart = {...precCart, storeId: storeId!}
+        return prepareCart(anotherCart);
+      })
+    }
+  }, [storeId]);
   const currentChildOfProduct = childProductsInMenu
     .filter(
       (p) =>
@@ -89,11 +105,6 @@ export const ProductPicker: FC<ProductPickerProps> = ({
     setVariantChosen(initialVariantChosen());
   }, [productInCart, product]);
 
-  
-
-  
-
-  
   return (
     <>
       {children({
@@ -104,25 +115,16 @@ export const ProductPicker: FC<ProductPickerProps> = ({
       <QuantityChangeSection
         visible={visible}
         setVisible={setVisible}
-
         product={product}
         productChildren={productChildren}
-        
         productChosen={productChosen}
         setProductChosen={setProductChosen}
-
         productInCart={productInCart!}
-
-        AddNewItem={addNewItem}
-        updateCart={updateCart}
-
         variantChosen={variantChosen}
         setVariantChosen={setVariantChosen}
-
         setProductInCart={setProductInCart}
         productInCartList={productInCartList}
       />
     </>
   );
 };
-
