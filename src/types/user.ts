@@ -66,3 +66,36 @@ export interface Data {
   brandId: string;
   roleName: string;
 }
+export interface MemberActionResponse {
+  actionValue: number
+  description: string
+  id: string
+  memberActionTypeId: string
+  memberWalletId: string
+  status: string
+  transactionId: string
+}
+export interface Membership {
+  membershipId: string
+  phoneNumber: string
+  email: any
+  fullname: string
+  gender: number
+  memberLevel: MemberLevel
+}
+export interface MemberLevel {
+  memberLevelId: string
+  name: string
+  indexLevel: number
+  benefits: string
+  maxPoint: number
+  nextLevelName: string
+  memberWallet: MemberWallet[]
+  membershipCard: MembershipCard[]
+  point: number
+}
+export interface RecentlySearchMember {
+  membershipId: string
+  phoneNumber: string
+  fullname: string
+}
