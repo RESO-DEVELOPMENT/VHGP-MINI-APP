@@ -29,8 +29,9 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   product,
   storeId,
 }) => {
+  console.log
   const [cart, setCart] = useRecoilState(cartState);
-  const childProductsInMenu = useRecoilValue(childrenProductState);
+  const childProductsInMenu = useRecoilValue(childrenProductState(storeId!));
 
   useEffect(() => {
     if(storeId !== null || storeId!.length > 0) {
@@ -39,7 +40,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
         return prepareCart(anotherCart);
       })
     }
-  }, [storeId]);
+  }, []);
   const currentChildOfProduct = childProductsInMenu
     .filter(
       (p) =>

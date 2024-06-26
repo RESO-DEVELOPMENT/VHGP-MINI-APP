@@ -1,6 +1,6 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { Product, ProductTypeEnum } from "types/store-menu";
-import { menuByStore } from "./menu.state";
+import { menuByStore, menuByStoreIdInput } from "./menu.state";
 import { wait } from "utils/async";
 import { Store } from "types/store";
 import { listStoreState, storeMenuByInputIdState } from "./store.state";
@@ -52,14 +52,18 @@ export const productsState = selector<Product[]>({
   },
 });
 
-export const childrenProductState = selector<Product[]>({
+export const childrenProductState = selectorFamily<Product[], string>({
   key: "childProducts",
-  get: async ({ get }) => {
-    const menu = get(menuByStore);
-    return menu.products.filter(
-      (product) => product.type === ProductTypeEnum.CHILD
-    );
-  },
+  get:
+    (storeId) =>
+    async ({ get }) => {
+      var menu;
+      if (storeId === null || storeId === undefined) menu = get(menuByStore);
+      else menu = get(menuByStoreIdInput(storeId))
+      return menu.products.filter(
+        (product) => product.type === ProductTypeEnum.CHILD
+      );
+    },
 });
 
 export const recommendProductsState = selector<Product[]>({
@@ -100,10 +104,6 @@ export const resultState = selector<Map<Store, Product[]>>({
   },
 });
 
-export const isAddedProductState = atom({
-  key: "isAddedProductState",
-  default: false,
-});
 
 export const searchedProductsByKeywordState = selectorFamily<
   Map<Store, Product[]>,
@@ -139,28 +139,28 @@ export const searchedProductsByKeywordState = selectorFamily<
     },
 });
 
-export const currentStoreChildrenProductNoParamState = selector<Product[]>({
-  key: "currentStoreChildrenProduct",
-  get: async ({ get }) => {
-    const menu = get(menuByStore);
-    return menu.products.filter(
-      (product) => product.type === ProductTypeEnum.CHILD
-    );
-  },
-});
+// export const currentStoreChildrenProductNoParamState = selector<Product[]>({
+//   key: "currentStoreChildrenProduct",
+//   get: async ({ get }) => {
+//     const menu = get(menuByStore);
+//     return menu.products.filter(
+//       (product) => product.type === ProductTypeEnum.CHILD
+//     );
+//   },
+// });
 
-export const currentStoreChildrenProductState = selectorFamily<
-  Product[],
-  string
->({
-  key: "currentStoreChildrenProduct",
-  get:
-    (storeId: string) =>
-    async ({ get }) => {
-      if (storeId.length == 0) return [];
-      const menu = get(storeMenuByInputIdState(storeId));
-      return menu.products.filter(
-        (product) => product.type === ProductTypeEnum.CHILD
-      );
-    },
-});
+// export const currentStoreChildrenProductState = selectorFamily<
+//   Product[],
+//   string
+// >({
+//   key: "currentStoreChildrenProduct",
+//   get:
+//     (storeId: string) =>
+//     async ({ get }) => {
+//       if (storeId.length == 0) return [];
+//       const menu = get(storeMenuByInputIdState(storeId));
+//       return menu.products.filter(
+//         (product) => product.type === ProductTypeEnum.CHILD
+//       );
+//     },
+// });

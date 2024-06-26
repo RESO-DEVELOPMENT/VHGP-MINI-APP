@@ -1,6 +1,6 @@
 import menuApi from "api/menu";
-import { selector } from "recoil";
-import { storeState } from "./store.state";
+import { selector, selectorFamily } from "recoil";
+import { selectedStoreIdState, storeState } from "./store.state";
 import { Category, Collection, TMenu } from "types/store-menu";
 
 export const menuByStore = selector<TMenu>({
@@ -11,19 +11,13 @@ export const menuByStore = selector<TMenu>({
     return menu.data;
   },
 });
-
-export const collectionsByStore = selector<Collection[]>({
-  key: "collections",
-  get: async ({ get }) => {
-    const menu = get(menuByStore);
-    return menu.collections;
-  },
+export const menuByStoreIdInput = selectorFamily<TMenu, string>({
+  key: "menuByStoreIdInput",
+  get:
+    (storeId) =>
+    async () => {
+      const menu = await menuApi.getMenu(storeId);
+      return menu.data;
+    },
 });
 
-export const categoriesByStore = selector<Category[]>({
-  key: "categories",
-  get: async ({ get }) => {
-    const menu = get(menuByStore);
-    return menu.categories;
-  },
-});

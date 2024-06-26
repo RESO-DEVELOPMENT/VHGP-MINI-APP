@@ -24,7 +24,7 @@ export const listOrderState = selector({
             size: 100,
           }
         );
-        console.log("danh sách trả về", listOrder);
+        // console.log("danh sách trả về", listOrder);
         return listOrder.data.items;
       }
     }

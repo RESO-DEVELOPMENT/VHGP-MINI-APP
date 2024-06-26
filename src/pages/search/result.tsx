@@ -18,12 +18,14 @@ const SearchResultContent: FC = () => {
   const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
   const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
   const navigate = useNavigate();
-
+  
   const gotoStore = (store: Store) => {
     setSelectedStoreIdState(store.id);
     setSelectedStoreNameState(store.name);
     navigate("/store");
   };
+
+  console.log(result)
 
   return (
     <Box flex flexDirection="column" className="bg-background flex-1 min-h-0">

@@ -9,15 +9,15 @@ import FloatingActionButton from "pages/FloatingActionButton";
 import { Divider } from "components/divider";
 import { prepareCart } from "utils/product";
 import { cartState } from "states/cart.state";
-import { selectedStoreIdState, storeState } from "states/store.state";
-import { collectionsByStore, menuByStore } from "states/menu.state";
+import {  storeState } from "states/store.state";
+import {  menuByStore } from "states/menu.state";
 import { ContentFallback } from "components/content-fallback";
 
 const StorePage: FC = () => {
   const [cart, setCart] = useRecoilStateLoadable(cartState);
   const currentPickedStore = useRecoilValue(storeState);
   const menu = useRecoilValueLoadable(menuByStore);
-  // console.log(menu)
+  console.log(menu)
 
   const ResetCart = () => {
     setCart((prevCart) => {

@@ -5,7 +5,6 @@ import { Box, Tabs } from "zmp-ui";
 import { ProductItem } from "components/product/item";
 import { ProductItemSkeleton } from "components/skeletons";
 import { productsByCategoryId } from "states/product.state";
-import { categoriesByStore } from "states/menu.state";
 import { Category } from "types/store-menu";
 import { CategoryId } from "types/category";
 
