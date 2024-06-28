@@ -86,7 +86,7 @@ export const CustomInquiry: FC<Props> = ({ placeholder, state }) => {
     []
   );
   return (
-    <Box p={2} className="bg-white items-center flex flex-row">
+    <Box p={2} className="bg-primary items-center flex flex-row">
       <Input.Search
         defaultValue={""}
         placeholder={placeholder}
@@ -94,7 +94,6 @@ export const CustomInquiry: FC<Props> = ({ placeholder, state }) => {
           handleChange(e.target.value);
         }}
         clearable
-       
       />
     </Box>
   );

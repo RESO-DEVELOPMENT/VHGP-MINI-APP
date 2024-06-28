@@ -16,11 +16,13 @@ import { useNavigate } from "react-router-dom";
 import { Subscription } from "pages/profile";
 import { ProductRePicker } from "components/product/repicker";
 import { selectedCategoryIdState } from "states/category.state";
-import { listOrderState, requestOrderTransactionTriesState } from "states/order.state";
+import {
+  listOrderState,
+  requestOrderTransactionTriesState,
+} from "states/order.state";
 import { listTransactionState } from "states/transaction.state";
 import { memberState } from "states/user.state";
 import { ContentFallback } from "components/content-fallback";
-
 
 const HistoryPicker: FC = () => {
   const selectedCategory = useRecoilValue(selectedCategoryIdState);
@@ -49,13 +51,16 @@ const HistoryPicker: FC = () => {
         >
           <Tabs.Tab key={0} label="Đơn hàng">
             <Suspense fallback={<ContentFallback />}>
-              {orderListData.state === "hasValue" && orderListData.contents !== null ? (
+              {orderListData.state === "hasValue" &&
+              orderListData.contents !== null ? (
                 <div style={{ overflowY: "auto", flex: 1 }}>
                   {orderListData.contents.map((order, index) => (
                     <Box key={index} className="m-2 p-2 bg-white" flex>
                       <Card className="time-order">
                         <div className="flex justify-between">
-                          <Text.Title size="normal">{order.invoiceId.slice(-5)}</Text.Title>
+                          <Text.Title size="normal">
+                            {order.invoiceId.slice(-5)}
+                          </Text.Title>
                           <Text
                             className={
                               order.status === OrderStatus.NEW
@@ -71,12 +76,19 @@ const HistoryPicker: FC = () => {
                           </Text>
                         </div>
                         <div className="flex my-1">
-                          <Icon className="text-primary" size={22} icon="zi-location" />
-                          <Text.Header className="text-md leading-6 ml-1">{order.storeName}</Text.Header>
+                          <Icon
+                            className="text-primary"
+                            size={22}
+                            icon="zi-location"
+                          />
+                          <Text.Header className="text-md leading-6 ml-1">
+                            {order.storeName}
+                          </Text.Header>
                         </div>
                         <div className="flex justify-between mx-1 my-2">
                           <Text>
-                            {displayDate(new Date(order.endDate))} {displayTime(new Date(order.endDate))}
+                            {displayDate(new Date(order.endDate))}{" "}
+                            {displayTime(new Date(order.endDate))}
                           </Text>
                           <Text.Header>
                             <DisplayPrice>{order.finalAmount}</DisplayPrice>
@@ -85,10 +97,16 @@ const HistoryPicker: FC = () => {
                         <hr className="hr-order" />
                         <div className="flex mt-1 justify-center">
                           <div className="m-1 flex-1 align-middle font-normal text-m text-primary">
-                            <Text.Header onClick={() => gotoPage(order.id)}>Chi tiết đơn hàng</Text.Header>
+                            <Text.Header onClick={() => gotoPage(order.id)}>
+                              Chi tiết đơn hàng
+                            </Text.Header>
                           </div>
                           {order && order.status !== OrderStatus.PENDING && (
-                            <ProductRePicker isUpdate={false} orderId={order.id} key={order.id} />
+                            <ProductRePicker
+                              isUpdate={false}
+                              orderId={order.id}
+                              key={order.id}
+                            />
                           )}
                         </div>
                       </Card>
@@ -97,21 +115,6 @@ const HistoryPicker: FC = () => {
                 </div>
               ) : (
                 <Box />
-              )}
-            </Suspense>
-          </Tabs.Tab>
-          <Tabs.Tab key={1} label="Giao dịch">
-            <Suspense fallback={<ContentFallback />}>
-              {transactionListData.state === "hasValue" && transactionListData.contents !== null && transactionListData.contents.length > 0 ? (
-                <div style={{ overflowY: "auto", flex: 1 }}>
-                  {transactionListData.contents.map((order) => (
-                    <TransactionCard key={order.id} trans={order} />
-                  ))}
-                </div>
-              ) : (
-                <Box className="p-4" >
-                    <Text>Không có giao dịch nào</Text>
-                </Box>
               )}
             </Suspense>
           </Tabs.Tab>
