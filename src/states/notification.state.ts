@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import logo from "static/logo.png";
+import logo from "static/logo-vhgp.jpg";
 import { Notification } from "../types/notification";
 
 export const notificationsState = atom<Notification[]>({
