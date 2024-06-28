@@ -1,23 +1,15 @@
 import React, { FC, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Box, Button, Header, Page, Tabs, Text, useSnackbar } from "zmp-ui";
-// import { cartState } from "states/cart.state";
+import {  Header, Page, Tabs, useSnackbar } from "zmp-ui";
 import {
   RecoilValueReadOnly,
-  useRecoilState,
-  useRecoilValue,
-  //   useRecoilState,
   useRecoilValueLoadable,
 } from "recoil";
 import { memberState } from "states/member.state";
 import { ContentFallback } from "components/content-fallback";
 import { Subscription } from "pages/profile";
-import VoucherCard from "pages/card-voucher";
-import { Promotion } from "types/promotion";
-import { displayDate } from "utils/date";
 import { VoucherGroup } from "types/voucher-group";
-
-import logo from "../../static/logo.png";
+import vhgpLogo from "static/logo-vhgp.jpg";
 import { membershipApi } from "api/member";
 import ConfirmModal from "components/confirm-modal";
 
@@ -27,7 +19,7 @@ interface VoucherGroupPageProps {
 const VoucherGroupPage: FC<VoucherGroupPageProps> = ({ state }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [selectedVoucherId, setSelectedVoucherId] = useState<string | null>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
   const toMemberId = location.state?.id;
   var isGift = location.state?.isGift;
@@ -44,6 +36,7 @@ const VoucherGroupPage: FC<VoucherGroupPageProps> = ({ state }) => {
     return <Subscription />;
 
   isGift = (memberLoadable.contents?.membershipId !== toMemberId) ? isGift : false;
+
   const handleSendGift = async () => {
     if (!selectedVoucherId) return;
 
@@ -134,7 +127,7 @@ const VoucherGroupCard: FC<VoucherCardProps> = ({
       <div className="relative p-1.5 h-35 rounded-md flex items-start">
         <img
           //   src={voucherGroup.imgUrl}
-          src={logo}
+          src={vhgpLogo}
           alt="Voucher Image"
           className="w-[100px] h-30 rounded-md mr-2.5"
         />

@@ -1,4 +1,4 @@
-import React, { } from "react";
+import React from "react";
 import { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -7,6 +7,7 @@ import { IoIosGift, IoIosSend } from "react-icons/io";
 import { IoTicket } from "react-icons/io5";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { MdPayments } from "react-icons/md";
 
 const containerStyle: React.CSSProperties = {
   backgroundColor: "#ffffff",
@@ -19,33 +20,42 @@ const swiperStyle: React.CSSProperties = {
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: "#ffffff",
-}
+};
 const iconSize = "40px";
 export const SwiperItem: FC = () => {
   const navigate = useNavigate();
   const swiperSlides1 = [
-
+    <SwiperSlide key={0} style={swiperStyle} onClick={() => navigate("/qr")}>
+      <div style={containerStyle}>
+        <MdPayments className="icon-color" size={iconSize} />
+      </div>
+      <div className="text-center text-sm">Tích điểm</div>
+    </SwiperSlide>,
     <SwiperSlide key={1} style={swiperStyle} onClick={() => navigate("/order")}>
       <div style={containerStyle}>
         <FaCartPlus className="icon-color" size={iconSize} />
       </div>
       <div className="text-center text-sm">Đặt món</div>
     </SwiperSlide>,
-    <SwiperSlide key={2} style={swiperStyle} onClick={() => navigate("/voucher")}>
+    <SwiperSlide
+      key={2}
+      style={swiperStyle}
+      onClick={() => navigate("/voucher")}
+    >
       <div style={containerStyle}>
         <IoTicket className="icon-color" size={iconSize} />
       </div>
       <div className="text-center text-sm">Khuyến mãi</div>
     </SwiperSlide>,
-    <SwiperSlide key={3} style={swiperStyle} onClick={() => navigate("/gifts-for-sale", {
-      state: { isGift: false },
-    })
-    }>
-      <div style={containerStyle}>
-        <IoIosGift className="icon-color" size={iconSize} />
-      </div>
-      <div className="text-center text-sm">Đổi Điểm</div>
-    </SwiperSlide >,
+    // <SwiperSlide key={3} style={swiperStyle} onClick={() => navigate("/gifts-for-sale", {
+    //   state: { isGift: false },
+    // })
+    // }>
+    //   <div style={containerStyle}>
+    //     <IoIosGift className="icon-color" size={iconSize} />
+    //   </div>
+    //   <div className="text-center text-sm">Đổi Điểm</div>
+    // </SwiperSlide >,
     <SwiperSlide key={4} style={swiperStyle} onClick={() => navigate("/gifts")}>
       <div style={containerStyle}>
         <IoIosSend className="icon-color" size={iconSize} />
