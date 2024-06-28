@@ -44,81 +44,73 @@ const HistoryPicker: FC = () => {
   return (
     <>
       {member.state === "hasValue" && member.contents !== null ? (
-        <Tabs
-          scrollable
-          defaultActiveKey={selectedCategory}
-          className="category-tabs"
-        >
-          <Tabs.Tab key={0} label="Đơn hàng">
-            <Suspense fallback={<ContentFallback />}>
-              {orderListData.state === "hasValue" &&
-              orderListData.contents !== null ? (
-                <div style={{ overflowY: "auto", flex: 1 }}>
-                  {orderListData.contents.map((order, index) => (
-                    <Box key={index} className="m-2 p-2 bg-white" flex>
-                      <Card className="time-order">
-                        <div className="flex justify-between">
-                          <Text.Title size="normal">
-                            {order.invoiceId.slice(-5)}
-                          </Text.Title>
-                          <Text
-                            className={
-                              order.status === OrderStatus.NEW
-                                ? "font-bold bg-gray p-1 rounded-md text-white"
-                                : order.status === OrderStatus.PENDING
-                                ? "font-bold bg-blue-400 p-1 rounded-md text-white"
-                                : order.status === OrderStatus.PAID
-                                ? "font-bold bg-emerald-400 p-1 rounded-md text-white"
-                                : "font-bold bg-red-400 p-1 rounded-md text-white"
-                            }
-                          >
-                            {showOrderStatus(order.status)}
-                          </Text>
-                        </div>
-                        <div className="flex my-1">
-                          <Icon
-                            className="text-primary"
-                            size={22}
-                            icon="zi-location"
-                          />
-                          <Text.Header className="text-md leading-6 ml-1">
-                            {order.storeName}
-                          </Text.Header>
-                        </div>
-                        <div className="flex justify-between mx-1 my-2">
-                          <Text>
-                            {displayDate(new Date(order.endDate))}{" "}
-                            {displayTime(new Date(order.endDate))}
-                          </Text>
-                          <Text.Header>
-                            <DisplayPrice>{order.finalAmount}</DisplayPrice>
-                          </Text.Header>
-                        </div>
-                        <hr className="hr-order" />
-                        <div className="flex mt-1 justify-center">
-                          <div className="m-1 flex-1 align-middle font-normal text-m text-primary">
-                            <Text.Header onClick={() => gotoPage(order.id)}>
-                              Chi tiết đơn hàng
-                            </Text.Header>
-                          </div>
-                          {order && order.status !== OrderStatus.PENDING && (
-                            <ProductRePicker
-                              isUpdate={false}
-                              orderId={order.id}
-                              key={order.id}
-                            />
-                          )}
-                        </div>
-                      </Card>
-                    </Box>
-                  ))}
-                </div>
-              ) : (
-                <Box />
-              )}
-            </Suspense>
-          </Tabs.Tab>
-        </Tabs>
+        <Suspense fallback={<ContentFallback />}>
+          {orderListData.state === "hasValue" &&
+          orderListData.contents !== null ? (
+            <div style={{ overflowY: "auto", flex: 1 }}>
+              {orderListData.contents.map((order, index) => (
+                <Box key={index} className="m-2 p-2 bg-white" flex>
+                  <Card className="time-order">
+                    <div className="flex justify-between">
+                      <Text.Title size="normal">
+                        {order.invoiceId.slice(-5)}
+                      </Text.Title>
+                      <Text
+                        className={
+                          order.status === OrderStatus.NEW
+                            ? "font-bold bg-gray p-1 rounded-md text-white"
+                            : order.status === OrderStatus.PENDING
+                            ? "font-bold bg-blue-400 p-1 rounded-md text-white"
+                            : order.status === OrderStatus.PAID
+                            ? "font-bold bg-emerald-400 p-1 rounded-md text-white"
+                            : "font-bold bg-red-400 p-1 rounded-md text-white"
+                        }
+                      >
+                        {showOrderStatus(order.status)}
+                      </Text>
+                    </div>
+                    <div className="flex my-1">
+                      <Icon
+                        className="text-primary"
+                        size={22}
+                        icon="zi-location"
+                      />
+                      <Text.Header className="text-md leading-6 ml-1">
+                        {order.storeName}
+                      </Text.Header>
+                    </div>
+                    <div className="flex justify-between mx-1 my-2">
+                      <Text>
+                        {displayDate(new Date(order.endDate))}{" "}
+                        {displayTime(new Date(order.endDate))}
+                      </Text>
+                      <Text.Header>
+                        <DisplayPrice>{order.finalAmount}</DisplayPrice>
+                      </Text.Header>
+                    </div>
+                    <hr className="hr-order" />
+                    <div className="flex mt-1 justify-center">
+                      <div className="m-1 flex-1 align-middle font-normal text-m text-primary">
+                        <Text.Header onClick={() => gotoPage(order.id)}>
+                          Chi tiết đơn hàng
+                        </Text.Header>
+                      </div>
+                      {order && order.status !== OrderStatus.PENDING && (
+                        <ProductRePicker
+                          isUpdate={false}
+                          orderId={order.id}
+                          key={order.id}
+                        />
+                      )}
+                    </div>
+                  </Card>
+                </Box>
+              ))}
+            </div>
+          ) : (
+            <Box />
+          )}
+        </Suspense>
       ) : (
         <Subscription />
       )}
@@ -129,7 +121,6 @@ const HistoryPicker: FC = () => {
 const HistoryPage: FC = () => {
   return (
     <Page className="flex flex-col">
-      <Header showBackIcon={false} title="Hoạt động" />
       <HistoryPicker key={1} />
     </Page>
   );
