@@ -1,79 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text, Icon, Header } from "zmp-ui";
-import { IoEyeSharp } from "react-icons/io5";
-import wallet from "static/wallet.png";
+import { Box, Text, Icon, Header , Page} from "zmp-ui";
 import QRCode from "react-qr-code";
-import Barcode from "react-barcode";
-import {
-  useRecoilState,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from "recoil";
-import { DisplayPrice } from "components/display/price";
-import { DisplayValue } from "components/display/value";
+import { useRecoilValueLoadable } from "recoil";
+import { memberState } from "states/member.state";
 import { Subscription } from "./profile";
-import { qrState, memberState, requestRetriveQRstate } from "states/user.state";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ContentFallback } from "components/content-fallback";
+import { MembershipWallets } from "./wallet/membership-wallet";
+import { qrState } from "states/user.state";
 
 const QRCodePage: React.FC = () => {
   const [countdown, setCountdown] = useState(120);
   const qrCode = useRecoilValueLoadable(qrState);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get("code");
   const member = useRecoilValueLoadable(memberState);
-  const [retry, setRetry] = useRecoilState(requestRetriveQRstate);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (countdown > 0) {
-        setCountdown(countdown - 1);
-      }
-    }, 1000);
-    if (retry == 0 || countdown == 0) {
-      handleUpdateClick();
-    }
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [countdown]);
-  useEffect(() => {
-    handleUpdateClick();
-  }, []);
-  const handleUpdateClick = () => {
-    setRetry((r) => r + 1);
-    setCountdown(120);
-  };
+  if (member.state == "loading" || member.state == "hasError") {
+    return <ContentFallback />;
+  }
 
   return (
-    <div className="flex flex-col w-full h-full bg-primary">
-      <Header showBackIcon={false} title="Mã thành viên" />
-      <div className="px-4 py-20">
-        {/* Header */}
-        <div className="flex justify-center items-center">
-          {/* <Icon className="mt-8" icon="zi-arrow-left" /> */}
-          {/* <span className="text-xl text-white font-bold m-4">
-            Mã Thành Viên
-          </span> */}
-          {/* <Icon className="mt-8 color-white" icon="zi-more-horiz-solid" /> */}
-        </div>
-        <div className="bg-white p-4 rounded-lg  text-black">
+    <Page className="bg-primary p-4 text-black flex justify-center items-center min-h-screen pl-0 pr-0">
+      <Box className="h-full w-full flex justify-center items-center ">
+        <div className="bg-white p-5 rounded-lg w-11/12 ">
           {member.state === "hasValue" && member.contents !== null ? (
             <>
+              {member.contents.memberLevel.memberWallet ? (
+                <MembershipWallets />
+              ) : (
+                ""
+              )}
               <div className="text-center">Đưa mã này vào thiết bị quét mã</div>
               <div className="flex justify-center my-8">
                 <QRCode
                   value={
-                    member.state === "hasValue" && qrCode.contents !== null
-                      ? qrCode.contents.toString()
-                      : ""
+                    code ??
+                    member.contents.memberLevel.membershipCard[0]
+                      .membershipCardCode
                   }
-                  size={220}
+                  // size={220}
                 />
               </div>
-              <div className="text-center text-sm my-4">
-                Tự động cập nhật sau {countdown}s.{" "}
+              <div className="flex justify-center mt-4">
                 <button
-                  onClick={handleUpdateClick}
-                  className="text-green-600 underline"
+                  className="px-14 py-3 border-2 border-primary rounded-lg flex items-center"
+                  onClick={() => navigate("/listTransaction")}
                 >
-                  Cập nhật
+                  <Icon icon="zi-clock-2" className="mr-2" />
+                  Giao dịch của bạn
                 </button>
               </div>
             </>
@@ -81,8 +56,8 @@ const QRCodePage: React.FC = () => {
             <Subscription />
           )}
         </div>
-      </div>
-    </div>
+      </Box>
+    </Page>
   );
 };
 

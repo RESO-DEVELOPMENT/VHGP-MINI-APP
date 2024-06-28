@@ -1,7 +1,7 @@
 import { Store } from "types/store";
 import requestWebAdmin from "utils/axios";
 import { BaseReponse } from "types/response";
-import { User, UserInfo, UserLogin } from "types/user";
+import { User, MembershipCard, UserInfo, UserLogin } from "types/user";
 import { Promotion } from "types/promotion";
 
 import { axiosInstances } from "utils/axios";
@@ -50,12 +50,18 @@ const generateQrCode = (id: string, params?: any) =>
     params,
   });
 
+const getMembershipCard = (id: string, params?: any) =>
+  requestPomotion.get<MembershipCard[]>(`/memberships/${id}/membershipcards`, {
+    params,
+  });
+
 const userApi = {
   getListStore,
   userLogin,
   getListPromotion,
   generateQrCode,
   getUserInfo,
+  getMembershipCard,
 };
 
 export default userApi;
