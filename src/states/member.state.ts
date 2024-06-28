@@ -5,8 +5,9 @@ import { atom, selector, selectorFamily } from "recoil";
 import { cartState, prepareCartState } from "./cart.state";
 import { requestPhoneTriesState, userState, phoneState } from "./user.state";
 import { Membership, RecentlySearchMember } from "types/user";
-import { membershipApi } from "api/member";
+// import { membershipApi } from "api/member";
 import { getStorage, setStorage } from "zmp-sdk";
+import { membershipApi } from "api/member";
 
 export const listMembershipCardState = selector({
   key: "membershipcardList",
@@ -117,7 +118,7 @@ export const phoneSearchState = selector<string>({
   },
   set: ({ set }, newValue) => {
     // if (typeof newValue === "string" && newValue.length == 10) {
-    set(rawPhoneNumberState, newValue);
+      set(rawPhoneNumberState, newValue);
     // } else set(rawPhoneNumberState, "");
   },
 });

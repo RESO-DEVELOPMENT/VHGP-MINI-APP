@@ -4,6 +4,32 @@ export interface User {
   userId: string;
 }
 
+export interface Membership {
+  membershipId: string
+  phoneNumber: string
+  email: any
+  fullname: string
+  gender: number
+  memberLevel: MemberLevel
+}
+
+
+export interface RecentlySearchMember {
+  membershipId: string
+  phoneNumber: string
+  fullname: string
+}
+
+export interface MemberActionResponse {
+  actionValue: number
+  description: string
+  id: string
+  memberActionTypeId: string
+  memberWalletId: string
+  status: string
+  transactionId: string
+}
+
 export interface UserInfo {
   membershipId: string;
   phoneNumber: string;
@@ -42,15 +68,17 @@ export interface WalletType {
 export interface MembershipCard {
   id: string;
   membershipCardCode: string;
-  physicalCardCode: string;
+  physicalCardCode: any;
   membershipCardType: MembershipCardType;
 }
+
 
 export interface MembershipCardType {
   id: string;
   name: string;
   cardImg: string;
 }
+
 
 export interface UserLogin {
   status: number;
