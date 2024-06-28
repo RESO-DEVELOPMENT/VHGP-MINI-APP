@@ -44,6 +44,12 @@ const HistoryPicker: FC = () => {
   return (
     <>
       {member.state === "hasValue" && member.contents !== null ? (
+        // <Tabs
+        //   scrollable
+        //   defaultActiveKey={selectedCategory}
+        //   className="category-tabs"
+        // >
+        //   <Tabs.Tab key={0} label="Đơn hàng">
         <Suspense fallback={<ContentFallback />}>
           {orderListData.state === "hasValue" &&
           orderListData.contents !== null ? (
@@ -112,6 +118,8 @@ const HistoryPicker: FC = () => {
           )}
         </Suspense>
       ) : (
+        //   </Tabs.Tab>
+        // </Tabs>
         <Subscription />
       )}
     </>
@@ -121,6 +129,7 @@ const HistoryPicker: FC = () => {
 const HistoryPage: FC = () => {
   return (
     <Page className="flex flex-col">
+      <Header showBackIcon={false} title="Đơn Hàng" />
       <HistoryPicker key={1} />
     </Page>
   );
