@@ -29,18 +29,20 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   product,
   storeId,
 }) => {
-  console.log
   const [cart, setCart] = useRecoilState(cartState);
   const childProductsInMenu = useRecoilValue(childrenProductState(storeId!));
-
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
-    if(storeId !== null || storeId!.length > 0) {
+    if (storeId !== null || storeId!.length > 0) {
       setCart((precCart) => {
-        let anotherCart = {...precCart, storeId: storeId!}
+        let anotherCart;
+        if (storeId !== precCart.storeId)
+          anotherCart = { ...precCart, storeId: storeId, productList: [] };
+        else anotherCart = { ...precCart, storeId: storeId };
         return prepareCart(anotherCart);
-      })
+      });
     }
-  }, []);
+  }, [visible]);
   const currentChildOfProduct = childProductsInMenu
     .filter(
       (p) =>
@@ -57,7 +59,6 @@ export const ProductPicker: FC<ProductPickerProps> = ({
     productChildren.length > 0 ? productChildren[0] : product
   );
 
-  const [visible, setVisible] = useState(false);
   const [productInCart, setProductInCart] = useState<ProductList | undefined>(
     cart.productList.find(
       (p) => p.productInMenuId === productChosen.menuProductId
