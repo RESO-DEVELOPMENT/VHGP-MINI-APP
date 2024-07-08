@@ -32,10 +32,11 @@ export const CartPreview: FC = () => {
     if (cartPrepare.contents.paymentType == PaymentType.CASH) {
       const body = {
         ...cartPrepare.contents,
-        // customerId: member.contents.membershipId,
+        customerId: member.contents.membershipId,
         customerName : member.contents.fullname,
         customerPhone: member.contents.phoneNumber,
       };
+      console.log("body", body);
 
       Payment.createOrder({
         desc: `Thanh toán cho ${getConfig((config) => config.app.title)}`,

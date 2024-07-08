@@ -15,6 +15,7 @@ import { Product, ProductTypeEnum } from "types/store-menu";
 import { useProductContext } from "components/context/app-context";
 import { QuantityChangeSection } from "pages/cart/quantity-change";
 import { prepareCart } from "utils/product";
+import { storeState } from "states/store.state";
 
 export interface ProductPickerProps {
   product: Product;
@@ -29,20 +30,21 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   product,
   storeId,
 }) => {
+  
   const [cart, setCart] = useRecoilState(cartState);
   const childProductsInMenu = useRecoilValue(childrenProductState(storeId!));
   const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    if (storeId !== null || storeId!.length > 0) {
-      setCart((precCart) => {
-        let anotherCart;
-        if (storeId !== precCart.storeId)
-          anotherCart = { ...precCart, storeId: storeId, productList: [] };
-        else anotherCart = { ...precCart, storeId: storeId };
-        return prepareCart(anotherCart);
-      });
-    }
-  }, [visible]);
+  // useEffect(() => {
+  //   if (storeId !== null || storeId!.length > 0) {
+  //     setCart((precCart) => {
+  //       let anotherCart;
+  //       if (storeId !== precCart.storeId)
+  //         anotherCart = { ...precCart, storeId: storeId, productList: [] };
+  //       else anotherCart = { ...precCart, storeId: storeId };
+  //       return prepareCart(anotherCart);
+  //     });
+  //   }
+  // }, [visible]);
   const currentChildOfProduct = childProductsInMenu
     .filter(
       (p) =>
@@ -126,6 +128,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
         setVariantChosen={setVariantChosen}
         setProductInCart={setProductInCart}
         productInCartList={productInCartList}
+        
       />
     </>
   );

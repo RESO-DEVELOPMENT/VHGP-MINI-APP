@@ -16,26 +16,27 @@ import { ContentFallback } from "components/content-fallback";
 const StorePage: FC = () => {
   const [cart, setCart] = useRecoilStateLoadable(cartState);
   const currentPickedStore = useRecoilValue(storeState);
+  console.log(currentPickedStore)
+  console.log(cart)
   const menu = useRecoilValueLoadable(menuByStore);
-  console.log(menu)
 
-  const ResetCart = () => {
-    setCart((prevCart) => {
-      let res = { ...prevCart };
-      res = {
-        ...prevCart,
-        productList: [],
-        totalQuantity: 0,
-        storeId: currentPickedStore.id,
-      };
-      return prepareCart(res);
-    });
-  };
-  useEffect(() => {
-    if (cart.contents.storeId !== currentPickedStore) {
-      ResetCart();
-    }
-  }, [currentPickedStore]);
+  // const ResetCart = () => {
+  //   setCart((prevCart) => {
+  //     let res = { ...prevCart };
+  //     res = {
+  //       ...prevCart,
+  //       productList: [],
+  //       totalQuantity: 0,
+  //       storeId: currentPickedStore.id,
+  //     };
+  //     return prepareCart(res);
+  //   });
+  // };
+  // useEffect(() => {
+  //   if (cart.contents.storeId !== currentPickedStore) {
+  //     ResetCart();
+  //   }
+  // }, [currentPickedStore]);
   const navigate = useNavigate();
   const handleFabClick = () => {
     navigate("/cart");

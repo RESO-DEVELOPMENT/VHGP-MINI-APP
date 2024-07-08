@@ -15,7 +15,8 @@ export interface ProductContextType {
   addNewItem: (
     product: Product,
     quantity: number,
-    variantChosen: string
+    variantChosen: string,
+    storeId: string
   ) => any;
   updateCart: (
     productInCart: ProductList,
@@ -59,12 +60,20 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
   const addNewItem = (
     product: Product,
     quantity: number,
-    variantChosen: string
+    variantChosen: string,
+    storeId: string,
   ) => {
 
     setCart((prevCart) => {
-      let anotherCart = { ...prevCart };
+      let anotherCart;
+      console.log('add')
+      if(storeId != undefined && storeId !== prevCart.storeId)
+        anotherCart = { ...prevCart, storeId: storeId, productList: [] };
+       else 
+        anotherCart = { ...prevCart, storeId: storeId };
+      
       if (product != null) {
+     
         const cartItem: ProductList = {
           productInMenuId: product.menuProductId,
           parentProductId: product.parentProductId,
@@ -83,7 +92,7 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
 
         let res = {
           ...anotherCart,
-          productList: cart.productList.concat(cartItem),
+          productList: anotherCart.productList.concat(cartItem),
         };
         return prepareCart(res);
       }

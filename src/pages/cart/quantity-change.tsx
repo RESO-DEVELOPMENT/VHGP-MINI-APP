@@ -7,6 +7,9 @@ import { Product, ProductTypeEnum } from "types/store-menu";
 import { Box, Button, Icon, Sheet, Text } from "zmp-ui";
 import { SingleOptionPicker } from "components/product/single-option-picker";
 import { useProductContext } from "components/context/app-context";
+import { cartState } from "states/cart.state";
+import { storeState } from "states/store.state";
+import { useRecoilValue } from "recoil";
 
 export const QuantityChangeSection: FC<{
   // updateCart: (
@@ -43,7 +46,9 @@ export const QuantityChangeSection: FC<{
   setVariantChosen,
   productInCartList,
   setProductInCart,
+
 }) => {
+  const currentStore = useRecoilValue(storeState);
   const {addNewItem, updateCart} = useProductContext();
   const [productInCartToUse, setProductInCartToUse] = useState<ProductList>();
   const [updateState, setUpdateState] = useState(
@@ -77,7 +82,7 @@ export const QuantityChangeSection: FC<{
   const handleAddOrUpdate = (update: boolean) => {
     if (update) {
       updateCart(productInCart!, quantity, variantChosen);
-    } else if (productChosen) addNewItem(productChosen!, quantity, variantChosen);
+    } else if (productChosen) addNewItem(productChosen!, quantity, variantChosen, currentStore.id);
 
     if (product.variants?.length === 0 || !product.variants) {
       setVisible(false);
@@ -216,3 +221,5 @@ export const QuantityChangeSection: FC<{
     document.body
   );
 };
+
+console.log(cartState);

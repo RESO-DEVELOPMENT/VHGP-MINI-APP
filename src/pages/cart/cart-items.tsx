@@ -14,7 +14,7 @@ export const CartItems: FC = () => {
   const [cart, setCart] = useRecoilState(cartState);
   const [visible, setVisible] = useState(false);
   const [productInCartChosen, setProductInCartChosen] = useState<ProductList>();
-
+  console.log(cart)
   const handleEditSheetShow = (productInCart: ProductList) => {
     setVisible(true);
     setProductInCartChosen(productInCart);
@@ -24,6 +24,7 @@ export const CartItems: FC = () => {
   const clearCartItem = (item: ProductList) => {
     setCart((prevCart) => {
       let res = { ...prevCart };
+      
       res = {
         ...prevCart,
         productList: prevCart.productList.filter((x) => x !== item),
