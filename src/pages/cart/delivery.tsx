@@ -1,10 +1,10 @@
 import React, { useState, FC } from "react";
-import { useRecoilState, useRecoilValueLoadable } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { Box, Icon, Text, Modal, Input } from "zmp-ui";
 import { ListRenderer } from "components/list-renderer";
 import { LocationPicker } from "./location-picker";
 import { cartState } from "states/cart.state";
-import { selectedStoreByIdState } from "states/store.state";
+import {  storeState } from "states/store.state";
 
 export const AddressPopup: FC<{
   title: string;
@@ -41,7 +41,7 @@ export const AddressPopup: FC<{
 
 export const Delivery: FC = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const storeLoadable = useRecoilValueLoadable(selectedStoreByIdState);
+  const currentStore = useRecoilValue(storeState);
   const [showPopup, setShowPopup] = useState(false);
   const [notes, setNotes] = useState(cart.notes || "");
 
@@ -63,20 +63,17 @@ export const Delivery: FC = () => {
             {
               left: <Icon icon="zi-home" className="my-auto" />,
               right: (
-                <React.Suspense fallback={<div>Loading...</div>}>
-                  {storeLoadable.state === "hasValue" ? (
+               
                     <Box>
                       <Text size="small" className="text-primary">
-                        {storeLoadable.contents?.name || "Cửa hàng"}
+                        {currentStore.name || "Cửa hàng"}
                       </Text>
                       <Text size="xSmall" className="text-gray">
                         {"Cửa hàng"}
                       </Text>
                     </Box>
-                  ) : (
-                    <div>Loading...</div>
-                  )}
-                </React.Suspense>
+                 
+        
               ),
             },
             {
