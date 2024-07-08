@@ -43,7 +43,7 @@ export const Banner: FC = () => {
               onClick={() => navigate("/qr")}
             >
               <Box
-                className="w-full rounded-xl aspect-[16/9] bg-cover bg-center bg-skeleton"
+                className="w-full rounded-xl aspect-[16/9] bg-cover bg-center bg-primary"
                 style={{
                   backgroundImage: `url(${card.membershipCardType.cardImg})`,
                 }}
