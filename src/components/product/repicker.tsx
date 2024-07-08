@@ -34,8 +34,11 @@ export const ProductRePicker: FC<ProductPickerProps> = ({ orderId, isUpdate }) =
   const stores = useRecoilValue(listStoreState);
   const orderDetail = useRecoilValue(getOrderDetailstate(orderId));
   const store = useMemo(() => stores.find((store) => store.name === orderDetail.storeName), [stores, orderDetail.storeName]);
-
+  console.log(store)
+  if(store === undefined)
+    return <></>
   const menuOfStore = useRecoilValue(storeMenuByInputIdState(store?.id ?? ""));
+ 
   const reOrderProductsInMenu = orderDetail.productList;
 
   const navigate = useNavigate();
