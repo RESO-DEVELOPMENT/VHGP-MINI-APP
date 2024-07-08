@@ -8,7 +8,8 @@ import { prepareCart } from "utils/product";
 import { Box, Icon, Text } from "zmp-ui";
 import { QuantityChangeSection } from "./quantity-change";
 import { Product } from "types/store-menu";
-import { useProductContext } from "components/context/app-context";
+import { useProductContext } from "context/app-context";
+
 export const CartItems: FC = () => {
   const [editingItem, setEditingItem] = useState<ProductList | undefined>();
   const [cart, setCart] = useRecoilState(cartState);

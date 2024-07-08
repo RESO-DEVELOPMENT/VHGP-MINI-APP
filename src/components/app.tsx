@@ -4,7 +4,7 @@ import { RecoilRoot } from "recoil";
 import { getConfig } from "utils/config";
 import { Layout } from "./layout";
 import { ConfigProvider } from "./config-provider";
-import { ProductContextProvider } from "./context/app-context";
+import { ProductContextProvider } from "context/app-context";
 
 const MyApp = () => {
   return (

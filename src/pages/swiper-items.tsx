@@ -8,6 +8,8 @@ import { IoTicket } from "react-icons/io5";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdPayments } from "react-icons/md";
+import { useSetRecoilState } from "recoil";
+import { navigationMenuPathState } from "states/navigation.state";
 
 const containerStyle: React.CSSProperties = {
   backgroundColor: "#ffffff",
@@ -23,15 +25,22 @@ const swiperStyle: React.CSSProperties = {
 };
 const iconSize = "40px";
 export const SwiperItem: FC = () => {
+  const  setActiveTab = useSetRecoilState(navigationMenuPathState);
   const navigate = useNavigate();
   const swiperSlides1 = [
-    <SwiperSlide key={0} style={swiperStyle} onClick={() => navigate("/qr")}>
+    <SwiperSlide key={0} style={swiperStyle} onClick={() => { 
+      setActiveTab("/qr");
+      navigate("/qr");
+    }}>
       <div style={containerStyle}>
         <MdPayments className="icon-color" size={iconSize} />
       </div>
       <div className="text-center text-sm">Tích điểm</div>
     </SwiperSlide>,
-    <SwiperSlide key={1} style={swiperStyle} onClick={() => navigate("/order")}>
+    <SwiperSlide key={1} style={swiperStyle} onClick={() => { 
+      setActiveTab("/order");
+      navigate("/order");
+    }}>
       <div style={containerStyle}>
         <FaCartPlus className="icon-color" size={iconSize} />
       </div>
@@ -40,7 +49,10 @@ export const SwiperItem: FC = () => {
     <SwiperSlide
       key={2}
       style={swiperStyle}
-      onClick={() => navigate("/voucher")}
+      onClick={() => { 
+        setActiveTab("/voucher");
+        navigate("/voucher");
+      }}
     >
       <div style={containerStyle}>
         <IoTicket className="icon-color" size={iconSize} />

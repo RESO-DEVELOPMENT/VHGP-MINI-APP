@@ -10,13 +10,14 @@ import { WelcomeUser } from "./hello";
 import { memberState } from "states/user.state";
 import { selectedStoreIndexState } from "states/store.state";
 import { ContentFallback } from "components/content-fallback";
+import { navigationMenuPathState } from "states/navigation.state";
 
 
 
 const WalletScreen: FC = () => {
   const member = useRecoilValueLoadable(memberState);
   const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
-
+ 
   const flexContainerStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",

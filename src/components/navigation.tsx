@@ -8,6 +8,7 @@ import { CartIcon } from "./cart-icon";
 import { OrderIcon } from "./order-icon";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "states/cart.state";
+import { navigationMenuPathState } from "states/navigation.state";
 
 const tabs: Record<string, MenuItem> = {
   "/": {
@@ -37,7 +38,7 @@ export type TabKeys = keyof typeof tabs;
 export const NO_BOTTOM_NAVIGATION_PAGES = ["/search", "/category"];
 
 export const Navigation: FC = () => {
-  const [activeTab, setActiveTab] = useState<TabKeys>("/");
+  const [activeTab, setActiveTab] = useRecoilState(navigationMenuPathState);
   const navigate = useNavigate();
   const location = useLocation();
   const quantityCart = useRecoilValue(cartState).totalQuantity;
