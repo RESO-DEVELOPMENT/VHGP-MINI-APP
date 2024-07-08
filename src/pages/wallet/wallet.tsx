@@ -50,9 +50,9 @@ const WalletScreen: FC = () => {
               <Text.Title size="normal">Dịch vụ</Text.Title>
             </Box>
             <SwiperItem />
-            <Box className="mx-4 mt-8" style={flexContainerStyle}>
+            {/* <Box className="mx-4 mt-8" style={flexContainerStyle}>
               <Text.Title size="normal">Chương trình</Text.Title>
-            </Box>
+            </Box> */}
             <SwiperEn />
           </>
         ) : (
