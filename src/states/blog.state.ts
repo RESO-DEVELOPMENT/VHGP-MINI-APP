@@ -8,7 +8,7 @@ export const listBlogState = selector({
     const listBlog = await blogApi.getListBlog({
       page: 1,
       size: 10,
-      brandCode: "VHGP",
+      brandCode: "DEERTEST",
     });
     return listBlog.data.items;
   },

@@ -55,7 +55,7 @@ export const listStoreState = selector({
     const listStore = await storeApi.getListStore({
       page: 1,
       size: 10,
-      brandCode: "VHGP",
+      brandCode: "DEERTEST",
     });
     return listStore.data.items;
   },

@@ -75,7 +75,7 @@ export const selectedCategoryIdState = atom({
 export const foodCategoriesListState = selector({
   key: "foodCategoriesList",
   get: async () => {
-    const brandCode = "VHGP";
+    const brandCode = "DEERTEST";
     const foodCategoriesResponse = (
       await CategoriesApi.getCategories(brandCode)
     ).data;
