@@ -128,7 +128,7 @@ export const ProductPicker: FC<ProductPickerProps> = ({
         setVariantChosen={setVariantChosen}
         setProductInCart={setProductInCart}
         productInCartList={productInCartList}
-        
+        storeId={storeId!}
       />
     </>
   );

@@ -30,10 +30,10 @@ export const selectedStoreIdState = atom<string>({
   default: "",
 });
 
-export const selectedStoreNameState = atom<string>({
-  key: "selectedStoreName",
-  default: "Tên Quán",
-});
+// export const selectedStoreNameState = atom<string>({
+//   key: "selectedStoreName",
+//   default: "Tên Quán",
+// });
 
 export const selectedStoreIndexState = atom<number>({
   key: "selectedStoreIndex",

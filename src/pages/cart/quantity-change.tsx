@@ -34,6 +34,7 @@ export const QuantityChangeSection: FC<{
   setVariantChosen: any;
   productInCartList?: ProductList[];
   setProductInCart?: any;
+  storeId?: string | undefined;
 }> = ({
   visible,
   setVisible,
@@ -46,7 +47,7 @@ export const QuantityChangeSection: FC<{
   setVariantChosen,
   productInCartList,
   setProductInCart,
-
+  storeId
 }) => {
   const currentStore = useRecoilValue(storeState);
   const {addNewItem, updateCart} = useProductContext();
@@ -80,9 +81,11 @@ export const QuantityChangeSection: FC<{
     setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
 
   const handleAddOrUpdate = (update: boolean) => {
+    console.log("break")
     if (update) {
+      
       updateCart(productInCart!, quantity, variantChosen);
-    } else if (productChosen) addNewItem(productChosen!, quantity, variantChosen, currentStore.id);
+    } else if (productChosen) addNewItem(productChosen!, quantity, variantChosen, (storeId === undefined)? currentStore.id : storeId);
 
     if (product.variants?.length === 0 || !product.variants) {
       setVisible(false);

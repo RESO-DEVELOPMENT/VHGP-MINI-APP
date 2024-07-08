@@ -3,7 +3,8 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { resultState } from "states/product.state";
 import {
   selectedStoreIdState,
-  selectedStoreNameState,
+  // selectedStoreNameState,
+  storeState,
 } from "states/store.state";
 import { Store } from "types/store";
 import { Product } from "types/store-menu";
@@ -15,13 +16,11 @@ import productSkeleton from "static/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
   const result: Map<Store, Product[]> = useRecoilValue(resultState);
-  const setSelectedStoreIdState = useSetRecoilState(selectedStoreIdState);
-  const setSelectedStoreNameState = useSetRecoilState(selectedStoreNameState);
+  const setCurrentStoreState = useSetRecoilState(storeState);
   const navigate = useNavigate();
   
   const gotoStore = (store: Store) => {
-    setSelectedStoreIdState(store.id);
-    setSelectedStoreNameState(store.name);
+    setCurrentStoreState(store);
     navigate("/store");
   };
 
