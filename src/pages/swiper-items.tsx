@@ -56,12 +56,12 @@ export const SwiperItem: FC = () => {
     //   </div>
     //   <div className="text-center text-sm">Đổi Điểm</div>
     // </SwiperSlide >,
-    <SwiperSlide key={4} style={swiperStyle} onClick={() => navigate("/gifts")}>
-      <div style={containerStyle}>
-        <IoIosSend className="icon-color" size={iconSize} />
-      </div>
-      <div className="text-center text-sm">Tặng quà</div>
-    </SwiperSlide>,
+    // <SwiperSlide key={4} style={swiperStyle} onClick={() => navigate("/gifts")}>
+    //   <div style={containerStyle}>
+    //     <IoIosSend className="icon-color" size={iconSize} />
+    //   </div>
+    //   <div className="text-center text-sm">Tặng quà</div>
+    // </SwiperSlide>,
   ];
   return (
     <Box m={2}>
