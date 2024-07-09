@@ -60,7 +60,7 @@ const Personal: FC = () => {
           },
           {
             navigate: "/history",
-            left: <Icon icon="zi-clock-2" />,
+            left: <Icon icon="zi-memory" />,
             right: (
               <Box flex>
                 <Text.Header className="flex-1 items-center font-normal">
@@ -72,7 +72,7 @@ const Personal: FC = () => {
           },
           {
             navigate: "/listTransaction",
-            left: <Icon icon="zi-clock-2" />,
+            left: <Icon icon="zi-auto" />,
             right: (
               <Box flex>
                 <Text.Header className="flex-1 items-center font-normal">
