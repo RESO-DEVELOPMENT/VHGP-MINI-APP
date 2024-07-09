@@ -1,4 +1,4 @@
-import React, { FC, Suspense } from "react";
+import React, { FC } from "react";
 import { Section } from "components/section";
 import {  useRecoilValueLoadable } from "recoil";
 import { Box, Tabs } from "zmp-ui";
@@ -6,7 +6,6 @@ import { ProductItem } from "components/product/item";
 import { ProductItemSkeleton } from "components/skeletons";
 import { productsByCategoryId } from "states/product.state";
 import { Category } from "types/store-menu";
-import { CategoryId } from "types/category";
 
 interface ProductListProps {
   categories: Category[];

@@ -4,7 +4,7 @@ import { RecommendStorePicker } from "pages/index/store/store-picker";
 import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Text, useNavigate } from "zmp-ui";
+import { Box, Text } from "zmp-ui";
 import storeSkeleton from "./../../static/store-skeleton.jpg";
 import { nearbyStoresState } from "states/store.state";
 
@@ -45,9 +45,8 @@ export const RecommendContent: FC = () => {
   );
 };
 
-//Phần sẽ dc hiển thị khi RecommendContent đag chạy
+
 export const RecommendFallback: FC = () => {
-  //5 cửa hàng trống sẽ dc hiển thị khi đợi chạy dữ liệu
   const recommendStores = [...new Array(5)];
   return (
     <Section title="Quán ăn gần bạn" padding="title-only">
@@ -64,7 +63,6 @@ export const RecommendFallback: FC = () => {
 
 export const Recommend: FC = () => {
   return (
-    //Fallback sẽ dc hiển thị khi  <RecommendContent /> đag xử lý dữ liệu
     <Suspense fallback={<RecommendFallback />}>
       <RecommendContent />
     </Suspense>

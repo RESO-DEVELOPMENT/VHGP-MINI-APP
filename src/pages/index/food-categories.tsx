@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { Box, useNavigate, Text } from "zmp-ui";
 import foodCateSkeleton from "../../static/food-categories-skeleton.png";
-import { foodCategoriesListState, foodCategoryState, selectedCategoryIdState } from "states/category.state";
+import { foodCategoriesListState, foodCategoryState } from "states/category.state";
 import { FoodCategory } from "types/category";
 
 export const FoodCategories: FC = () => {

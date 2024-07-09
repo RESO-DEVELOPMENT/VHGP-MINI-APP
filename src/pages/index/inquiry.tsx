@@ -1,4 +1,3 @@
-import { CartIcon } from "components/cart-icon";
 import React from "react";
 import { FC } from "react";
 import { Box, Input, useNavigate } from "zmp-ui";
