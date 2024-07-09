@@ -1,10 +1,9 @@
 import React from "react";
 import { FC } from "react";
 import { Header, Page } from "zmp-ui";
-import { StorePickerbyFoodResult } from "./result";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { StorePickedByFoodResult } from "./result";
+import {  useRecoilValue } from "recoil";
 import { foodCategoryState } from "states/category.state";
-import { FoodCategory } from "types/category";
 
 export const StoresPickerByFood: FC = () => {
   const currentFoodCategoryState = useRecoilValue(foodCategoryState);
@@ -12,7 +11,7 @@ export const StoresPickerByFood: FC = () => {
   return (
     <Page className="flex flex-col">
       <Header title={pickedCategoryName} />
-      <StorePickerbyFoodResult />
+      <StorePickedByFoodResult />
     </Page>
   );
 };

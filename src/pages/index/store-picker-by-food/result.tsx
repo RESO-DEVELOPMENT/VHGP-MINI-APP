@@ -3,16 +3,15 @@ import { FC } from "react";
 import { useNavigate } from "react-router";
 import { Box, Button, Icon, Text } from "zmp-ui";
 import {
-  useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
 //TODO: design
-import { selectedStoreIdState, storeIdsByCategoryState, storeState, storesByFoodCategoryState } from "states/store.state";
+import { selectedStoreIdState, storeState, storesByFoodCategoryState } from "states/store.state";
 import storeSkeleton from "../../../static/store-skeleton.jpg";
 import { Store } from "types/store";
 
-export const StorePickerbyFoodResult: FC = () => {
+export const StorePickedByFoodResult: FC = () => {
   const setStoreSelected = useSetRecoilState(selectedStoreIdState);
   const setStoreState = useSetRecoilState(storeState);
   const navigate = useNavigate();

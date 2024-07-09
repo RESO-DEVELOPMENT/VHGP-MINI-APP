@@ -1,9 +1,5 @@
-import React, { FC, Suspense } from "react";
-import { Box, Header, Icon } from "zmp-ui";
-import {
-  RequestStorePickerLocation,
-  StorePicker,
-} from "pages/cart/store-picker";
+import React, { FC } from "react";
+import {  Header } from "zmp-ui";
 
 export const Welcome: FC = () => {
   return (
