@@ -1,14 +1,15 @@
 import { useVirtualKeyboardVisible } from "hooks";
-import FloatingActionButton from "pages/FloatingActionButton";
+
 import React, { FC, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { MenuItem } from "types/menu";
 import { BottomNavigation, Icon } from "zmp-ui";
-import { CartIcon } from "./cart-icon";
-import { OrderIcon } from "./order-icon";
+import { CartIcon } from "../cart-icon/cart-icon";
+import { OrderIcon } from "../order-icon";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "states/cart.state";
 import { navigationMenuPathState } from "states/navigation.state";
+import FloatingActionButton from "../cart-icon/FloatingActionButton";
 
 const tabs: Record<string, MenuItem> = {
   "/": {

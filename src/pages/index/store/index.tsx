@@ -1,43 +1,19 @@
-import React, { FC, Suspense, useEffect } from "react";
-import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import React, { FC, Suspense } from "react";
+import { useRecoilValueLoadable } from "recoil";
 import { Box, Header, Page, useNavigate } from "zmp-ui";
 import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
 import { Collections } from "./collections";
-import { CartIcon } from "components/cart-icon";
-import FloatingActionButton from "pages/FloatingActionButton";
 import { Divider } from "components/divider";
-import { prepareCart } from "utils/product";
-import { cartState } from "states/cart.state";
-import {  storeState } from "states/store.state";
 import {  menuByStore } from "states/menu.state";
 import { ContentFallback } from "components/content-fallback";
+import { CartIcon } from "components/cart-icon/cart-icon";
+import FloatingActionButton from "components/cart-icon/FloatingActionButton";
 
 const StorePage: FC = () => {
-  const [cart, setCart] = useRecoilStateLoadable(cartState);
-  const currentPickedStore = useRecoilValue(storeState);
-  console.log(currentPickedStore)
-  console.log(cart)
-  const menu = useRecoilValueLoadable(menuByStore);
-
-  // const ResetCart = () => {
-  //   setCart((prevCart) => {
-  //     let res = { ...prevCart };
-  //     res = {
-  //       ...prevCart,
-  //       productList: [],
-  //       totalQuantity: 0,
-  //       storeId: currentPickedStore.id,
-  //     };
-  //     return prepareCart(res);
-  //   });
-  // };
-  // useEffect(() => {
-  //   if (cart.contents.storeId !== currentPickedStore) {
-  //     ResetCart();
-  //   }
-  // }, [currentPickedStore]);
   const navigate = useNavigate();
+
+  const menu = useRecoilValueLoadable(menuByStore);
   const handleFabClick = () => {
     navigate("/cart");
   };
@@ -62,12 +38,7 @@ const StorePage: FC = () => {
     );
   }
  
-  return <Page>
-
-  </Page>
-
-
- 
+  return <Page/>
 };
 
 export default StorePage;

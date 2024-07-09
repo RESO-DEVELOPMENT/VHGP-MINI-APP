@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import {  useRecoilValue } from "recoil";
 import { Box, Text } from "zmp-ui";
-
 import storeSkeleton from "../../../static/store-skeleton.jpg";
 import { storeState } from "states/store.state";
 

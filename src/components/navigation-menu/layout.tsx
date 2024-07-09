@@ -9,7 +9,7 @@ import NotificationPage from "pages/notification";
 import ProfilePage from "pages/profile";
 import SearchPage from "pages/search";
 import { getSystemInfo } from "zmp-sdk";
-import { ScrollRestoration } from "./scroll-restoration";
+import { ScrollRestoration } from "../scroll-restoration";
 import HistoryPage from "pages/orders/list-order";
 import OrderDetailsPage from "pages/orders/order-details";
 import WalletScreen from "pages/wallet/wallet";

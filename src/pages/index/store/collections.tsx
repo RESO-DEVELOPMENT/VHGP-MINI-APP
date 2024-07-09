@@ -1,5 +1,5 @@
 import { Section } from "components/section";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";

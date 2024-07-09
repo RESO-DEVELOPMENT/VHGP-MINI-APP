@@ -1,6 +1,6 @@
 import React, { FC, Suspense } from "react";
 import { Section } from "components/section";
-import { useRecoilValue, useRecoilValueLoadable } from "recoil";
+import {  useRecoilValueLoadable } from "recoil";
 import { Box, Tabs } from "zmp-ui";
 import { ProductItem } from "components/product/item";
 import { ProductItemSkeleton } from "components/skeletons";
