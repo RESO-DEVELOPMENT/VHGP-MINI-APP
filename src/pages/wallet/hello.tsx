@@ -29,7 +29,7 @@ export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
           <Box flex alignItems="center" className="space-x-2">
             <img
               className="w-8 h-8 rounded-lg border-inset"
-              src={memberInfo?.avatar}
+              src={memberInfo!.avatar|| iconUser}
             />
 
             <Box>
