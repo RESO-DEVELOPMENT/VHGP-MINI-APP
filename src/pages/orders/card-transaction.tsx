@@ -1,10 +1,5 @@
-// VoucherCard.tsx
-
-import { DisplayDay } from "components/display/date";
-import { DisplayPrice } from "components/display/price";
 import { ListRenderer } from "components/list-renderer";
-import React, { FC, useState } from "react";
-import { OrderPreview } from "types/order";
+import React, { FC } from "react";
 import { Transaction } from "types/transaction";
 import { displayDate, displayTime } from "utils/date";
 import { showTransactionStatus, showTransactionType } from "utils/product";
