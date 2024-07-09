@@ -19,13 +19,14 @@ import { Box, Button, Icon, Text, useSnackbar } from "zmp-ui";
 import { PaymentPicker } from "./payment-picker";
 import { cartState, prepareCartState } from "states/cart.state";
 import { memberState } from "states/user.state";
+import { ContentFallback } from "components/content-fallback";
 
 export const CartPreview: FC = () => {
   const setCart = useSetRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
 
   const member = useRecoilValueLoadable(memberState);
- 
+
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   const onCheckout = async () => {
@@ -33,7 +34,7 @@ export const CartPreview: FC = () => {
       const body = {
         ...cartPrepare.contents,
         customerId: member.contents.membershipId,
-        customerName : member.contents.fullname,
+        customerName: member.contents.fullname,
         customerPhone: member.contents.phoneNumber,
       };
       console.log("body", body);
@@ -43,11 +44,9 @@ export const CartPreview: FC = () => {
         item: [],
         amount: cartPrepare.contents.finalAmount,
         success: async (data) => {
-       
           let { orderId } = data;
           const res = await orderApi.createNewOrder(body);
           if (res.status == 200) {
-        
             snackbar.openSnackbar({
               duration: 2000,
               type: "success",
@@ -74,7 +73,6 @@ export const CartPreview: FC = () => {
               state: { id: res.data },
             });
           } else {
-         
             snackbar.openSnackbar({
               duration: 3000,
               type: "error",
@@ -83,7 +81,6 @@ export const CartPreview: FC = () => {
           }
         },
         fail: (err) => {
-        
           snackbar.openSnackbar({
             duration: 3000,
             type: "error",
@@ -148,14 +145,13 @@ export const CartPreview: FC = () => {
         const body = {
           ...cartPrepare.contents,
           // customerId: member.contents.membershipId,
-          customerName : member.contents.fullname,
+          customerName: member.contents.fullname,
           customerPhone: member.contents.phoneNumber,
         };
-       
+
         const res = await orderApi.createNewOrder(body);
-        
+
         if (res.status == 200) {
-          
           snackbar.openSnackbar({
             type: "success",
             text: "Đặt hàng thành công",
@@ -183,14 +179,12 @@ export const CartPreview: FC = () => {
             state: { id: res.data },
           });
         } else if (res.status == 400) {
-         
           snackbar.openSnackbar({
             type: "error",
             text: "Đặt hàng thất bại, " + res.data.Error,
           });
         }
       } catch (error: any) {
-       
         snackbar.openSnackbar({
           type: "error",
           text: "Đặt hàng thất bại, " + error.Error,
@@ -247,6 +241,10 @@ export const CartPreview: FC = () => {
     }
   };
 
+  if (member.state == "loading" || member.state == "hasError") {
+    return <ContentFallback />;
+  }
+
   return (
     <Box
       flex
@@ -292,7 +290,7 @@ export const CartPreview: FC = () => {
               size="small"
             >
               <PaymentPicker />
-        
+
               {/* {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
                 ? showPaymentType(cartPrepare.contents.paymentType)
                 : "TIỀN MẶT"} */}

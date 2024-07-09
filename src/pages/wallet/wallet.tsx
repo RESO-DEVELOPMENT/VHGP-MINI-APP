@@ -11,8 +11,6 @@ import { memberState } from "states/user.state";
 import { selectedStoreIndexState } from "states/store.state";
 import { ContentFallback } from "components/content-fallback";
 
-
-
 const WalletScreen: FC = () => {
   const member = useRecoilValueLoadable(memberState);
   const setStoreIdx = useSetRecoilState(selectedStoreIndexState);

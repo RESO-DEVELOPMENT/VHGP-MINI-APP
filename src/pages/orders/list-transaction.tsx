@@ -8,7 +8,6 @@ import { Subscription } from "pages/profile";
 import { requestOrderTransactionTriesState } from "states/order.state";
 
 const ListTransaction: FC = () => {
-    
   const retry = useSetRecoilState(requestOrderTransactionTriesState);
   useEffect(() => {
     retry((r) => r + 1);
@@ -29,7 +28,7 @@ const ListTransaction: FC = () => {
     transactionListData.state === "hasValue" &&
     transactionListData.contents !== null
   ) {
-    console.log('nội dung')
+    console.log("nội dung");
     return (
       <Box
         style={{
@@ -47,7 +46,7 @@ const ListTransaction: FC = () => {
 };
 const TransactionPage: FC = () => (
   <Page className="flex flex-col">
-    <Header showBackIcon={true} title="Giao dịch" />
+    <Header showBackIcon={true} title="?" />
     <ListTransaction />
   </Page>
 );

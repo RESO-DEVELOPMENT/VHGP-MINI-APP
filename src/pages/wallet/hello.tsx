@@ -29,14 +29,16 @@ export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
           <Box flex alignItems="center" className="space-x-2">
             <img
               className="w-8 h-8 rounded-lg border-inset"
-              src={memberInfo?.avatar || iconUser}
+              src={memberInfo?.avatar}
             />
 
             <Box>
               <Text className=" flex">
                 <Text className="mr-1.5 font-bold">Chào</Text>
                 {user.state === "hasValue" ? (
-                  <Text className="font-bold">{memberInfo?.fullname || user.contents.name}</Text>
+                  <Text className="font-bold">
+                    {memberInfo?.fullname || user.contents.name}
+                  </Text>
                 ) : (
                   <Text className="font-bold">...</Text>
                 )}
