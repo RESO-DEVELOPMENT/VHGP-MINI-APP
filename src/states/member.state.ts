@@ -1,12 +1,8 @@
-import { keywordState } from "states/product.state";
 import userApi from "api/user";
 import axios from "axios";
-import { atom, selector, selectorFamily } from "recoil";
-import { cartState, prepareCartState } from "./cart.state";
+import { atom, selector } from "recoil";
+import { cartState } from "./cart.state";
 import { requestPhoneTriesState, userState, phoneState } from "./user.state";
-import { Membership, RecentlySearchMember } from "types/user";
-// import { membershipApi } from "api/member";
-import { getStorage, setStorage } from "zmp-sdk";
 import { membershipApi } from "api/member";
 
 export const listMembershipCardState = selector({
@@ -82,7 +78,6 @@ export const memberState = selector({
       customerName: member?.fullname,
       customerPhone: member?.phoneNumber,
     };
-    console.log("cart set", res);
     set(cartState, res);
   },
 });

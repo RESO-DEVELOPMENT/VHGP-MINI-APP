@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import {  useRecoilValue } from "recoil";
 import { Box, Text } from "zmp-ui";
-import storeSkeleton from "../../../static/store-skeleton.jpg";
+import storeSkeleton from "../../../static/skeletons/store-skeleton.jpg";
 import { storeState } from "states/store.state";
 
 export const StoreDetail: FC = () => {

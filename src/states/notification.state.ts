@@ -1,9 +1,9 @@
 import { atom } from "recoil";
-import logo from "static/logo-vhgp.jpg";
+import logo from "static/logos/logo-vhgp.jpg";
 import { Notification } from "../types/notification";
 
 export const notificationsState = atom<Notification[]>({
-  key: "notifications",
+  key: "notification",
 
   default: [
     {
@@ -11,7 +11,7 @@ export const notificationsState = atom<Notification[]>({
       image: logo,
       title: "Chào bạn mới",
       content:
-        "Cảm ơn đã sử dụng ZaUI Coffee, bạn có thể dùng ứng dụng này để tiết kiệm thời gian xây dựng",
+        "Cảm ơn đã sử dụng Bean, bạn có thể dùng ứng dụng này để tiết kiệm thời gian sử dụng",
     },
     {
       id: 2,

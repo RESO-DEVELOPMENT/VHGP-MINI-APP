@@ -9,7 +9,7 @@ import { memberState } from "states/member.state";
 import { ContentFallback } from "components/content-fallback";
 import { Subscription } from "pages/profile";
 import { VoucherGroup } from "types/voucher-group";
-import vhgpLogo from "static/logo-vhgp.jpg";
+import vhgpLogo from "static/logos/logo-vhgp.jpg";
 import { membershipApi } from "api/member";
 import ConfirmModal from "components/confirm-modal";
 

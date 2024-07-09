@@ -5,7 +5,7 @@ import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
-import storeSkeleton from "./../../static/store-skeleton.jpg";
+import storeSkeleton from "./../../static/skeletons/store-skeleton.jpg";
 import { nearbyStoresState } from "states/store.state";
 
 export const RecommendContent: FC = () => {

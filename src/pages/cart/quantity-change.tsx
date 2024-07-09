@@ -82,7 +82,6 @@ export const QuantityChangeSection: FC<{
     setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
 
   const handleAddOrUpdate = (update: boolean) => {
-    console.log("break")
     if (update) {
       
       updateCart(productInCart!, quantity, variantChosen);
@@ -226,4 +225,4 @@ export const QuantityChangeSection: FC<{
   );
 };
 
-console.log(cartState);
+

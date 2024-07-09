@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { openSupportChat } from "utils/config";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { requestPhoneTriesState, memberState } from "states/user.state";
-import subscriptionDecor from "static/subscription-decor.svg";
+import subscriptionDecor from "static/others/subscription-decor.svg";
 import RankInfo from "./rank";
 import { ContentFallback } from "components/content-fallback";
 

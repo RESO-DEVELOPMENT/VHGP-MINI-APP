@@ -8,7 +8,7 @@ import {
 } from "recoil";
 //TODO: design
 import { selectedStoreIdState, storeState, storesByFoodCategoryState } from "states/store.state";
-import storeSkeleton from "../../../static/store-skeleton.jpg";
+import storeSkeleton from "../../../static/skeletons/store-skeleton.jpg";
 import { Store } from "types/store";
 
 export const StorePickedByFoodResult: FC = () => {

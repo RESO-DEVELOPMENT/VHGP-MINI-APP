@@ -3,8 +3,8 @@ import { Box, Header, Text } from "zmp-ui";
 import {
   useRecoilValueLoadable,
 } from "recoil";
-import iconWallet from "../../static/icons8-wallet-50.png";
-import iconUser from "../../static/icons8-user-60.png";
+import iconWallet from "../../static/icons/icons8-wallet-50.png";
+import iconUser from "../../static/icons/icons8-user-60.png";
 
 import { UserInfo } from "types/user";
 import { userState } from "states/user.state";

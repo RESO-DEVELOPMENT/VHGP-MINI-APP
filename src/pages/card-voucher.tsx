@@ -5,7 +5,7 @@ import { Promotion } from "types/promotion";
 import { displayDate } from "utils/date";
 import { Button } from "zmp-react";
 import { Box, Text } from "zmp-ui";
-import promotionSkeleton from "../static/promotion-skeleton.jpg"
+import promotionSkeleton from "../static/skeletons/promotion-skeleton.jpg"
 
 interface VoucherCardProps {
   promotion: Promotion;

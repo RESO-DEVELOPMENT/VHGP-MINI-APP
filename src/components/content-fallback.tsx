@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Spinner } from "zmp-ui";
-import vhgpLogo from "static/logo-vhgp.jpg";
+import vhgpLogo from "static/logos/logo-vhgp.jpg";
 
 
 export const ContentFallback: FC = () => {
