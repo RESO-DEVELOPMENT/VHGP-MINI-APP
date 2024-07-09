@@ -12,7 +12,7 @@ import { Box, Text, useNavigate } from "zmp-ui";
 import { FinalPrice } from "components/display/final-price";
 import { ProductPicker } from "components/product/picker";
 import { ProductSearchResultSkeleton } from "components/skeletons";
-import productSkeleton from "static/drink-skeleton.jpg";
+import productSkeleton from "static/skeletons/drink-skeleton.jpg";
 
 const SearchResultContent: FC = () => {
   const result: Map<Store, Product[]> = useRecoilValue(resultState);
