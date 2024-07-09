@@ -5,7 +5,7 @@ import React, { FC, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import { useRecoilValueLoadable } from "recoil";
 import { memberState } from "states/member.state";
-import { MemberLevel, MemberWallet } from "types/user";
+import {  MemberWallet } from "types/user";
 
 import { Box, Text } from "zmp-ui";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";

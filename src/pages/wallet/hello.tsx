@@ -1,9 +1,6 @@
 import React, { FC } from "react";
 import { Box, Header, Text } from "zmp-ui";
 import {
-  useRecoilState,
-  useRecoilStateLoadable,
-  useRecoilValue,
   useRecoilValueLoadable,
 } from "recoil";
 import iconWallet from "../../static/icons8-wallet-50.png";

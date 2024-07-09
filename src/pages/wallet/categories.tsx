@@ -3,17 +3,16 @@ import { FC } from "react";
 import { Box, Text } from "zmp-ui";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router";
-import qrwallet from "static/qrwallet.png";
 import qrpoint from "static/qrpoint.png";
 import order from "static/order.png";
 import voucher from "static/voucher.png";
 import { MdPayments } from "react-icons/md";
 import { categoriesState, selectedCategoryIdState } from "states/category.state";
 export const Features: FC = () => {
-  const categories = useRecoilValue(categoriesState);
+  // const categories = useRecoilValue(categoriesState);
 
   const navigate = useNavigate();
-  const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
+  // const setSelectedCategoryId = useSetRecoilState(selectedCategoryIdState);
 
   const gotoCategory = () => {
     navigate("/category");

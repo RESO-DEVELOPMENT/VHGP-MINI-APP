@@ -1,8 +1,6 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Header, Page, useNavigate } from "zmp-ui";
-import { useVirtualKeyboardVisible } from "hooks";
 import { TabOrder } from "./tabs";
-import { CartPreview } from "../cart/preview";
 
 export const OrderStatus: FC = () => {
   // const keyboardVisible = useVirtualKeyboardVisible();

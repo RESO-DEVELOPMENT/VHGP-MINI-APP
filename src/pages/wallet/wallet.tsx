@@ -5,12 +5,11 @@ import { SwiperItem } from "pages/swiper-items";
 import React, { FC, useEffect } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { getStorage } from "zmp-sdk";
-import { Box, Page, Spinner, Text } from "zmp-ui";
+import { Box, Page, Text } from "zmp-ui";
 import { WelcomeUser } from "./hello";
 import { memberState } from "states/user.state";
 import { selectedStoreIndexState } from "states/store.state";
 import { ContentFallback } from "components/content-fallback";
-import { navigationMenuPathState } from "states/navigation.state";
 
 
 

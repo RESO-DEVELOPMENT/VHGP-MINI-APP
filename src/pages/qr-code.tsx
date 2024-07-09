@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Box, Text, Icon, Header , Page} from "zmp-ui";
+import React, {  useState } from "react";
+import { Box,  Icon , Page} from "zmp-ui";
 import QRCode from "react-qr-code";
 import { useRecoilValueLoadable } from "recoil";
 import { memberState } from "states/member.state";

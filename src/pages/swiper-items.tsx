@@ -3,7 +3,6 @@ import { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import { Box } from "zmp-ui";
-import { IoIosGift, IoIosSend } from "react-icons/io";
 import { IoTicket } from "react-icons/io5";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";

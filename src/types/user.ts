@@ -40,6 +40,7 @@ export interface UserInfo {
   insDate: Date;
   updDate: Date;
   memberLevel: MemberLevel;
+  level: MemberLevel;
 }
 
 export interface MemberLevel {

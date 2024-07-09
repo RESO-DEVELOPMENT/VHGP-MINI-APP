@@ -1,13 +1,9 @@
 import { useToBeImplemented } from "hooks";
-import React, { FC, Suspense } from "react";
-import { Box, Icon, Text } from "zmp-ui";
-import subscriptionDecor from "static/subscription-decor.svg";
-import { DisplayPrice } from "components/display/price";
-import { CartIcon } from "components/cart-icon";
+import React, { FC } from "react";
+import { Box, Text } from "zmp-ui";
 import { useNavigate } from "react-router";
-// import point from "static/point.png";
 import wallet from "static/icon-bean.png";
-import { MemberWallet, UserInfo } from "types/user";
+import { UserInfo } from "types/user";
 import { DisplayValue } from "components/display/value";
 
 export interface MemberBalanceProps {
