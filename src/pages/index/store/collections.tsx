@@ -9,11 +9,10 @@ import { DisplayPrice } from "components/display/price";
 import { productsByCollectionId } from "states/product.state";
 import { Collection } from "types/store-menu";
 
-
 interface CollectionProps {
   collections: Collection[];
 }
-export const Collections: FC<CollectionProps> = ({collections}) => {
+export const Collections: FC<CollectionProps> = ({ collections }) => {
   return (
     <>
       {collections.map((collection, index) => {

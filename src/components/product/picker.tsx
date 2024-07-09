@@ -30,7 +30,6 @@ export const ProductPicker: FC<ProductPickerProps> = ({
   product,
   storeId,
 }) => {
-  
   const [cart, setCart] = useRecoilState(cartState);
   const childProductsInMenu = useRecoilValue(childrenProductState(storeId!));
   const [visible, setVisible] = useState(false);

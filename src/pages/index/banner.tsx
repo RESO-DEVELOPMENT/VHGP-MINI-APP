@@ -29,11 +29,7 @@ export const Banner: FC = () => {
       >
         {member.state === "hasValue" &&
           member.contents?.memberLevel.membershipCard.map((card, i) => (
-            <SwiperSlide
-              key={i}
-              className="px-4"
-              onClick={() => gotoPage}
-            >
+            <SwiperSlide key={i} className="px-4" onClick={() => gotoPage}>
               <Box
                 className="w-full rounded-xl aspect-[16/9] bg-cover bg-center bg-primary"
                 style={{

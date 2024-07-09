@@ -1,10 +1,5 @@
 import cart from "pages/cart";
-import React, {
-  createContext,
-  useContext,
-  ReactNode,
-  FC,
-} from "react";
+import React, { createContext, useContext, ReactNode, FC } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "states/cart.state";
 import { ProductList } from "types/cart";
@@ -26,16 +21,18 @@ export interface ProductContextType {
 }
 
 const defaultContextValue: ProductContextType = {
-    addNewItem: () => {},
-    updateCart: () => {},
-  };
-const ProductContext = createContext<ProductContextType >(defaultContextValue);
+  addNewItem: () => {},
+  updateCart: () => {},
+};
+const ProductContext = createContext<ProductContextType>(defaultContextValue);
 
 export const useProductContext = (): ProductContextType => {
-    return useContext(ProductContext);
-  };
+  return useContext(ProductContext);
+};
 
-export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const ProductContextProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [cart, setCart] = useRecoilState(cartState);
 
   function addNote(
@@ -61,19 +58,15 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
     product: Product,
     quantity: number,
     variantChosen: string,
-    storeId: string,
+    storeId: string
   ) => {
-
     setCart((prevCart) => {
       let anotherCart;
-      console.log('add')
-      if(storeId != undefined && storeId !== prevCart.storeId)
+      if (storeId != undefined && storeId !== prevCart.storeId)
         anotherCart = { ...prevCart, storeId: storeId, productList: [] };
-       else 
-        anotherCart = { ...prevCart, storeId: storeId };
-      
+      else anotherCart = { ...prevCart, storeId: storeId };
+
       if (product != null) {
-     
         const cartItem: ProductList = {
           productInMenuId: product.menuProductId,
           parentProductId: product.parentProductId,
@@ -129,7 +122,6 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
           return prepareCart(res);
         }
         let newProductList = anotherCart.productList.map((item) => {
-
           if (item === productInCart) {
             return {
               ...item,
@@ -150,7 +142,7 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({ children }
       return prepareCart(anotherCart);
     });
   };
-  
+
   return (
     <ProductContext.Provider value={{ addNewItem, updateCart }}>
       {children}

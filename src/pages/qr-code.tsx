@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import { Box,  Icon , Page} from "zmp-ui";
+import React, { useEffect, useState } from "react";
+import { Box, Icon, Page } from "zmp-ui";
 import QRCode from "react-qr-code";
 import { useRecoilValueLoadable } from "recoil";
 import { memberState } from "states/member.state";
@@ -11,11 +11,42 @@ import { qrState } from "states/user.state";
 
 const QRCodePage: React.FC = () => {
   const [countdown, setCountdown] = useState(120);
+  const [qrCodeValue, setQrCodeValue] = useState<string | null>(null);
   const qrCode = useRecoilValueLoadable(qrState);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const member = useRecoilValueLoadable(memberState);
+
+  useEffect(() => {
+    // Thiết lập QR code ban đầu
+    if (member.state === "hasValue" && member.contents !== null) {
+      setQrCodeValue(
+        code ?? member.contents.memberLevel.membershipCard[0].membershipCardCode
+      );
+    }
+  }, [member.state, member.contents, code]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown((prevCountdown) => prevCountdown - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (countdown <= 0) {
+      if (member.state === "hasValue" && member.contents !== null) {
+        setQrCodeValue(
+          code ??
+            member.contents.memberLevel.membershipCard[0].membershipCardCode
+        );
+      }
+      setCountdown(120);
+    }
+  }, [countdown, member.state, member.contents, code]);
+
   if (member.state == "loading" || member.state == "hasError") {
     return <ContentFallback />;
   }
@@ -33,14 +64,14 @@ const QRCodePage: React.FC = () => {
               )}
               <div className="text-center">Đưa mã này vào thiết bị quét mã</div>
               <div className="flex justify-center my-8">
-                <QRCode
-                  value={
-                    code ??
-                    member.contents.memberLevel.membershipCard[0]
-                      .membershipCardCode
-                  }
-                  // size={220}
-                />
+                <QRCode value={qrCodeValue ?? ""} />
+              </div>
+              <div className="text-center mb-4 text-lg">
+                {countdown > 0 ? (
+                  <span>QR code sẽ hết hạn trong: {countdown}s</span>
+                ) : (
+                  <span>QR code đã hết hạn</span>
+                )}
               </div>
               <div className="flex justify-center mt-4">
                 <button

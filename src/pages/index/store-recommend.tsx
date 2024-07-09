@@ -12,7 +12,6 @@ export const RecommendContent: FC = () => {
   const recommendStores = useRecoilValue(nearbyStoresState);
 
   return (
-
     <Section title="Quán ngon gần bạn" padding="title-only">
       <Swiper slidesPerView={1.25} spaceBetween={16} className="">
         {recommendStores.map((store) => (
@@ -23,7 +22,9 @@ export const RecommendContent: FC = () => {
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box
                     className="relative aspect-video rounded-lg bg-cover bg-center "
-                    style={{ backgroundImage: `url(${store?.picUrl || storeSkeleton})` }}
+                    style={{
+                      backgroundImage: `url(${store?.picUrl || storeSkeleton})`,
+                    }}
                   >
                     <Text
                       size="small"
@@ -44,7 +45,6 @@ export const RecommendContent: FC = () => {
     </Section>
   );
 };
-
 
 export const RecommendFallback: FC = () => {
   const recommendStores = [...new Array(5)];

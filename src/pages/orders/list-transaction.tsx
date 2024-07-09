@@ -46,7 +46,7 @@ const ListTransaction: FC = () => {
 };
 const TransactionPage: FC = () => (
   <Page className="flex flex-col">
-    <Header showBackIcon={true} title="?" />
+    <Header showBackIcon={true} title="Giao dịch" />
     <ListTransaction />
   </Page>
 );

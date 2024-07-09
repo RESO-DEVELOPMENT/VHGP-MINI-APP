@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Section } from "components/section";
-import {  useRecoilValueLoadable } from "recoil";
+import { useRecoilValueLoadable } from "recoil";
 import { Box, Tabs } from "zmp-ui";
 import { ProductItem } from "components/product/item";
 import { ProductItemSkeleton } from "components/skeletons";
@@ -40,22 +40,22 @@ export const ProductListTabContent: FC<ProductListTabContentProps> = ({
   ) {
     const productsByCategory = productsByCategoryLoadable.contents;
     return (
-       <Box className="grid grid-cols-1 gap-4">
-          {productsByCategory.length > 0 ? (
-            productsByCategory.map((product) => (
-              <ProductItem
-                key={product.id}
-                product={product}
-                onQuantityChange={0}
-              />
-            ))
-          ) : (
-            <h6 className="text-center">Chưa có sản phẩm</h6>
-          )}
-        </Box> 
+      <Box className="grid grid-cols-1 gap-4">
+        {productsByCategory.length > 0 ? (
+          productsByCategory.map((product) => (
+            <ProductItem
+              key={product.id}
+              product={product}
+              onQuantityChange={0}
+            />
+          ))
+        ) : (
+          <h6 className="text-center">Chưa có sản phẩm</h6>
+        )}
+      </Box>
     );
   }
-  return <Box/>
+  return <Box />;
 };
 
 export const ProductListFallback: FC = () => {

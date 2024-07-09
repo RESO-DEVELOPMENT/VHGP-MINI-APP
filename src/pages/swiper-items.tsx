@@ -24,22 +24,30 @@ const swiperStyle: React.CSSProperties = {
 };
 const iconSize = "40px";
 export const SwiperItem: FC = () => {
-  const  setActiveTab = useSetRecoilState(navigationMenuPathState);
+  const setActiveTab = useSetRecoilState(navigationMenuPathState);
   const navigate = useNavigate();
   const swiperSlides1 = [
-    <SwiperSlide key={0} style={swiperStyle} onClick={() => { 
-      setActiveTab("/qr");
-      navigate("/qr");
-    }}>
+    <SwiperSlide
+      key={0}
+      style={swiperStyle}
+      onClick={() => {
+        setActiveTab("/qr");
+        navigate("/qr");
+      }}
+    >
       <div style={containerStyle}>
         <MdPayments className="icon-color" size={iconSize} />
       </div>
       <div className="text-center text-sm">Tích điểm</div>
     </SwiperSlide>,
-    <SwiperSlide key={1} style={swiperStyle} onClick={() => { 
-      setActiveTab("/order");
-      navigate("/order");
-    }}>
+    <SwiperSlide
+      key={1}
+      style={swiperStyle}
+      onClick={() => {
+        setActiveTab("/order");
+        navigate("/order");
+      }}
+    >
       <div style={containerStyle}>
         <FaCartPlus className="icon-color" size={iconSize} />
       </div>
@@ -48,7 +56,7 @@ export const SwiperItem: FC = () => {
     <SwiperSlide
       key={2}
       style={swiperStyle}
-      onClick={() => { 
+      onClick={() => {
         setActiveTab("/voucher");
         navigate("/voucher");
       }}
@@ -76,12 +84,7 @@ export const SwiperItem: FC = () => {
   ];
   return (
     <Box m={2}>
-      <Swiper
-        spaceBetween={2}
-        slidesPerView={4}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
-      >
+      <Swiper spaceBetween={2} slidesPerView={4}>
         {swiperSlides1}
       </Swiper>
     </Box>

@@ -22,12 +22,9 @@ export const RecommendContent: FC = () => {
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box className="relative rounded-lg bg-skeleton aspect-w-4 aspect-h-5">
                     <Box className=" absolute inset-0 w- h-50 object-cover rounded-lg">
-                    <img
-                      src={product.picUrl}
-                      className=""
-                    />
+                      <img src={product.picUrl} className="" />
                     </Box>
-                    
+
                     <Text
                       size="small"
                       className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded-full"
