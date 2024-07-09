@@ -22,7 +22,6 @@ export const WelcomeUser: FC<MemberBalanceProps> = ({ memberInfo }) => {
   // const money = memberInfo?.memberLevel.memberWallet.find(
   //   (e) => e.walletType.name === "MONEY"
   // );
-  console.log("....", memberInfo);
   const money = memberInfo?.memberLevel.memberWallet[0];
   return (
     <Header
