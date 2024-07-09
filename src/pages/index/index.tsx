@@ -8,7 +8,6 @@ import { FoodCategories } from "./food-categories";
 import Promotions from "./promotions";
 import { ProductsRecommend } from "./recommend";
 
-
 const HomePage: FC = () => {
   return (
     <Page className="relative flex-1 flex flex-col bg-white">
@@ -28,5 +27,3 @@ const HomePage: FC = () => {
   );
 };
 export default HomePage;
-
-
