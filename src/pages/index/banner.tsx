@@ -1,24 +1,16 @@
 import React, { FC, useState } from "react";
 import { useNavigate } from "react-router";
-import { useRecoilValueLoadable, useResetRecoilState } from "recoil";
-// import { Pagination } from "swiper";
+import { useRecoilValueLoadable } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getDummyImage } from "utils/product";
 import { Box, Text } from "zmp-ui";
 import { Autoplay, Pagination, Navigation, EffectCards } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import Barcode from "react-barcode";
-import QRCode from "react-qr-code";
 import { memberState } from "states/user.state";
 
 export const Banner: FC = () => {
-  // const blogList = useRecoilValueLoadable(listBlogState);
-
   const member = useRecoilValueLoadable(memberState);
-
-  const [visible, setVisible] = useState(true);
   const navigate = useNavigate();
   const gotoPage = () => {
     navigate("/qr");
@@ -40,7 +32,7 @@ export const Banner: FC = () => {
             <SwiperSlide
               key={i}
               className="px-4"
-              onClick={() => navigate("/qr")}
+              onClick={() => gotoPage}
             >
               <Box
                 className="w-full rounded-xl aspect-[16/9] bg-cover bg-center bg-primary"
