@@ -78,7 +78,12 @@ export const Navigation: FC = () => {
           />
         ))}
       </BottomNavigation>
-      {shouldShowFAB && quantityCart > 0 && (
+      {/* Show giỏ hàng nếu như có > 0 sản phẩm */}
+      {/* {shouldShowFAB && quantityCart > 0 && (
+        <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
+      )} */}
+      {/* Luôn luôn show giỏ hàng */}
+      {shouldShowFAB && (
         <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
       )}
     </>
