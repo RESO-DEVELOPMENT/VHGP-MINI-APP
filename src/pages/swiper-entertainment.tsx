@@ -5,7 +5,7 @@ import { useRecoilValueLoadable } from "recoil";
 import { listBlogState } from "states/blog.state";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
-import { Box } from "zmp-ui";
+import { Box, Text } from "zmp-ui";
 
 const container2Style: React.CSSProperties = {
   position: "relative",
@@ -41,7 +41,10 @@ export const SwiperEn: FC = () => {
   const gotoPage = (id: string) => {
     navigate("/blog", { state: { id } });
   };
-  return blogList.state === "hasValue" && blogList.contents !== null ? (
+
+  return blogList.state === "hasValue" &&
+    blogList.contents !== null &&
+    blogList.contents.length > 0 ? (
     <Box m={4}>
       <Swiper spaceBetween={0} slidesPerView={2}>
         {blogList.contents.map((item, index) => (
@@ -76,6 +79,16 @@ export const SwiperEn: FC = () => {
       </Swiper>
     </Box>
   ) : (
-    <Box />
+    <Box
+      m={4}
+      className="h-[150px] rounded-lg flex items-center justify-center "
+      style={{
+        background: "linear-gradient(to right, #D17842, #FFA166)",
+      }}
+    >
+      <Text size="large" className="text-white text-center">
+        Chương trình khuyến mãi sẽ được cập nhật sớm...
+      </Text>
+    </Box>
   );
 };

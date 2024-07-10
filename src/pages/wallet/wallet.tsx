@@ -10,6 +10,7 @@ import { WelcomeUser } from "./hello";
 import { memberState } from "states/member.state";
 import { selectedStoreIndexState } from "states/store.state";
 import { ContentFallback } from "components/content-fallback";
+import { Divider } from "components/divider";
 
 const WalletScreen: FC = () => {
   const member = useRecoilValueLoadable(memberState);
@@ -48,19 +49,24 @@ const WalletScreen: FC = () => {
               <Text.Title size="normal">Dịch vụ</Text.Title>
             </Box>
             <SwiperItem />
-            {/* <Box className="mx-4 mt-8" style={flexContainerStyle}>
+            <Box className="mx-4 mt-4" style={flexContainerStyle}>
               <Text.Title size="normal">Chương trình</Text.Title>
-            </Box> */}
+            </Box>
+            <Divider/>
             <SwiperEn />
           </>
         ) : (
           <>
             <Box className="h-24" />
             <Subscription />
+            <Box className="mx-4 mt-4" style={flexContainerStyle}>
+              <Text.Title size="normal">Dịch vụ</Text.Title>
+            </Box>
             <SwiperItem />
             <Box className="mx-4 mt-4" style={flexContainerStyle}>
-              {/* <Text.Title size="normal">Chương trình</Text.Title> */}
+              <Text.Title size="normal">Chương trình</Text.Title>
             </Box>
+            <Divider/>
             <SwiperEn />
           </>
         )}
