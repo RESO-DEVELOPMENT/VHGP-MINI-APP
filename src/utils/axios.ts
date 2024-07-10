@@ -7,6 +7,7 @@ export enum AxiosClientFactoryEnum {
   PAYMENT = "payment",
   REPORT = "report",
   PROMOTION = "promotion",
+  VHGP = "vhgp",
 }
 
 // ----------------------------------------------------------------------
@@ -42,6 +43,7 @@ const account = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
 const paymentService = `${process.env.REACT_APP_PAYMENT_SERVICE_URL}`;
 const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
 const promotion = "https://api-pointify.reso.vn/api";
+const vhgp = "https://api.vhgp.net/api/v1/";
 const requestWebAdmin = axios.create({
   baseURL: admin,
   paramsSerializer: parseParams,
@@ -124,12 +126,41 @@ requestLogin.interceptors.request.use((options) => {
   return options;
 });
 
+
 requestLogin.interceptors.response.use(
   (response) => response,
   (error) =>
     Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
 );
+const requestVHGP = axios.create({
+  baseURL: vhgp,
+  paramsSerializer: parseParams,
+});
 
+requestVHGP.interceptors.request.use((options) => {
+  const { method } = options;
+  console.log("break")
+  if (method === "put" || method === "post") {
+    Object.assign(options.headers, {
+      "Content-Type": "application/json;charset=UTF-8",
+    });
+  }
+
+  return options;
+});
+requestVHGP.interceptors.response.use(
+  (response) => response,
+  (error) =>
+    Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
+);
+requestPromotion.interceptors.response.use(
+  (response) => response,
+  (error) =>
+    Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
+);
+
+
+//handle error
 const requestReport = axios.create({
   baseURL: report,
   paramsSerializer: parseParams,
@@ -147,11 +178,7 @@ requestReport.interceptors.request.use((options) => {
   return options;
 });
 
-requestReport.interceptors.response.use(
-  (response) => response,
-  (error) =>
-    Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
-);
+
 
 // ----------------------------------------------------------------------
 class AxiosClientFactory {
@@ -187,6 +214,8 @@ class AxiosClientFactory {
         return requestPaymentServices;
       case "promotion":
         return requestPromotion;
+      case "vhgp":
+        return requestVHGP;
       default:
         return requestWebAdmin;
     }
@@ -204,6 +233,8 @@ export const axiosInstances = {
   promotion: axiosClientFactory.getAxiosClient(
     AxiosClientFactoryEnum.PROMOTION
   ),
+  vhgp: axiosClientFactory.getAxiosClient(AxiosClientFactoryEnum.VHGP),
 };
 
 export default axiosInstances.webAdmin;
+

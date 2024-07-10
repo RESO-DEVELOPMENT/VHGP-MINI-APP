@@ -6,6 +6,10 @@ export type BaseReponse<T> = {
   totalPages: number;
 };
 
+export type SingleReponse<T> = {
+  items: T;
+};
+
 export type TRequestPaging = {
   size?: number;
   page?: number;

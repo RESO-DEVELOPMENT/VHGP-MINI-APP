@@ -1,4 +1,5 @@
 import orderApi from "api/order";
+import { useProductContext } from "context/app-context";
 import { atom, selector } from "recoil";
 import { Cart } from "types/cart";
 import { OrderType, PaymentType } from "types/order";
@@ -12,11 +13,12 @@ export const prepareCartState = selector<Cart>({
   },
 });
 
+const { commonOrderType } = useProductContext();
 export const cartState = atom<Cart>({
   key: "cart",
   default: {
     storeId: "",
-    orderType: OrderType.EATIN,
+    orderType: commonOrderType,
     paymentType: PaymentType.CASH,
     productList: [],
     totalAmount: 0,

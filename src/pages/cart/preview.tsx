@@ -1,7 +1,7 @@
 import orderApi from "api/order";
 import { DisplayPrice } from "components/display/price";
 import { Subscription } from "pages/profile";
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { useNavigate } from "react-router";
 import {
   useRecoilState,
@@ -20,8 +20,10 @@ import { PaymentPicker } from "./payment-picker";
 import { cartState, prepareCartState } from "states/cart.state";
 import { memberState } from "states/user.state";
 import { ContentFallback } from "components/content-fallback";
+import { useProductContext } from "context/app-context";
 
 export const CartPreview: FC = () => {
+  const { commonOrderType } = useProductContext();
   const setCart = useSetRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
 
@@ -56,7 +58,8 @@ export const CartPreview: FC = () => {
               let res = { ...prevCart };
               res = {
                 ...prevCart,
-                orderType: OrderType.EATIN,
+                //TODO: hard set
+                orderType: commonOrderType,
                 productList: [],
                 totalAmount: 0,
                 shippingFee: 0,
@@ -160,7 +163,7 @@ export const CartPreview: FC = () => {
             let res = { ...prevCart };
             res = {
               ...prevCart,
-              orderType: OrderType.EATIN,
+              orderType: commonOrderType,
               paymentType: PaymentType.POINTIFY,
               productList: [],
               totalAmount: 0,
@@ -207,7 +210,7 @@ export const CartPreview: FC = () => {
           let res = { ...prevCart };
           res = {
             ...prevCart,
-            orderType: OrderType.EATIN,
+            orderType: commonOrderType,
             paymentType: PaymentType.POINTIFY,
             productList: [],
             totalAmount: 0,

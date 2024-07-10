@@ -3,6 +3,7 @@ import React, { createContext, useContext, ReactNode, FC } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "states/cart.state";
 import { ProductList } from "types/cart";
+import { OrderType } from "types/order";
 import { Product } from "types/store-menu";
 import { prepareCart } from "utils/product";
 
@@ -18,11 +19,13 @@ export interface ProductContextType {
     quantity: number,
     variantChosen: string
   ) => any;
+  commonOrderType: string;
 }
 
 const defaultContextValue: ProductContextType = {
   addNewItem: () => {},
   updateCart: () => {},
+  commonOrderType: OrderType.DELIVERY,
 };
 const ProductContext = createContext<ProductContextType>(defaultContextValue);
 
@@ -143,8 +146,9 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({
     });
   };
 
+  const commonOrderType = OrderType.DELIVERY
   return (
-    <ProductContext.Provider value={{ addNewItem, updateCart }}>
+    <ProductContext.Provider value={{ addNewItem, updateCart, commonOrderType }}>
       {children}
     </ProductContext.Provider>
   );
