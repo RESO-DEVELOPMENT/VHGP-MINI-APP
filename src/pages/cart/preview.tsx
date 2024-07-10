@@ -21,25 +21,41 @@ import { cartState, prepareCartState } from "states/cart.state";
 import { memberState } from "states/user.state";
 import { ContentFallback } from "components/content-fallback";
 import { useProductContext } from "context/app-context";
+import { addressState } from "states/order.state";
+import { storeState } from "states/store.state";
 
 export const CartPreview: FC = () => {
   const { commonOrderType } = useProductContext();
   const setCart = useSetRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
-
+  const address = useRecoilValue(addressState);
   const member = useRecoilValueLoadable(memberState);
-
+  const store = useRecoilValue(storeState);
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   const onCheckout = async () => {
-    if (cartPrepare.contents.paymentType == PaymentType.CASH) {
+  //TODO: check address . Example: Vinhome,Origami, S202
+  console.log("break")
+      if(address.split(",").length != 3) {
+        snackbar.openSnackbar({
+                      duration: 3000,
+                      position: "top",
+                      type: "warning",
+          
+                      text: "Vui lòng nhập dịa chỉ giao hàng",
+                   });
+                  }
+    
+
+    else if (cartPrepare.contents.paymentType == PaymentType.CASH) {
       const body = {
         ...cartPrepare.contents,
         customerId: member.contents.membershipId,
         customerName: member.contents.fullname,
         customerPhone: member.contents.phoneNumber,
+        address: store.name,
       };
-      console.log("body", body);
+      // console.log("body", body);
 
       Payment.createOrder({
         desc: `Thanh toán cho ${getConfig((config) => config.app.title)}`,
@@ -147,9 +163,10 @@ export const CartPreview: FC = () => {
       try {
         const body = {
           ...cartPrepare.contents,
-          // customerId: member.contents.membershipId,
+          customerId: member.contents.membershipId,
           customerName: member.contents.fullname,
           customerPhone: member.contents.phoneNumber,
+          address: store.name,
         };
 
         const res = await orderApi.createNewOrder(body);

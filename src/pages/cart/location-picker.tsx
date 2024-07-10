@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { addressState } from "states/order.state";
 import { cartState } from "states/cart.state";
 import { selectedStoreState } from "states/store.state";
-import {  Box, Button, Input, Sheet } from "zmp-ui";
+import {  Box, Button, Input, Sheet, useSnackbar } from "zmp-ui";
 import AddressPicker from "components/address-picker";
 import { ListItem } from "components/list-item";
 import { createPortal } from "react-dom";
@@ -18,13 +18,18 @@ export const LocationPicker: FC = () => {
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setAddress(e.target.value);
   // };
-
+  const snackbar = useSnackbar();
   const handleAddressSubmit = () => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      deliveryAddress: address || undefined,
-    }));
-    setVisible(false);
+   
+    
+
+      setCart((prevCart) => ({
+        ...prevCart,
+        deliveryAddress: address || undefined,
+      }));
+      setVisible(false);
+    
+    
   };
 
   return (

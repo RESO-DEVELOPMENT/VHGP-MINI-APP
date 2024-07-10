@@ -8,7 +8,7 @@ import {
 } from "recoil";
 //TODO: design
 import { selectedStoreIdState, storeState, storesByFoodCategoryState } from "states/store.state";
-import storeSkeleton from "../../../static/skeletons/store-skeleton.jpg";
+import storeSkeleton from "../../../static/skeletons/store-skeleton.png";
 import { Store } from "types/store";
 
 export const StorePickedByFoodResult: FC = () => {
@@ -45,7 +45,7 @@ export const StorePickedByFoodResult: FC = () => {
                   <div className="flex-none aspect-card relative w-3/12">
                     <img
                       src={storeSkeleton}
-                      className="absolute w-full h-full object-cover rounded-xl"
+                      className="absolute w-full h-full object-fit rounded-xl"
                     />
                   </div>
                   <Box my={4} mx={5} className="w-9/12">

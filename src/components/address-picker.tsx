@@ -129,6 +129,7 @@ const AddressPicker: FC = () => {
              
   
             }}
+            mask={true}
             disabled={false}
             data={pickerData}
           />

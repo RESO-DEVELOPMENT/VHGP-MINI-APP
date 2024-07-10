@@ -5,7 +5,7 @@ import React, { FC, Suspense } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Text } from "zmp-ui";
-import storeSkeleton from "./../../static/skeletons/store-skeleton.jpg";
+import storeSkeleton from "./../../static/skeletons/store-skeleton.png";
 import { nearbyStoresState } from "states/store.state";
 
 export const RecommendContent: FC = () => {
@@ -21,7 +21,7 @@ export const RecommendContent: FC = () => {
               {({ open }) => (
                 <div onClick={open} className="space-y-3 ml-3">
                   <Box
-                    className="relative aspect-video rounded-lg bg-cover bg-center "
+                    className="relative aspect-video rounded-lg bg-cover bg-center object-fit "
                     style={{
                       backgroundImage: `url(${store?.picUrl || storeSkeleton})`,
                     }}

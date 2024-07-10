@@ -260,11 +260,14 @@ const OrderDetailsPage: FC = () => {
                         <Text size="small">
                           {orderDetail.state == "hasValue" &&
                           orderDetail.contents !== null
-                            ? orderDetail.contents.orderType ==
-                              OrderType.DELIVERY
-                              ? orderDetail.contents.customerInfo?.address
-                              : orderDetail.contents.storeName
-                            : ""}
+                            ? 
+                            // orderDetail.contents.orderType ==
+                            //   OrderType.DELIVERY
+                            //   ? orderDetail.contents.customerInfo?.address
+                            //   : orderDetail.contents.storeName
+                            // : ""
+                               orderDetail.contents.storeName : ""
+                            }
                         </Text>
                       </Box>
                     ),
