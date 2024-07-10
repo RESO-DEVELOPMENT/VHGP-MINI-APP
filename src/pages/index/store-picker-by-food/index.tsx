@@ -10,7 +10,7 @@ export const StoresPickerByFood: FC = () => {
   const pickedCategoryName = currentFoodCategoryState.name || "";
   return (
     <Page className="flex flex-col">
-      <Header title={pickedCategoryName} />
+      <Header title={pickedCategoryName} className="py-4" />
       <StorePickedByFoodResult />
     </Page>
   );

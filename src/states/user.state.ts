@@ -64,7 +64,7 @@ export const phoneState = selector<string | undefined>({
       });
       if (token !== undefined) {
         await zaloApi.getUserPhone(token, accessToken).then((value) => {
-          phone = value.data.data.number.replace(/^\84/, "0");
+          phone = value.data.data.number.replace(/^\+84/, "0");
         });
       }
       return phone;

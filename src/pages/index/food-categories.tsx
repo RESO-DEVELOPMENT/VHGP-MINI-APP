@@ -45,21 +45,25 @@ export const FoodCategories: FC = () => {
     case "hasValue":
       const categories: FoodCategory[] = foodCategoriesLoadable.contents;
       return (
-        <Box className="bg-white grid grid-cols-4 gap-4 p-4">
+        <Box className="bg-white grid grid-cols-2 gap-4 p-4">
           {categories.map((category) => (
             <div
               key={category.code}
               onClick={() => gotoCategory(category)}
-              className="flex flex-col space-y-2 items-center"
+              className="flex flex-row space-y-2 justify-between items-center shadow-sm shadow-primary p-2 rounded-lg"
             >
-              <img
-                className="w-12 h-12"
-                src={category.picUrl || foodCateSkeleton}
-                alt={category.name}
-              />
-              <Text size="xxSmall" className="text-gray">
-                {category.name}
-              </Text>
+              <Box>
+                <img
+                  className="w-12 h-12"
+                  src={category.picUrl || foodCateSkeleton}
+                  alt={category.name}
+                />
+              </Box>
+              <Box>
+                <Text size="xxSmall" className="text-gray">
+                  {category.name}
+                </Text>
+              </Box>
             </div>
           ))}
         </Box>

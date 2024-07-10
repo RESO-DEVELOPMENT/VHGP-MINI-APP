@@ -13,35 +13,39 @@ export const RecommendContent: FC = () => {
 
   return (
     <Section title="Quán ngon gần bạn" padding="title-only">
-      <Swiper slidesPerView={1.25} spaceBetween={16} className="">
-        {recommendStores.map((store) => (
-          <SwiperSlide key={store.id}>
-            {/* Các cửa hàng được recomment render ở đây */}
-            <RecommendStorePicker store={store} isUpdate={false}>
-              {({ open }) => (
-                <div onClick={open} className="space-y-3 ml-3">
-                  <Box
-                    className="relative aspect-video rounded-lg bg-cover bg-center object-fit "
-                    style={{
-                      backgroundImage: `url(${store?.picUrl || storeSkeleton})`,
-                    }}
-                  >
-                    <Text
-                      size="small"
-                      className="absolute right-2 top-2  bg-primary text-white h-5 px-[8px] rounded-full border border-white"
-                    >
-                      <h6>HOT</h6>
-                    </Text>
-                  </Box>
-                  <Box className="space-y-1">
-                    <Text size="normal">{store.name}</Text>
-                  </Box>
-                </div>
-              )}
-            </RecommendStorePicker>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {recommendStores.map((store, index) => (
+        <RecommendStorePicker key={index} store={store} isUpdate={false}>
+          {({ open }) => (
+            <div onClick={open} className="ml-3 flex ">
+              <Box
+                className="relative overflow-hidden rounded-lg shadow-md"
+                style={{
+                  width: "100px", // Điều chỉnh chiều rộng của hình ảnh
+                  height: "100px", // Điều chỉnh chiều cao của hình ảnh
+                }}
+              >
+                <div
+                  className="bg-cover bg-center w-full h-full"
+                  style={{
+                    backgroundImage: `url(${store?.picUrl || storeSkeleton})`,
+                  }}
+                />
+                <Text
+                  size="small"
+                  className="absolute right-2 top-2 bg-primary text-white px-2 py-1 rounded-full"
+                >
+                  <h6>HOT</h6>
+                </Text>
+              </Box>
+              <Box className="ml-2 flex-col justify-start px-2 py-2 ">
+                <Text className="font-bold" size="large">{store.name}</Text>
+                <Text className=" mt-1" size="normal">{store.address}</Text>
+              </Box>
+              
+            </div>
+          )}
+        </RecommendStorePicker>
+      ))}
     </Section>
   );
 };

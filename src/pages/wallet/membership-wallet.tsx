@@ -78,7 +78,7 @@ export const MembershipWallets: FC<MembershipWalletsProps> = () => {
       //     </Box>
       //   </Swiper>
       // </Box>
-      <Box m={4}>
+      <Box>
         <Swiper spaceBetween={0} slidesPerView={2}>
           {memberWallets.map((wallet, index) => (
             <SwiperSlide key={`slide${index + 1}`} className="p-1">
@@ -106,34 +106,33 @@ const MembershipWallet: FC<MembershipWalletProps> = ({ memberWallet }) => {
   };
 
   return (
-    <>
-      <Box
-        p={2}
-        className="rounded-lg text-center relative border border-primary"
-      >
-        <Text size="large" className="font-semibold mb-2 ">
-          {memberWallet.walletType.name}
-        </Text>
+    <Box
+  p={2}
+  className="rounded-lg text-center border border-slate-400  "
+>
+  <Text size="large" className="font-semibold mb-2">
+    {memberWallet.walletType.name}
+  </Text>
 
-        <Text className="absolute top-2.5 right-2.5">
-          {isExpanded ? (
-            <IoEye onClick={toggleExpand} />
-          ) : (
-            <IoEyeOff onClick={toggleExpand} />
-          )}
-        </Text>
+  <Text className="absolute top-2.5 right-2.5">
+    {isExpanded ? (
+      <IoEye onClick={toggleExpand} />
+    ) : (
+      <IoEyeOff onClick={toggleExpand} />
+    )}
+  </Text>
 
-        <Text size="normal" className="font-bold  ">
-          {isExpanded ? (
-            <DisplayValue
-              value={memberWallet?.balance ?? 0}
-              unit={memberWallet?.walletType.currency}
-            />
-          ) : (
-            "******"
-          )}
-        </Text>
-      </Box>
-    </>
+  <Text size="normal" className="font-bold">
+    {isExpanded ? (
+      <DisplayValue
+        value={memberWallet?.balance ?? 0}
+        unit={memberWallet?.walletType.currency}
+      />
+    ) : (
+      "******"
+    )}
+  </Text>
+</Box>
+
   );
 };

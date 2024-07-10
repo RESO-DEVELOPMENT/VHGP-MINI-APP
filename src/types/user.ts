@@ -41,6 +41,7 @@ export interface UserInfo {
   updDate: Date;
   memberLevel: MemberLevel;
   level: MemberLevel;
+  avatar: string;
 }
 
 export interface MemberLevel {

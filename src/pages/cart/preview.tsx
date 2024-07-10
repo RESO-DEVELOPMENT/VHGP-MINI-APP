@@ -1,20 +1,16 @@
 import orderApi from "api/order";
 import { DisplayPrice } from "components/display/price";
 import { Subscription } from "pages/profile";
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import { useNavigate } from "react-router";
 import {
-  useRecoilState,
-  useRecoilStateLoadable,
   useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
-import { OrderType, PaymentType } from "types/order";
+import {  PaymentType } from "types/order";
 import { getConfig } from "utils/config";
-import pay, { showPaymentType } from "utils/product";
 import { Payment } from "zmp-sdk";
-import { EventName, events } from "zmp-sdk/apis";
 import { Box, Button, Icon, Text, useSnackbar } from "zmp-ui";
 import { PaymentPicker } from "./payment-picker";
 import { cartState, prepareCartState } from "states/cart.state";

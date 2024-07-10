@@ -12,7 +12,7 @@ const CategoryPicker: FC = () => {
     return (
       <Box className="flex-1 bg-background p-4 flex justify-center items-center">
         <Text size="xSmall" className="text-gray">
-          Không có sản phẩm hoặc danh mục nào trong danh mục này
+          Không có sản phẩm hoặc danh mục nào 
         </Text>
       </Box>
     );

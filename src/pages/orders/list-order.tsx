@@ -4,8 +4,8 @@ import {
   useSetRecoilState,
 } from "recoil";
 import "./orders.css";
-import { Box, Button, Header, Icon, Page, Tabs, Text } from "zmp-ui";
-// import TransactionCard from "./card-transaction";
+import { Box, Header, Icon, Page, Tabs, Text } from "zmp-ui";
+
 import { Card } from "react-bootstrap";
 import { displayDate, displayTime } from "utils/date";
 import { DisplayPrice } from "components/display/price";
@@ -14,20 +14,19 @@ import { OrderStatus } from "types/order";
 import { useNavigate } from "react-router-dom";
 import { Subscription } from "pages/profile";
 import { ProductRePicker } from "components/product/repicker";
-// import { selectedCategoryIdState } from "states/category.state";
+import historyIcon from "../../static/icons/time_line.png";
+
 import {
   listOrderState,
   requestOrderTransactionTriesState,
 } from "states/order.state";
-// import { listTransactionState } from "states/transaction.state";
+
 import { memberState } from "states/member.state";
 import { ContentFallback } from "components/content-fallback";
 
 const HistoryPicker: FC = () => {
-  // const selectedCategory = useRecoilValue(selectedCategoryIdState);
-  const orderListData = useRecoilValueLoadable(listOrderState);
-  // const transactionListData = useRecoilValueLoadable(listTransactionState);
 
+  const orderListData = useRecoilValueLoadable(listOrderState);
   const navigate = useNavigate();
   const retry = useSetRecoilState(requestOrderTransactionTriesState);
   const member = useRecoilValueLoadable(memberState);
@@ -128,7 +127,12 @@ const HistoryPicker: FC = () => {
 const HistoryPage: FC = () => {
   return (
     <Page className="flex flex-col">
-      <Header showBackIcon={false} title="Đơn Hàng" />
+      <Header
+          title="Đơn hàng "
+          backIcon= {<img className="text-primary" src={historyIcon} />}
+          onBackClick={() => {}}
+          showBackIcon={true}
+          />
       <HistoryPicker key={1} />
     </Page>
   );

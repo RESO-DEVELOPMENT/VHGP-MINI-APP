@@ -24,7 +24,7 @@ const StorePage: FC = () => {
     return (
       <Page className="flex flex-col ">
         <Box>
-          <Header className="z-10" />
+          <Header showBackIcon={true} className="py-4" />
           <StoreDetail />
           <Divider />
           <Suspense>
