@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { Box, useNavigate, Text } from "zmp-ui";
-import foodCateSkeleton from "../../static/skeletons/food-categories-skeleton.png";
+import foodCateSkeleton from "../../static/skeletons/fast-food.png";
 import {
   foodCategoriesListState,
   foodCategoryState,
