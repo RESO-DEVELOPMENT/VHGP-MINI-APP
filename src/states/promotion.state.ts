@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { memberState } from "./user.state";
+import { memberState } from "./member.state";
 import userApi from "api/user";
 
 

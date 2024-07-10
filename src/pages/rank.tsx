@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useRecoilValueLoadable } from "recoil";
-import { memberState } from "states/user.state";
+import { memberState } from "states/member.state";
 import { MemberLevel } from "types/user";
 import { Box, Progress, Text } from "zmp-ui";
 

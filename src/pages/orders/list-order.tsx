@@ -20,7 +20,7 @@ import {
   requestOrderTransactionTriesState,
 } from "states/order.state";
 // import { listTransactionState } from "states/transaction.state";
-import { memberState } from "states/user.state";
+import { memberState } from "states/member.state";
 import { ContentFallback } from "components/content-fallback";
 
 const HistoryPicker: FC = () => {

@@ -1,5 +1,5 @@
 import orderApi from "api/order";
-import { memberState } from "./user.state";
+import { memberState } from "./member.state";
 import { selector } from "recoil";
 import { requestOrderTransactionTriesState } from "./order.state";
 

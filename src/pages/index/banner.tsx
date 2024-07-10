@@ -7,7 +7,7 @@ import { Autoplay, Pagination, Navigation, EffectCards } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { memberState } from "states/user.state";
+import { memberState } from "states/member.state";
 
 export const Banner: FC = () => {
   const member = useRecoilValueLoadable(memberState);

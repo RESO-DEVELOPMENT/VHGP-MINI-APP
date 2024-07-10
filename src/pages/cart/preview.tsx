@@ -18,7 +18,7 @@ import { EventName, events } from "zmp-sdk/apis";
 import { Box, Button, Icon, Text, useSnackbar } from "zmp-ui";
 import { PaymentPicker } from "./payment-picker";
 import { cartState, prepareCartState } from "states/cart.state";
-import { memberState } from "states/user.state";
+import { memberState } from "states/member.state";
 import { ContentFallback } from "components/content-fallback";
 import { useProductContext } from "context/app-context";
 import { addressState } from "states/order.state";
@@ -50,16 +50,17 @@ export const CartPreview: FC = () => {
     else if (cartPrepare.contents.paymentType == PaymentType.CASH) {
       const body = {
         ...cartPrepare.contents,
-        customerId: member.contents.membershipId,
-        customerName: member.contents.fullname,
-        customerPhone: member.contents.phoneNumber,
-        address: store.name,
+        // customerId: member.contents.membershipId,
+        // customerName: member.contents.fullname,
+        // customerPhone: member.contents.phoneNumber,
+        // address: store.name,
       };
       // console.log("body", body);
 
       Payment.createOrder({
         desc: `Thanh toán cho ${getConfig((config) => config.app.title)}`,
         item: [],
+       
         amount: cartPrepare.contents.finalAmount,
         success: async (data) => {
           let { orderId } = data;
@@ -163,10 +164,6 @@ export const CartPreview: FC = () => {
       try {
         const body = {
           ...cartPrepare.contents,
-          customerId: member.contents.membershipId,
-          customerName: member.contents.fullname,
-          customerPhone: member.contents.phoneNumber,
-          address: store.name,
         };
 
         const res = await orderApi.createNewOrder(body);
@@ -293,27 +290,12 @@ export const CartPreview: FC = () => {
               </Text>
               <Icon className="bottom-0.5" icon="zi-chevron-up" />
             </Box>
-            {/* <Text.Title
-           onClick={() => navigate("/voucher")}
-           className="text-primary"
-           size="small"
-         >
-           {cartPrepare.state === "hasValue" &&
-           cartPrepare.contents !== null &&
-           cartPrepare.contents.promotionCode !== null
-             ? cartPrepare.contents.promotionCode
-             : "KHUYẾN MÃI"}
-         </Text.Title> */}
 
             <Text.Title
               className="text-gray text-transform: uppercase;"
               size="small"
             >
               <PaymentPicker />
-
-              {/* {cartPrepare.state === "hasValue" && cartPrepare.contents !== null
-                ? showPaymentType(cartPrepare.contents.paymentType)
-                : "TIỀN MẶT"} */}
             </Text.Title>
           </Box>
           <Button

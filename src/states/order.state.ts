@@ -1,6 +1,6 @@
 import orderApi from "api/order";
 import { atom, selector, selectorFamily } from "recoil";
-import { memberState } from "./user.state";
+import { memberState } from "./member.state";
 import { OrderDetails, PaymentType } from "types/order";
 import { Payment } from "types/payment";
 

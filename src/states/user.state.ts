@@ -3,6 +3,7 @@ import zaloApi from "api/zalo-api";
 import { atom, selector } from "recoil";
 import axios from "utils/axios";
 import { getAccessToken, getPhoneNumber, getUserInfo } from "zmp-sdk";
+import { memberState } from "./member.state";
 
 export const requestRetriveQRstate = atom({
   key: "requestRetriveQR",
@@ -71,28 +72,28 @@ export const phoneState = selector<string | undefined>({
   },
 });
 
-export const memberState = selector({
-  key: "member",
-  get: async ({ get }) => {
-    const requested = get(requestPhoneTriesState);
-    if (requested) {
-      const user = get(userState);
-      const phone = get(phoneState);
-      if (phone !== undefined && user != null) {
-        var response = await userApi.userLogin(phone, user.name);
-        if (response.status == 200) {
-          axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
-          var member = await userApi.getUserInfo(
-            response.data.data.userId || ""
-          );
-          return member.data;
-        }
-      }
-      return null;
-    }
-    return null;
-  },
-});
+// export const memberState = selector({
+//   key: "member",
+//   get: async ({ get }) => {
+//     const requested = get(requestPhoneTriesState);
+//     if (requested) {
+//       const user = get(userState);
+//       const phone = get(phoneState);
+//       if (phone !== undefined && user != null) {
+//         var response = await userApi.userLogin(phone, user.name);
+//         if (response.status == 200) {
+//           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+//           var member = await userApi.getUserInfo(
+//             response.data.data.userId || ""
+//           );
+//           return member.data;
+//         }
+//       }
+//       return null;
+//     }
+//     return null;
+//   },
+// });
 
 export const qrState = selector({
   key: "qrCode",
