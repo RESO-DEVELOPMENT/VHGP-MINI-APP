@@ -35,8 +35,8 @@ export const CartPreview: FC = () => {
   const navigate = useNavigate();
   const onCheckout = async () => {
   //TODO: check address . Example: Vinhome,Origami, S202
-  console.log("break")
-      if(address.split(",").length != 3) {
+      console.log("break")
+      if(address.split(",").some(a => a.includes("undefined"))) {
         snackbar.openSnackbar({
                       duration: 3000,
                       position: "top",
