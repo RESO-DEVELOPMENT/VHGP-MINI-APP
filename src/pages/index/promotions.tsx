@@ -55,7 +55,7 @@ const Promotions = () => {
         <Box className="flex items-center ">
           <img className="w-8 h-8 mr-2" src={voucherIcon} alt="Voucher Icon" />
           <div>
-            <Text>{`Có ${promotionListData.contents.length} ưu đãi đang chờ bạn !`}</Text>
+            <Text>Có <span className="font-bold">{promotionListData.contents.length}</span> ưu đãi đang chờ bạn !</Text>
           </div>
         </Box>
         <div>
@@ -73,7 +73,7 @@ const Promotions = () => {
         <Box className="flex items-center ">
           <img className="w-8 h-8 mr-2" src={voucherIcon} alt="Voucher Icon" />
           <div>
-            <Text>{`Đăng nhập để nhận ưu đãi !`}</Text>
+          <Text> <span className="font-bold">Đăng nhập</span> để nhận ưu đãi !</Text>
           </div>
         </Box>
       </Box>
