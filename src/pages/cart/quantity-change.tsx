@@ -112,7 +112,7 @@ export const QuantityChangeSection: FC<{
             <Box className="space-y-2 ml">
               <Text.Title>{product.name}</Text.Title>
               <div className="flex justify-between">
-                <Text>{product.description}</Text>
+                {/* <Text>{product.description}</Text> */}
                 {product.variants?.length > 0 &&
                   (updateState ? (
                     <Box className="text-primary" onClick={clearUpdate}>

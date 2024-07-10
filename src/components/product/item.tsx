@@ -53,9 +53,9 @@ export const ProductItem: FC<{
                 style={{ aspectRatio: "1" }}
               />
             </Box>
-            <Box className="w-2/3 pl-4 flex flex-1 flex-col m-2">
+            <Box className="w-2/3 pl-4 flex flex-1 flex-col m-2 ">
               <Text size="large">{product.name}</Text>
-              <Text size="small" className="text-gray">{product.description}</Text>
+              {/* <Text size="small" className="text-gray">{product.description}</Text> */}
               <Text size="normal" className=" mt-6 font-semibold">
                 <DisplayPrice>{product.sellingPrice}</DisplayPrice>
               </Text>
@@ -66,4 +66,3 @@ export const ProductItem: FC<{
     </ProductPicker>
   );
 };
-
