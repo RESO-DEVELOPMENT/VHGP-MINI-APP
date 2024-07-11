@@ -117,14 +117,15 @@ const AddressPicker: FC = () => {
         <Box>
           <Picker
             // label='Địa chỉ giao hàng'
-            helperText='Vị trí tòa nhà của bạn'
-            placeholder='Chọn địa chỉ tòa nhà của bạn'
+            helperText='Chọn địa chỉ giao hàng của bạn'
+            placeholder={`${selectedAreaName}, ${selectedClusterName}, ${selectedBuildingName}`}
             title='Cuộn để hiển thị thông tin'
             // action={{
             //   text: "Xác nhận",
             //   close: true,
             // }}
             onChange={(selectedValues) => {
+              console.log(selectedValues)
               if(selectedValues.Area?.value && selectedValues.Area?.value.toString() !== selectedArea){
                 setSelectedArea(selectedValues.Area?.value.toString())
                setSelectedAreaName(selectedValues.Area?.displayName)
@@ -153,7 +154,7 @@ const AddressPicker: FC = () => {
     return (
       <Box>
         <Text>Tải dữ liệu thất bại</Text>
-        <Text>Vui lòng điền địa chỉ của bạn</Text>
+        <Text>Vui lòng điền địa chỉ của bạn vào ghi chú</Text>
       </Box>
     );
   };

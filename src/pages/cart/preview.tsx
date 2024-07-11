@@ -1,9 +1,10 @@
 import orderApi from "api/order";
 import { DisplayPrice } from "components/display/price";
 import { Subscription } from "pages/profile";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
+  useRecoilState,
   useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState,
@@ -22,26 +23,30 @@ import { storeState } from "states/store.state";
 
 export const CartPreview: FC = () => {
   const { commonOrderType } = useProductContext();
-  const setCart = useSetRecoilState(cartState);
+  const [cart,setCart] = useRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
   const address = useRecoilValue(addressState);
   const member = useRecoilValueLoadable(memberState);
   const store = useRecoilValue(storeState);
   const snackbar = useSnackbar();
   const navigate = useNavigate();
+
+  useEffect(() =>{
+
+  }, [])
+
   const onCheckout = async () => {
   //TODO: check address . Example: Vinhome,Origami, S202
       console.log("break")
-      if(address.split(",").some(a => a.includes("undefined"))) {
+      if(cart.deliveryAddress === undefined || cart.deliveryAddress!.length === 0 || address.split(",").some(a => a.includes("undefined") || a.includes("_______"))) {
         snackbar.openSnackbar({
                       duration: 3000,
                       position: "top",
                       type: "warning",
           
-                      text: "Vui lòng nhập dịa chỉ giao hàng",
+                      text: "Vui lòng xác nhận địa chỉ giao hàng",
                    });
                   }
-    
 
     else if (cartPrepare.contents.paymentType == PaymentType.CASH) {
       const body = {
@@ -49,7 +54,8 @@ export const CartPreview: FC = () => {
         // customerId: member.contents.membershipId,
         // customerName: member.contents.fullname,
         // customerPhone: member.contents.phoneNumber,
-        // address: store.name,
+        address: store.name,
+        deliveryAddress: address,
       };
       // console.log("body", body);
 
@@ -160,6 +166,8 @@ export const CartPreview: FC = () => {
       try {
         const body = {
           ...cartPrepare.contents,
+          address: store.name,
+          deliveryAddress: address,
         };
 
         const res = await orderApi.createNewOrder(body);
@@ -206,53 +214,53 @@ export const CartPreview: FC = () => {
     }
   };
 
-  const onDevCheckout = async () => {
-    try {
-      const body = { ...cartPrepare.contents };
-      const res = await orderApi.createNewOrder(body);
-      if (res.status == 200) {
-        // console.log(res.data);
-        snackbar.openSnackbar({
-          type: "success",
-          text: "Đặt hàng thành công",
-        });
-        setCart((prevCart) => {
-          let res = { ...prevCart };
-          res = {
-            ...prevCart,
-            orderType: commonOrderType,
-            paymentType: PaymentType.POINTIFY,
-            productList: [],
-            totalAmount: 0,
-            shippingFee: 0,
-            bonusPoint: 0,
-            discountAmount: 0,
-            finalAmount: 0,
-            totalQuantity: 0,
-            customerId: null,
-            promotionList: [],
-            promotionCode: null,
-          };
-          return res;
-        });
-        navigate("/order-detail", {
-          state: { id: res.data },
-        });
-      } else if (res.status == 400) {
-        console.log(" log eror", res);
-        snackbar.openSnackbar({
-          type: "error",
-          text: "Đặt hàng thất bại, " + res.data.Error,
-        });
-      }
-    } catch (error: any) {
-      console.log(" log eror", error);
-      snackbar.openSnackbar({
-        type: "error",
-        text: "Đặt hàng thất bại, " + error.Error,
-      });
-    }
-  };
+  // const onDevCheckout = async () => {
+  //   try {
+  //     const body = { ...cartPrepare.contents };
+  //     const res = await orderApi.createNewOrder(body);
+  //     if (res.status == 200) {
+  //       // console.log(res.data);
+  //       snackbar.openSnackbar({
+  //         type: "success",
+  //         text: "Đặt hàng thành công",
+  //       });
+  //       setCart((prevCart) => {
+  //         let res = { ...prevCart };
+  //         res = {
+  //           ...prevCart,
+  //           orderType: commonOrderType,
+  //           paymentType: PaymentType.POINTIFY,
+  //           productList: [],
+  //           totalAmount: 0,
+  //           shippingFee: 0,
+  //           bonusPoint: 0,
+  //           discountAmount: 0,
+  //           finalAmount: 0,
+  //           totalQuantity: 0,
+  //           customerId: null,
+  //           promotionList: [],
+  //           promotionCode: null,
+  //         };
+  //         return res;
+  //       });
+  //       navigate("/order-detail", {
+  //         state: { id: res.data },
+  //       });
+  //     } else if (res.status == 400) {
+  //       console.log(" log eror", res);
+  //       snackbar.openSnackbar({
+  //         type: "error",
+  //         text: "Đặt hàng thất bại, " + res.data.Error,
+  //       });
+  //     }
+  //   } catch (error: any) {
+  //     console.log(" log eror", error);
+  //     snackbar.openSnackbar({
+  //       type: "error",
+  //       text: "Đặt hàng thất bại, " + error.Error,
+  //     });
+  //   }
+  // };
 
   if (member.state == "loading" || member.state == "hasError") {
     return <ContentFallback />;

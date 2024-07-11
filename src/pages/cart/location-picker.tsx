@@ -20,16 +20,11 @@ export const LocationPicker: FC = () => {
   // };
   const snackbar = useSnackbar();
   const handleAddressSubmit = () => {
-   
-    
-
       setCart((prevCart) => ({
         ...prevCart,
         deliveryAddress: address || undefined,
       }));
       setVisible(false);
-    
-    
   };
 
   return (
@@ -38,7 +33,7 @@ export const LocationPicker: FC = () => {
         onClick={() => {
           setVisible(true);
         }}
-        title={cart?.deliveryAddress ?? "Chọn địa chỉ giao hàng"}
+        title={address || "Chọn địa chỉ giao hàng"}
         subtitle={"Địa chỉ nhận hàng"}
       />
       {selectedStore.state === "hasValue" &&
@@ -48,7 +43,9 @@ export const LocationPicker: FC = () => {
             visible={visible}
             onClose={() => setVisible(false)}
             autoHeight
-            swipeToClose
+            swipeToClose = {false}
+            maskClosable = {false}
+            handler={false}
           >
             {/* <Box className="w-full flex justify-center items-center px-4 py-2">
               <Input
