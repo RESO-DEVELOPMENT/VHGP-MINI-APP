@@ -18,7 +18,7 @@ export const RecommendContent: FC = () => {
           {({ open }) => (
             <div onClick={open} className="ml-3 flex ">
               <Box
-                className="relative overflow-hidden rounded-lg shadow-md"
+                className="relative overflow-hidden rounded-lg shadow-md flex-shrink-0"
                 style={{
                   width: "100px", // Điều chỉnh chiều rộng của hình ảnh
                   height: "100px", // Điều chỉnh chiều cao của hình ảnh
