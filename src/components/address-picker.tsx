@@ -21,14 +21,27 @@ const AddressPicker: FC = () => {
     const [selectedClusterName, setSelectedClusterName] = useState<string | undefined>();
     const [selectedBuildingName, setSelectedBuildingName] = useState<string | undefined>();
     const areasLoadBalance = useRecoilValueLoadable(listAreasVHGPState);
-    var areaInfoLoadable = useRecoilValueLoadable( getAreaInfosVHGPState((+selectedArea!))); 
+  
+    var areaInfoLoadable = useRecoilValueLoadable( getAreaInfosVHGPState((+selectedArea!) ) ); 
   
     // Sử dụng useEffect để thiết lập giá trị ban đầu cho selectedArea
     useEffect(() => {
       if (areasLoadBalance.state === "hasValue" && areasLoadBalance.contents !== null && selectedArea === undefined) {
-        setSelectedArea(areasLoadBalance.contents[0].id); // Gán giá trị đầu tiên từ areasLoadBalance cho selectedArea
+        setSelectedArea(areasLoadBalance.contents[0].id); 
+        setSelectedAreaName(areasLoadBalance.contents[0].name); 
       }
     }, [areasLoadBalance]);
+    // Sử dụng useEffect để thiết lập giá trị ban đầu cho selectedArea
+    useEffect(() => {
+      if (areaInfoLoadable.state === "hasValue" && areaInfoLoadable.contents !== null && selectedArea !== undefined) {
+        setSelectedCluster(areaInfoLoadable.contents.listCluster[0].id.toString()); 
+        setSelectedClusterName(areaInfoLoadable.contents.listCluster[0].name); 
+
+        setSelectedBuilding(areaInfoLoadable.contents.listCluster[0].listBuilding[0].id.toString())
+        setSelectedBuildingName(areaInfoLoadable.contents.listCluster[0].listBuilding[0].name)
+      }
+    }, [areaInfoLoadable]);
+
 
     useEffect(() => {
         setAddress(`${selectedAreaName}, ${selectedClusterName}, ${selectedBuildingName}`);
