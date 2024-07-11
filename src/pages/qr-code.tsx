@@ -52,59 +52,63 @@ const QRCodePage: React.FC = () => {
     return <ContentFallback />;
   }
 
-  return (
-    <>
-      <Header
-        title="Mã QR"
-        backIcon={<img className="text-primary" src={cart} />}
-        onBackClick={() => {}}
-        showBackIcon={true}
-        className="py-4"
-      />
-      <Page className="p-4 flex items-center justify-center bg-primary min-h-screen">
-        <div className="w-full bg-white h-auto p-6 rounded-lg shadow-lg">
-          <Box>
-            {member.state === "hasValue" && member.contents !== null ? (
-              <>
-                {member.contents.memberLevel.memberWallet ? (
-                  <MembershipWallets />
-                ) : (
-                  ""
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-          </Box>
-          {member.state === "hasValue" && member.contents !== null ? (
-            <>
-              <div className="text-center">Đưa mã này vào thiết bị quét mã</div>
-              <div className="flex justify-center my-8">
-                <QRCode value={qrCodeValue ?? ""} />
-              </div>
-              <div className="text-center mb-4 text-lg">
-                {countdown > 0 ? (
-                  <span>QR code sẽ hết hạn trong: {countdown}s</span>
-                ) : (
-                  <span>QR code đã hết hạn</span>
-                )}
-              </div>
-              <div className="flex justify-center mt-4">
-                <button
-                  className="px-14 py-3 border-2 border-primary rounded-lg flex items-center"
-                  onClick={() => navigate("/listTransaction")}
-                >
-                  Giao dịch của bạn
-                </button>
-              </div>
-            </>
-          ) : (
-            <Subscription />
-          )}
-        </div>
+  if (member.state === "hasValue" && member.contents === null) {
+    return (
+      <Page>
+        <Header
+          title="Mã QR"
+          backIcon={<img className="text-primary" src={cart} />}
+          onBackClick={() => {}}
+          showBackIcon={true}
+          className="py-4"
+        />
+        <Subscription />
       </Page>
-    </>
-  );
+    );
+  }
+  if (member.state === "hasValue" && member.contents !== null)
+    return (
+      <>
+        <Header
+          title="Mã QR"
+          backIcon={<img className="text-primary" src={cart} />}
+          onBackClick={() => {}}
+          showBackIcon={true}
+          className="py-4"
+        />
+        <Page className="p-4 flex items-center justify-center bg-primary min-h-screen">
+          <div className="w-full bg-white h-auto p-6 rounded-lg shadow-lg">
+            <Box>
+              {member!.contents!.memberLevel.memberWallet ? (
+                <MembershipWallets />
+              ) : (
+                ""
+              )}
+            </Box>
+            <div className="text-center">Đưa mã này vào thiết bị quét mã</div>
+            <div className="flex justify-center my-8">
+              <QRCode value={qrCodeValue ?? ""} />
+            </div>
+            <div className="text-center mb-4 text-lg">
+              {countdown > 0 ? (
+                <span>QR code sẽ hết hạn trong: {countdown}s</span>
+              ) : (
+                <span>QR code đã hết hạn</span>
+              )}
+            </div>
+            <div className="flex justify-center mt-4">
+              <button
+                className="px-14 py-3 border-2 border-primary rounded-lg flex items-center"
+                onClick={() => navigate("/listTransaction")}
+              >
+                Giao dịch của bạn
+              </button>
+            </div>
+          </div>
+        </Page>
+      </>
+    );
+  return <Box />;
 };
 
 export default QRCodePage;
