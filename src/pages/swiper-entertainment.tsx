@@ -81,13 +81,13 @@ export const SwiperEn: FC = () => {
   ) : (
     <Box
       m={4}
-      className="h-[150px] rounded-lg flex items-center justify-center "
+      className="h-[150px] rounded-lg flex items-center justify-center outline-white outline-dashed outline-3  "
       style={{
-        background: "linear-gradient(to right, #D17842, #FFA166)",
+        background: "linear-gradient(to right, #D17842, #E9C46A, #D17842)",
       }}
     >
-      <Text size="large" className="text-white text-center">
-        Chương trình khuyến mãi sẽ được cập nhật sớm...
+      <Text size="large" className="text-white text-center font-bold">
+        Sắp diễn ra.....
       </Text>
     </Box>
   );
