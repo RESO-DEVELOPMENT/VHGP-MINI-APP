@@ -12,7 +12,6 @@ import { cartState } from "../../states/cart.state";
 import { ProductList } from "types/cart";
 import { Product, ProductTypeEnum } from "types/store-menu";
 
-import { useProductContext } from "components/context/app-context";
 import { QuantityChangeSection } from "pages/cart/quantity-change";
 import { prepareCart } from "utils/product";
 import { storeState } from "states/store.state";

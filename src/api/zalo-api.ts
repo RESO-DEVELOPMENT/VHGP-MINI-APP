@@ -21,6 +21,7 @@ const getUserPhone = async (code: string, accessToken: string) => {
   //   },
   //   url: "https://graph.zalo.me/v2.0/me/info",
   // });
+  console.log("toekn", accessToken);
   return axios.get<BaseZaloApiResponse<PhoneNumberResponse>>(
     "https://graph.zalo.me/v2.0/me/info",
     {

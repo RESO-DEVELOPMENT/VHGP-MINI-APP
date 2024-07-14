@@ -1,8 +1,5 @@
 import React, { FC, Suspense, useEffect } from "react";
-import {
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from "recoil";
+import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import "./orders.css";
 import { Box, Header, Icon, Page, Tabs, Text } from "zmp-ui";
 
@@ -14,6 +11,7 @@ import { OrderStatus } from "types/order";
 import { useNavigate } from "react-router-dom";
 import { Subscription } from "pages/profile";
 import { ProductRePicker } from "components/product/repicker";
+import { CancelOrder } from "components/product/cancle";
 import historyIcon from "../../static/icons/time_line.png";
 
 import {
@@ -25,7 +23,6 @@ import { memberState } from "states/member.state";
 import { ContentFallback } from "components/content-fallback";
 
 const HistoryPicker: FC = () => {
-
   const orderListData = useRecoilValueLoadable(listOrderState);
   const navigate = useNavigate();
   const retry = useSetRecoilState(requestOrderTransactionTriesState);
@@ -38,6 +35,7 @@ const HistoryPicker: FC = () => {
   const gotoPage = (id: string) => {
     navigate("/order-detail", { state: { id } });
   };
+  console.log("????", orderListData);
 
   return (
     <>
@@ -106,6 +104,9 @@ const HistoryPicker: FC = () => {
                           key={order.id}
                         />
                       )}
+                      {order && order.status !== OrderStatus.PENDING && (
+                        <CancelOrder orderId={order.id} key={order.id} />
+                      )}
                     </div>
                   </Card>
                 </Box>
@@ -128,11 +129,11 @@ const HistoryPage: FC = () => {
   return (
     <Page className="flex flex-col">
       <Header
-          title="Đơn hàng "
-          backIcon= {<img className="text-primary" src={historyIcon} />}
-          onBackClick={() => {}}
-          showBackIcon={true}
-          />
+        title="Đơn hàng "
+        backIcon={<img className="text-primary" src={historyIcon} />}
+        onBackClick={() => {}}
+        showBackIcon={true}
+      />
       <HistoryPicker key={1} />
     </Page>
   );

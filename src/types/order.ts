@@ -23,6 +23,13 @@ export enum PaymentStatus {
   PAID = "PAID",
 }
 
+export interface orderStatusCart {
+  status: OrderStatus;
+  paymentType: string;
+  guestNumber: number;
+  deliStatus: string;
+}
+
 export interface OrderPreview {
   id: string;
   invoiceId: string;

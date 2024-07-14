@@ -1,7 +1,7 @@
 import orderApi from "api/order";
 import { atom, selector, selectorFamily } from "recoil";
 import { memberState } from "./member.state";
-import { OrderDetails, PaymentType } from "types/order";
+import { OrderDetails, PaymentType, orderStatusCart } from "types/order";
 import { Payment } from "types/payment";
 
 export const requestOrderTransactionTriesState = atom({
@@ -38,6 +38,21 @@ export const getOrderDetailstate = selectorFamily<OrderDetails, string>({
   },
 });
 
+export const setOrder = selectorFamily<
+  void,
+  { orderStatusCart: string; storeId: string; orderId: string }
+>({
+  key: "orderStatus",
+  get: () => () => {
+    return;
+  },
+  set: (params) => async () => {
+    const { orderStatusCart, storeId, orderId } = params;
+    const parsedOrderStatusCart: orderStatusCart = JSON.parse(orderStatusCart);
+    await orderApi.setOrderStatus(parsedOrderStatusCart, storeId, orderId);
+  },
+});
+
 export const paymentTypeState = atom<Payment[]>({
   key: "paymentType",
   default: [
@@ -69,5 +84,10 @@ export const requestLocationTriesState = atom({
 
 export const addressState = atom({
   key: "address",
+  default: "",
+});
+
+export const deleteOrderIdState = atom({
+  key: "deleteOrderId",
   default: "",
 });

@@ -6,7 +6,11 @@ import { Cart, ProductList } from "types/cart";
 import { useNavigate } from "react-router-dom";
 import { cartState } from "states/cart.state";
 import { getOrderDetailstate } from "states/order.state";
-import { selectedStoreIdState, listStoreState, storeMenuByInputIdState } from "states/store.state";
+import {
+  selectedStoreIdState,
+  listStoreState,
+  storeMenuByInputIdState,
+} from "states/store.state";
 import { Box } from "zmp-ui";
 import { ContentFallback } from "components/content-fallback";
 
@@ -20,25 +24,31 @@ type ProductQuantity = {
   quantity: number;
 };
 
-export const ProductRePicker: FC<ProductPickerProps> = ({ orderId, isUpdate }) => {
-
+export const ProductRePicker: FC<ProductPickerProps> = ({
+  orderId,
+  isUpdate,
+}) => {
   if (!orderId) {
     return <Box></Box>;
   }
 
   const setCurrentStoreId = useSetRecoilState(selectedStoreIdState);
   const [cart, setCart] = useRecoilState(cartState);
-  const [reOrderProducts, setReOrderProducts] = useState<ProductQuantity[] | null>(null);
+  const [reOrderProducts, setReOrderProducts] = useState<
+    ProductQuantity[] | null
+  >(null);
   const [loading, setLoading] = useState(true);
 
   const stores = useRecoilValue(listStoreState);
   const orderDetail = useRecoilValue(getOrderDetailstate(orderId));
-  const store = useMemo(() => stores.find((store) => store.name === orderDetail.storeName), [stores, orderDetail.storeName]);
+  const store = useMemo(
+    () => stores.find((store) => store.name === orderDetail.storeName),
+    [stores, orderDetail.storeName]
+  );
   // console.log(store)
-  if(store === undefined)
-    return <></>
+  if (store === undefined) return <></>;
   const menuOfStore = useRecoilValue(storeMenuByInputIdState(store?.id ?? ""));
- 
+
   const reOrderProductsInMenu = orderDetail.productList;
 
   const navigate = useNavigate();
@@ -56,60 +66,68 @@ export const ProductRePicker: FC<ProductPickerProps> = ({ orderId, isUpdate }) =
     }
   }, [reOrderProductsInMenu, menuOfStore.products]);
 
-  const reAddToCart = useCallback(
-    () => {
-      setCurrentStoreId(store!.id);
-      reOrderProducts?.forEach(({ product, quantity }) => {
-        setCart((prevCart) => {
-          let res: Cart = (prevCart.storeId === store!.id) ? { ...prevCart, storeId: store!.id } : { ...prevCart, storeId: store!.id, productList: [] };
+  const reAddToCart = useCallback(() => {
+    setCurrentStoreId(store!.id);
+    reOrderProducts?.forEach(({ product, quantity }) => {
+      setCart((prevCart) => {
+        let res: Cart =
+          prevCart.storeId === store!.id
+            ? { ...prevCart, storeId: store!.id }
+            : { ...prevCart, storeId: store!.id, productList: [] };
 
-          let isProductInCart = false;
-          const updatedProductList = res.productList.map((addedProduct) => {
-            if (addedProduct.productInMenuId === product?.menuProductId) {
-              isProductInCart = true;
-              const productListObjectToUpdate = { ...addedProduct };
-              productListObjectToUpdate.quantity += quantity;
-              productListObjectToUpdate.finalAmount += (quantity * product.sellingPrice);
-              return productListObjectToUpdate;
-            }
-            return addedProduct;
-          });
-
-          if (isProductInCart) {
-            res = {
-              ...prevCart,
-              productList: updatedProductList,
-            };
-          } else {
-            const cartItem: ProductList = {
-              productInMenuId: product!.menuProductId,
-              parentProductId: product!.parentProductId,
-              name: product!.name,
-              type: product!.type,
-              quantity: quantity,
-              sellingPrice: product!.sellingPrice,
-              code: product!.code,
-              categoryCode: product!.code,
-              totalAmount: product!.sellingPrice * quantity,
-              discount: 0,
-              finalAmount: product!.sellingPrice * quantity,
-              picUrl: product!.picUrl,
-            };
-            res = {
-              ...prevCart,
-              productList: res.productList.concat(cartItem),
-              storeId: store!.id,
-            };
+        let isProductInCart = false;
+        const updatedProductList = res.productList.map((addedProduct) => {
+          if (addedProduct.productInMenuId === product?.menuProductId) {
+            isProductInCart = true;
+            const productListObjectToUpdate = { ...addedProduct };
+            productListObjectToUpdate.quantity += quantity;
+            productListObjectToUpdate.finalAmount +=
+              quantity * product.sellingPrice;
+            return productListObjectToUpdate;
           }
-
-          return prepareCart(res);
+          return addedProduct;
         });
-      });
 
-      navigate("/cart");
-    },
-    [store, reOrderProducts, setCurrentStoreId, setCart, cart.storeId, navigate]
-  );
+        if (isProductInCart) {
+          res = {
+            ...prevCart,
+            productList: updatedProductList,
+          };
+        } else {
+          const cartItem: ProductList = {
+            productInMenuId: product!.menuProductId,
+            parentProductId: product!.parentProductId,
+            name: product!.name,
+            type: product!.type,
+            quantity: quantity,
+            sellingPrice: product!.sellingPrice,
+            code: product!.code,
+            categoryCode: product!.code,
+            totalAmount: product!.sellingPrice * quantity,
+            discount: 0,
+            finalAmount: product!.sellingPrice * quantity,
+            picUrl: product!.picUrl,
+          };
+          res = {
+            ...prevCart,
+            productList: res.productList.concat(cartItem),
+            storeId: store!.id,
+          };
+        }
+
+        return prepareCart(res);
+      });
+    });
+
+    navigate("/cart");
+  }, [
+    store,
+    reOrderProducts,
+    setCurrentStoreId,
+    setCart,
+    cart.storeId,
+    navigate,
+  ]);
 
   return (
     <>
@@ -126,6 +144,3 @@ export const ProductRePicker: FC<ProductPickerProps> = ({ orderId, isUpdate }) =
     </>
   );
 };
-
-
-

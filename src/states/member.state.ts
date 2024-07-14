@@ -35,6 +35,7 @@ export const memberState = selector({
         var response = await userApi.userLogin(phone, user.name);
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+          console.log("token", response.data.data.token);
           var member = await userApi.getUserInfo(
             response.data.data.userId ?? ""
           );
@@ -113,7 +114,7 @@ export const phoneSearchState = selector<string>({
   },
   set: ({ set }, newValue) => {
     // if (typeof newValue === "string" && newValue.length == 10) {
-      set(rawPhoneNumberState, newValue);
+    set(rawPhoneNumberState, newValue);
     // } else set(rawPhoneNumberState, "");
   },
 });

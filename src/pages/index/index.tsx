@@ -11,12 +11,12 @@ import cart from "../../static/icons/order2.png";
 const HomePage: FC = () => {
   return (
     <Page className="relative flex-1 flex flex-col bg-white">
-       <Header
-          title="Hôm nay bạn muốn ăn gì ?"
-          backIcon= {<img className="text-primary" src={cart} />}
-          onBackClick={() => {}}
-          className="py-4"
-    />
+      <Header
+        title="Hôm nay bạn muốn ăn gì ?"
+        backIcon={<img className="text-primary" src={cart} />}
+        onBackClick={() => {}}
+        className="py-4"
+      />
       <Box className="flex-1 overflow-auto">
         <Inquiry />
         <FoodCategories />
