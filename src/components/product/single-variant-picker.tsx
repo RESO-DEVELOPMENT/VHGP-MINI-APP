@@ -34,7 +34,9 @@ export const SingleVariantPicker: FC<{
               >
                 <Box className="justify-between m-1 flex w-full">
                   <Text
-                    className={value === `${v.name}_${val}` ? "text-primary" : ""}
+                    className={
+                      value === `${v.name}_${val}` ? "text-primary" : ""
+                    }
                   >
                     {val}
                   </Text>

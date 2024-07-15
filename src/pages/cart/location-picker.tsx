@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { addressState } from "states/order.state";
 import { cartState } from "states/cart.state";
 import { selectedStoreState } from "states/store.state";
-import {  Box, Button, Input, Sheet, useSnackbar } from "zmp-ui";
+import { Box, Button, Input, Sheet, useSnackbar } from "zmp-ui";
 import AddressPicker from "components/address-picker";
 import { ListItem } from "components/list-item";
 import { createPortal } from "react-dom";
@@ -20,11 +20,11 @@ export const LocationPicker: FC = () => {
   // };
   const snackbar = useSnackbar();
   const handleAddressSubmit = () => {
-      setCart((prevCart) => ({
-        ...prevCart,
-        deliveryAddress: address || undefined,
-      }));
-      setVisible(false);
+    setCart((prevCart) => ({
+      ...prevCart,
+      deliveryAddress: address || undefined,
+    }));
+    setVisible(false);
   };
 
   return (
@@ -43,8 +43,8 @@ export const LocationPicker: FC = () => {
             visible={visible}
             onClose={() => setVisible(false)}
             autoHeight
-            swipeToClose = {false}
-            maskClosable = {false}
+            swipeToClose={false}
+            maskClosable={false}
             handler={false}
           >
             {/* <Box className="w-full flex justify-center items-center px-4 py-2">
@@ -63,8 +63,8 @@ export const LocationPicker: FC = () => {
               </Button>
             </Box> */}
             <Box className="px-4 pb-4 text-center w-full">
-              <AddressPicker  />
-              <Divider/>
+              <AddressPicker />
+              <Divider />
               <Button
                 className=" w-full rounded"
                 type="neutral"
@@ -76,18 +76,6 @@ export const LocationPicker: FC = () => {
           </Sheet>,
           document.body
         )}
-
-
     </>
   );
 };
-
-
-
-
-
-
-
-
-
-

@@ -9,7 +9,6 @@ export const SingleOptionPicker: FC<{
   defaultValue: string;
   varianName: string;
   onChange: (value: string) => void;
-  
 }> = ({ variant, value, defaultValue, varianName, onChange }) => {
   const [width, setWidth] = useState(window.innerWidth - 80);
 

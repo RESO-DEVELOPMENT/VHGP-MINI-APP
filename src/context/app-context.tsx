@@ -146,9 +146,11 @@ export const ProductContextProvider: FC<{ children: ReactNode }> = ({
     });
   };
 
-  const commonOrderType = OrderType.DELIVERY
+  const commonOrderType = OrderType.DELIVERY;
   return (
-    <ProductContext.Provider value={{ addNewItem, updateCart, commonOrderType }}>
+    <ProductContext.Provider
+      value={{ addNewItem, updateCart, commonOrderType }}
+    >
       {children}
     </ProductContext.Provider>
   );
