@@ -10,6 +10,7 @@ import { OrderStatus, OrderType } from "types/order";
 import { showOrderStatus } from "utils/product";
 import { openSupportChat } from "utils/config";
 import { getOrderDetailstate } from "states/order.state";
+import { CancelOrder } from "components/product/cancle";
 
 const OrderDetailsPage: FC = () => {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ const OrderDetailsPage: FC = () => {
     setShowCancellationOptions(false);
     setCancellationReason("");
   };
+
+  console.log("dmm", orderDetail.contents);
 
   return (
     <Page className="flex flex-col">
@@ -260,14 +263,13 @@ const OrderDetailsPage: FC = () => {
                         <Text size="small">
                           {orderDetail.state == "hasValue" &&
                           orderDetail.contents !== null
-                            ? 
-                            // orderDetail.contents.orderType ==
-                            //   OrderType.DELIVERY
-                            //   ? orderDetail.contents.customerInfo?.address
-                            //   : orderDetail.contents.storeName
-                            // : ""
-                               orderDetail.contents.storeName : ""
-                            }
+                            ? // orderDetail.contents.orderType ==
+                              //   OrderType.DELIVERY
+                              //   ? orderDetail.contents.customerInfo?.address
+                              //   : orderDetail.contents.storeName
+                              // : ""
+                              orderDetail.contents.storeName
+                            : ""}
                         </Text>
                       </Box>
                     ),
@@ -304,7 +306,7 @@ const OrderDetailsPage: FC = () => {
                           {orderDetail.state == "hasValue" &&
                           orderDetail.contents !== null
                             ? displayTime(
-                              adjustDeliveryTime(
+                                adjustDeliveryTime(
                                   orderDetail.contents.checkInDate,
                                   10
                                 )
@@ -382,9 +384,7 @@ const OrderDetailsPage: FC = () => {
                     right: (
                       <Box flex className="space-x-1">
                         <Box className="flex-1 space-y-[1px]"></Box>
-                        <Text size="small">
-                          {orderDetail.contents.notes}
-                        </Text>
+                        <Text size="small">{orderDetail.contents.notes}</Text>
                       </Box>
                     ),
                   },
@@ -538,44 +538,15 @@ const OrderDetailsPage: FC = () => {
             <Box className="space-y-3 px-4 my-2">
               {/* Tạm thời để nút HUỶ ĐƠN là undefined. */}
               {orderDetail.state === "hasValue" &&
-                orderDetail.contents !== null &&
-                orderDetail.contents.orderStatus === "undefined" && (
+                orderDetail.contents !== null && (
                   <>
-                    {showCancellationOptions ? (
-                      <>
-                        <select
-                          className="p-2 w-full border rounded-md mb-2"
-                          value={cancellationReason}
-                          onChange={(e) =>
-                            setCancellationReason(e.target.value)
-                          }
-                        >
-                          <option value="">
-                            Select a reason for cancellation
-                          </option>
-                          {cancellationReasons.map((reason) => (
-                            <option key={reason} value={reason}>
-                              {reason}
-                            </option>
-                          ))}
-                        </select>
-
-                        <button
-                          className="font-bold bg-red-500 p-3 text-[18px] rounded-md hover:bg-red-600 w-full"
-                          onClick={handleCancelOrder}
-                          disabled={!cancellationReason}
-                        >
-                          Confirm Cancellation
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        className="font-bold bg-red-300 p-3 text-[18px] rounded-md hover:bg-red-400 w-full"
-                        onClick={() => setShowCancellationOptions(true)}
-                      >
-                        Huỷ đơn
-                      </button>
-                    )}
+                    <div className="h-43 w-453">
+                      <CancelOrder
+                        orderId={orderDetail.contents.orderId}
+                        index={1}
+                        key={orderDetail.contents.orderId}
+                      />
+                    </div>
                   </>
                 )}
               <button

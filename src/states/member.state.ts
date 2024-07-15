@@ -35,7 +35,7 @@ export const memberState = selector({
         var response = await userApi.userLogin(phone, user.name);
         if (response.status == 200) {
           axios.defaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
-          console.log("token", response.data.data.token);
+          localStorage.setItem("token", response.data.data.token);
           var member = await userApi.getUserInfo(
             response.data.data.userId ?? ""
           );

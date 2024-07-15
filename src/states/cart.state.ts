@@ -10,13 +10,12 @@ export const prepareCartState = selector<Cart>({
   get: async ({ get }) => {
     const cart = get(cartState);
     const membership = await get(memberState);
-    console.log("memebr", membership);
     if (membership !== undefined && membership !== null) {
       let req = {
         ...cart,
         customerId: membership.membershipId,
         customerPhone: membership.phoneNumber,
-        customerName: membership.fullname
+        customerName: membership.fullname,
       };
       var res = await orderApi.prepareOrder(req);
       return res.data;

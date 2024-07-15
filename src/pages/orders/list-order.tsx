@@ -35,7 +35,6 @@ const HistoryPicker: FC = () => {
   const gotoPage = (id: string) => {
     navigate("/order-detail", { state: { id } });
   };
-  console.log("????", orderListData);
 
   return (
     <>
@@ -105,7 +104,11 @@ const HistoryPicker: FC = () => {
                         />
                       )}
                       {order && order.status !== OrderStatus.PENDING && (
-                        <CancelOrder orderId={order.id} key={order.id} />
+                        <CancelOrder
+                          orderId={order.id}
+                          index={0}
+                          key={order.id}
+                        />
                       )}
                     </div>
                   </Card>

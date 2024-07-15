@@ -4,6 +4,7 @@ import { Cart } from "types/cart";
 import { OrderDetails, OrderPreview, orderStatusCart } from "types/order";
 import { Transaction } from "types/transaction";
 import { getAccessToken, getPhoneNumber, getUserInfo } from "zmp-sdk";
+import axios from "axios";
 
 const getListOrder = (id: string, params?: any) =>
   requestWebAdmin.get<BaseReponse<OrderPreview>>(`users/${id}/orders`, {
@@ -27,13 +28,26 @@ const prepareOrder = (cart: Cart) =>
 const setOrderStatus = (
   orderStatusCart: orderStatusCart,
   storeId: string,
-  orderId: string
+  orderId: string,
+  token: string
 ) => {
-  console.log("alo", orderStatusCart);
-  requestWebAdmin.patch<orderStatusCart>(
-    `/stores/${storeId}/orders/${orderId}`,
-    orderStatusCart
-  );
+  const requestWebAdmin = axios.create({
+    baseURL: `https://admin-test.reso.vn/api/v1/`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  requestWebAdmin
+    .patch<orderStatusCart>(
+      `/stores/${storeId}/orders/${orderId}`,
+      orderStatusCart
+    )
+    .then((response) => {
+      console.log("Order status updated successfully", response.data);
+    })
+    .catch((error) => {
+      console.error("Error updating order status", error);
+    });
 };
 
 // const setOrderStatus = (

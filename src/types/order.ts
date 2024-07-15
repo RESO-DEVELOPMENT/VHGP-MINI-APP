@@ -25,7 +25,7 @@ export enum PaymentStatus {
 
 export interface orderStatusCart {
   status: OrderStatus;
-  paymentType: string;
+  paymentType: PaymentStatus;
   guestNumber: number;
   deliStatus: string;
 }

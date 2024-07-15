@@ -4,18 +4,19 @@ import { ContentFallback } from "components/content-fallback";
 import ConfirmationModal from "./ConfirmationModal";
 import { listStoreState } from "states/store.state";
 import { getOrderDetailstate } from "states/order.state";
-import { OrderStatus } from "types/order";
+import { OrderStatus, PaymentStatus } from "types/order";
 import orderApi from "api/order";
 
 interface CancelOrderProps {
+  index: number;
   orderId: string;
 }
 
-export const CancelOrder: FC<CancelOrderProps> = ({ orderId }) => {
+export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [canCancel, setCanCancel] = useState(true); // State to track if cancellation is allowed
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [canCancel, setCanCancel] = useState(false);
+  const [time, setTime] = useState(0);
   const stores = useRecoilValue(listStoreState);
   const orderDetail = useRecoilValue(getOrderDetailstate(orderId));
   const store = useMemo(
@@ -25,14 +26,30 @@ export const CancelOrder: FC<CancelOrderProps> = ({ orderId }) => {
 
   useEffect(() => {
     if (orderDetail.checkInDate) {
-      const createTime = new Date(orderDetail.checkInDate);
-      const currentTime = new Date();
-      setElapsedTime((currentTime.getTime() - createTime.getTime()) / 1000);
-      if (elapsedTime > 120) {
-        setCanCancel(false);
-      }
+      const createTime = new Date(orderDetail.checkInDate).getTime();
+      const updateElapsedTime = () => {
+        const currentTime = new Date().getTime();
+        const elapsedSeconds = Math.floor((currentTime - createTime) / 1000);
+        const countDown = 120 - elapsedSeconds;
+        setTime(countDown);
+        if (countDown <= 0) {
+          setCanCancel(false);
+        } else {
+          setCanCancel(true);
+        }
+      };
+      const intervalId = setInterval(updateElapsedTime, 1000);
+      return () => clearInterval(intervalId);
     }
-  }, [orderDetail, elapsedTime]);
+  }, [orderDetail.checkInDate]);
+
+  const getToken = (): string => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("Token not found");
+    }
+    return token;
+  };
 
   const cancel = useCallback(async () => {
     if (!store) {
@@ -45,11 +62,16 @@ export const CancelOrder: FC<CancelOrderProps> = ({ orderId }) => {
     try {
       const orderStatusCart = {
         status: OrderStatus.CANCELED,
-        paymentType: orderDetail.paymentType,
+        paymentType: PaymentStatus.FAIL,
         guestNumber: orderDetail.customerNumber,
-        deliStatus: "PENDING",
+        deliStatus: "FAIL",
       };
-      await orderApi.setOrderStatus(orderStatusCart, store.id, orderId);
+      await orderApi.setOrderStatus(
+        orderStatusCart,
+        store.id,
+        orderId,
+        getToken()
+      );
       setShowModal(false);
     } catch (error) {
       console.error("Failed to cancel the order:", error);
@@ -57,6 +79,12 @@ export const CancelOrder: FC<CancelOrderProps> = ({ orderId }) => {
       setLoading(false);
     }
   }, [orderDetail, store, orderId]);
+
+  const formatElapsedTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
 
   return (
     <>
@@ -66,17 +94,31 @@ export const CancelOrder: FC<CancelOrderProps> = ({ orderId }) => {
         <>
           {canCancel ? (
             <>
-              <button
-                className={`font-bold p-1 pl-6 pr-6 rounded-md text-white text-sm  ${
-                  !canCancel
-                    ? "bg-gray "
-                    : "bg-red-500 hover:text-red-200 hover:bg-red-700"
-                }`}
-                onClick={() => canCancel && setShowModal(true)} // Show modal only if canCancel is true
-                disabled={!canCancel}
-              >
-                Hủy đơn
-              </button>
+              {index === 1 ? (
+                <button
+                  className={`font-bold w-full p-1 pl-6 pr-6 rounded-md text-white text-sm ${
+                    !canCancel
+                      ? "bg-gray-500"
+                      : "bg-red-500 hover:text-red-200 hover:bg-red-700"
+                  } h-11`}
+                  onClick={() => canCancel && setShowModal(true)}
+                  disabled={!canCancel}
+                >
+                  Hủy đơn ({formatElapsedTime(time)})
+                </button>
+              ) : (
+                <button
+                  className={`font-bold  p-1 pl-6 pr-6  rounded-md text-white text-sm  ${
+                    !canCancel
+                      ? "bg-gray "
+                      : "bg-red-500 hover:text-red-200 hover:bg-red-700"
+                  }`}
+                  onClick={() => canCancel && setShowModal(true)}
+                  disabled={!canCancel}
+                >
+                  Hủy đơn ({formatElapsedTime(time)})
+                </button>
+              )}
 
               <ConfirmationModal
                 show={showModal}
@@ -93,3 +135,5 @@ export const CancelOrder: FC<CancelOrderProps> = ({ orderId }) => {
     </>
   );
 };
+
+export default CancelOrder;
