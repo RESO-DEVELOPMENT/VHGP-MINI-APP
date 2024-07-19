@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useState, useCallback, useMemo } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Product } from "types/store-menu";
-import { prepareCart } from "utils/product";
-import { Cart, ProductList } from "types/cart";
+import { Cart } from "types/cart";
 import { useNavigate } from "react-router-dom";
 import { cartState } from "states/cart.state";
 import { getOrderDetailstate } from "states/order.state";
@@ -13,7 +12,7 @@ import {
 } from "states/store.state";
 import { Box } from "zmp-ui";
 import { ContentFallback } from "components/content-fallback";
-
+import { useProductContext } from "context/app-context";
 export interface ProductPickerProps {
   orderId: string;
   isUpdate: boolean;
@@ -33,7 +32,6 @@ export const ProductRePicker: FC<ProductPickerProps> = ({
   }
 
   const setCurrentStoreId = useSetRecoilState(selectedStoreIdState);
-  const [cart, setCart] = useRecoilState(cartState);
   const [reOrderProducts, setReOrderProducts] = useState<
     ProductQuantity[] | null
   >(null);
@@ -45,13 +43,12 @@ export const ProductRePicker: FC<ProductPickerProps> = ({
     () => stores.find((store) => store.name === orderDetail.storeName),
     [stores, orderDetail.storeName]
   );
-  // console.log(store)
-  if (store === undefined) return <></>;
+
   const menuOfStore = useRecoilValue(storeMenuByInputIdState(store?.id ?? ""));
-
   const reOrderProductsInMenu = orderDetail.productList;
-
   const navigate = useNavigate();
+
+  const { addNewItem } = useProductContext();
 
   useEffect(() => {
     if (reOrderProductsInMenu && menuOfStore.products) {
@@ -62,72 +59,18 @@ export const ProductRePicker: FC<ProductPickerProps> = ({
       });
 
       setReOrderProducts(filteredReOProducts);
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false);
     }
   }, [reOrderProductsInMenu, menuOfStore.products]);
 
   const reAddToCart = useCallback(() => {
     setCurrentStoreId(store!.id);
     reOrderProducts?.forEach(({ product, quantity }) => {
-      setCart((prevCart) => {
-        let res: Cart =
-          prevCart.storeId === store!.id
-            ? { ...prevCart, storeId: store!.id }
-            : { ...prevCart, storeId: store!.id, productList: [] };
-
-        let isProductInCart = false;
-        const updatedProductList = res.productList.map((addedProduct) => {
-          if (addedProduct.productInMenuId === product?.menuProductId) {
-            isProductInCart = true;
-            const productListObjectToUpdate = { ...addedProduct };
-            productListObjectToUpdate.quantity += quantity;
-            productListObjectToUpdate.finalAmount +=
-              quantity * product.sellingPrice;
-            return productListObjectToUpdate;
-          }
-          return addedProduct;
-        });
-
-        if (isProductInCart) {
-          res = {
-            ...prevCart,
-            productList: updatedProductList,
-          };
-        } else {
-          const cartItem: ProductList = {
-            productInMenuId: product!.menuProductId,
-            parentProductId: product!.parentProductId,
-            name: product!.name,
-            type: product!.type,
-            quantity: quantity,
-            sellingPrice: product!.sellingPrice,
-            code: product!.code,
-            categoryCode: product!.code,
-            totalAmount: product!.sellingPrice * quantity,
-            discount: 0,
-            finalAmount: product!.sellingPrice * quantity,
-            picUrl: product!.picUrl,
-          };
-          res = {
-            ...prevCart,
-            productList: res.productList.concat(cartItem),
-            storeId: store!.id,
-          };
-        }
-
-        return prepareCart(res);
-      });
+      addNewItem(product, quantity, "", store!.id);
     });
 
     navigate("/cart");
-  }, [
-    store,
-    reOrderProducts,
-    setCurrentStoreId,
-    setCart,
-    cart.storeId,
-    navigate,
-  ]);
+  }, [store, reOrderProducts, setCurrentStoreId, addNewItem, navigate]);
 
   return (
     <>
