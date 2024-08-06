@@ -9,7 +9,7 @@ import {
   useRecoilValueLoadable,
   useSetRecoilState,
 } from "recoil";
-import {  PaymentType } from "types/order";
+import { PaymentType } from "types/order";
 import { getConfig } from "utils/config";
 import { Payment } from "zmp-sdk";
 import { Box, Button, Icon, Text, useSnackbar } from "zmp-ui";
@@ -23,7 +23,7 @@ import { storeState } from "states/store.state";
 
 export const CartPreview: FC = () => {
   const { commonOrderType } = useProductContext();
-  const [cart,setCart] = useRecoilState(cartState);
+  const [cart, setCart] = useRecoilState(cartState);
   const cartPrepare = useRecoilValueLoadable(prepareCartState);
   const address = useRecoilValue(addressState);
   const member = useRecoilValueLoadable(memberState);
@@ -31,24 +31,26 @@ export const CartPreview: FC = () => {
   const snackbar = useSnackbar();
   const navigate = useNavigate();
 
-  useEffect(() =>{
-
-  }, [])
+  useEffect(() => {}, []);
 
   const onCheckout = async () => {
-  //TODO: check address . Example: Vinhome,Origami, S202
-      console.log("break")
-      if(cart.deliveryAddress === undefined || cart.deliveryAddress!.length === 0 || address.split(",").some(a => a.includes("undefined") || a.includes("_______"))) {
-        snackbar.openSnackbar({
-                      duration: 3000,
-                      position: "top",
-                      type: "warning",
-          
-                      text: "Vui lòng xác nhận địa chỉ giao hàng",
-                   });
-                  }
+    //TODO: check address . Example: Vinhome,Origami, S202
+    console.log("break");
+    if (
+      cart.deliveryAddress === undefined ||
+      cart.deliveryAddress!.length === 0 ||
+      address
+        .split(",")
+        .some((a) => a.includes("undefined") || a.includes("_______"))
+    ) {
+      snackbar.openSnackbar({
+        duration: 3000,
+        position: "top",
+        type: "warning",
 
-    else if (cartPrepare.contents.paymentType == PaymentType.CASH) {
+        text: "Vui lòng xác nhận địa chỉ giao hàng",
+      });
+    } else if (cartPrepare.contents.paymentType == PaymentType.CASH) {
       const body = {
         ...cartPrepare.contents,
         // customerId: member.contents.membershipId,
@@ -57,12 +59,12 @@ export const CartPreview: FC = () => {
         address: store.name,
         deliveryAddress: address,
       };
-      // console.log("body", body);
+      console.log("body", body);
 
       Payment.createOrder({
         desc: `Thanh toán cho ${getConfig((config) => config.app.title)}`,
         item: [],
-       
+
         amount: cartPrepare.contents.finalAmount,
         success: async (data) => {
           let { orderId } = data;

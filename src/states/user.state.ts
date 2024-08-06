@@ -55,7 +55,9 @@ export const phoneState = selector<string | undefined>({
   key: "phone",
   get: async ({ get }) => {
     const accessToken = await getAccessToken();
-    let phone = "0337076898";
+    // let phone = "0337076898";
+    let phone = "0352489278";
+
     if (true) {
       const { token } = await getPhoneNumber({
         fail: (err) => {

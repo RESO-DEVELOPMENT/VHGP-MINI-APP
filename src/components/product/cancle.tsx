@@ -66,7 +66,7 @@ export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
         guestNumber: orderDetail.customerNumber,
         deliStatus: "FAIL",
       };
-      await orderApi.setOrderStatus(
+      await orderApi.setOrderStatusToCanceled(
         orderStatusCart,
         store.id,
         orderId,

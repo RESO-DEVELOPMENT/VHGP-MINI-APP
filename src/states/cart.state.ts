@@ -10,6 +10,7 @@ export const prepareCartState = selector<Cart>({
   get: async ({ get }) => {
     const cart = get(cartState);
     const membership = await get(memberState);
+    console.log("membership", membership);
     if (membership !== undefined && membership !== null) {
       let req = {
         ...cart,
@@ -43,6 +44,7 @@ export const cartState = atom<Cart>({
     customerId: null,
     promotionList: [],
     promotionCode: null,
+    brandCode: "VHGP",
   },
 });
 

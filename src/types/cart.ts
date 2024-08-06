@@ -22,6 +22,7 @@ export interface Cart {
   totalQuantity: number;
   customerNote?: string;
   notes?: string;
+  brandCode: "VHGP";
 }
 
 export interface ProductList {

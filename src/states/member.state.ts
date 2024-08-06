@@ -39,6 +39,7 @@ export const memberState = selector({
           var member = await userApi.getUserInfo(
             response.data.data.userId ?? ""
           );
+          console.log(member.data);
           return member.data;
         }
       }
