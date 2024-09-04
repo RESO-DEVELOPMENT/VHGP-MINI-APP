@@ -12,7 +12,8 @@ interface ProductListProps {
 }
 export const ProductList: FC<ProductListProps> = ({ categories }) => {
   return (
-    <Tabs scrollable defaultActiveKey={"0"} className="category-tabs">
+    <Tabs scrollable defaultActiveKey={"0"}>
+      <Tabs.Tab disabled key="titleTab" label="Sản phẩm"></Tabs.Tab>
       {categories.map((category, index) => (
         <Tabs.Tab key={index} label={category.name} className="p-4">
           <ProductListTabContent categoryId={category.id} key={category.id} />
@@ -40,7 +41,7 @@ export const ProductListTabContent: FC<ProductListTabContentProps> = ({
   ) {
     const productsByCategory = productsByCategoryLoadable.contents;
     return (
-      <Box className="grid grid-cols-1 gap-4">
+      <Box className="grid grid-cols-2 gap-4">
         {productsByCategory.length > 0 ? (
           productsByCategory.map((product) => (
             <ProductItem

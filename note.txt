@@ -1,0 +1,14 @@
+product name: sử dụng Text size default
+<Text>{product.name}</Text>
+~ Style: Normal
+Size: 15px
+Line height: 20px
+Font weight: 400
+
+product price: sử dụng Text size xxSmall
+<Text size="xxSmall" className="text-gray pb-2">2000000</Text>
+~Style: xxSmall
+Size: 12x
+Line height: 16px
+Font weight: 400
+

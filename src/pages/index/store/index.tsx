@@ -1,6 +1,6 @@
 import React, { FC, Suspense } from "react";
 import { useRecoilValueLoadable } from "recoil";
-import { Box, Header, Page, useNavigate } from "zmp-ui";
+import { Box, Header, Page, useNavigate, Text } from "zmp-ui";
 import { ProductList } from "../product-list";
 import { StoreDetail } from "./detail";
 import { Collections } from "./collections";
@@ -24,11 +24,12 @@ const StorePage: FC = () => {
     return (
       <Page className="flex flex-col ">
         <Box>
-          <Header showBackIcon={true} className="py-4" />
+          <Header showBackIcon={true} />
           <StoreDetail />
           <Divider />
           <Suspense>
             <Collections collections={menu.contents.collections} />
+            <Divider />
             <ProductList categories={menu.contents.categories} />
           </Suspense>
           <Divider />

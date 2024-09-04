@@ -2,7 +2,7 @@ import { useToBeImplemented } from "hooks";
 import React, { FC } from "react";
 import { Box, Text } from "zmp-ui";
 import { useNavigate } from "react-router";
-import wallet from "static/icon-bean.png";
+import wallet from "static/icons/wallet.png";
 import { UserInfo } from "types/user";
 import { DisplayValue } from "components/display/value";
 

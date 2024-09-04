@@ -2,7 +2,7 @@ import { Section } from "components/section";
 import React, { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box, Text } from "zmp-ui";
+import { Box, Text, Tabs } from "zmp-ui";
 import { ProductPicker } from "components/product/picker";
 import drinkSekeleton from "../../../static/skeletons/drink-skeleton.jpg";
 import { DisplayPrice } from "components/display/price";
@@ -12,22 +12,28 @@ import { Collection } from "types/store-menu";
 interface CollectionProps {
   collections: Collection[];
 }
+function cancleTab(event) {
+  event.preventDefault(); // Ngăn chặn sự kiện click lan truyền lên các phần tử cha
+  console.log("Click event propagation stopped");
+}
 export const Collections: FC<CollectionProps> = ({ collections }) => {
   return (
-    <>
+    <Tabs activeKey={"0"}>
+      <Tabs.Tab disabled key="titleTab" label="Bộ sưu tập"></Tabs.Tab>
       {collections.map((collection, index) => {
         const productsByCollection = useRecoilValue(
           productsByCollectionId(collection.id)
         );
-        if (productsByCollection.length <= 0) return;
+        if (productsByCollection.length <= 0) return null;
+
         return (
-          <Section key={index} title={collection.name} padding="title-only">
-            <Swiper slidesPerView={2} spaceBetween={4} className="">
+          <Tabs.Tab key={index} label={collection.name} className="pt-4">
+            <Swiper slidesPerView={1.2} spaceBetween={4} className="">
               {productsByCollection.map((product) => (
                 <SwiperSlide key={product.id} className="pl-4">
                   <ProductPicker product={product} isUpdate={false}>
                     {({ open }) => (
-                      <div className="space-y-2" onClick={open}>
+                      <Box className="space-y-2" onClick={open}>
                         <Box className="relative w-full h-full">
                           <img
                             loading="lazy"
@@ -42,18 +48,16 @@ export const Collections: FC<CollectionProps> = ({ collections }) => {
                             <DisplayPrice>{product.sellingPrice}</DisplayPrice>
                           </Text>
                         </Box>
-                        <Text className="text-base md:text-lg lg:text-xl xl:text-2xl">
-                          {product.name}
-                        </Text>
-                      </div>
+                        <Text>{product.name}</Text>
+                      </Box>
                     )}
                   </ProductPicker>
                 </SwiperSlide>
               ))}
             </Swiper>
-          </Section>
+          </Tabs.Tab>
         );
       })}
-    </>
+    </Tabs>
   );
 };
