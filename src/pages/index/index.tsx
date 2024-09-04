@@ -15,7 +15,6 @@ const HomePage: FC = () => {
         title="Hôm nay bạn muốn ăn gì ?"
         backIcon={<img className="text-primary" src={cart} />}
         onBackClick={() => {}}
-        className="py-4"
       />
       <Box className="flex-1 overflow-auto">
         <Inquiry />
