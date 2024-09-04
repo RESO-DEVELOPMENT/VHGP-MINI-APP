@@ -60,7 +60,6 @@ const QRCodePage: React.FC = () => {
           backIcon={<img className="text-primary" src={cart} />}
           onBackClick={() => {}}
           showBackIcon={true}
-          className="py-4"
         />
         <Subscription />
       </Page>
@@ -74,7 +73,6 @@ const QRCodePage: React.FC = () => {
           backIcon={<img className="text-primary" src={cart} />}
           onBackClick={() => {}}
           showBackIcon={true}
-          className="py-4"
         />
         <Page className="p-4 flex items-center justify-center bg-primary min-h-screen">
           <div className="w-full bg-white h-auto p-6 rounded-lg shadow-lg">
