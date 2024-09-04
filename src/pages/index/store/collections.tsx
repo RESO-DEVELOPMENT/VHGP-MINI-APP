@@ -18,16 +18,15 @@ function cancleTab(event) {
 }
 export const Collections: FC<CollectionProps> = ({ collections }) => {
   return (
-    <Tabs activeKey={"0"}>
+    <Tabs defaultActiveKey={"content-0"}>
       <Tabs.Tab disabled key="titleTab" label="Bộ sưu tập"></Tabs.Tab>
       {collections.map((collection, index) => {
         const productsByCollection = useRecoilValue(
           productsByCollectionId(collection.id)
         );
-        if (productsByCollection.length <= 0) return null;
-
+        if (productsByCollection.length <= 0) return;
         return (
-          <Tabs.Tab key={index} label={collection.name} className="pt-4">
+          <Tabs.Tab key={`content-0`} label={collection.name} className="pt-4">
             <Swiper slidesPerView={1.2} spaceBetween={4} className="">
               {productsByCollection.map((product) => (
                 <SwiperSlide key={product.id} className="pl-4">
