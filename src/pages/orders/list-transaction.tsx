@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { listTransactionState } from "states/transaction.state";
 import TransactionCard from "./card-transaction";
-import { Box, Header, Page } from "zmp-ui";
+import { Box, Header, Page, Text } from "zmp-ui";
 import { ContentFallback } from "components/content-fallback";
 import { Subscription } from "pages/profile";
 import { requestOrderTransactionTriesState } from "states/order.state";
@@ -28,7 +28,14 @@ const ListTransaction: FC = () => {
     transactionListData.state === "hasValue" &&
     transactionListData.contents !== null
   ) {
-    console.log("nội dung");
+    if (transactionListData.contents.length <= 0) {
+      return (
+        <Page className="flex items-center justify-center">
+          <Text>Không tìm thấy giao dịch</Text>
+        </Page>
+      );
+    }
+
     return (
       <Box
         style={{
