@@ -12,7 +12,7 @@ interface ProductListProps {
 }
 export const ProductList: FC<ProductListProps> = ({ categories }) => {
   return (
-    <Tabs scrollable defaultActiveKey={"content-0"}>
+    <Tabs scrollable={true} defaultActiveKey={"content-0"}>
       <Tabs.Tab disabled key="titleTab" label="Sản phẩm"></Tabs.Tab>
       {categories.map((category, index) => (
         <Tabs.Tab

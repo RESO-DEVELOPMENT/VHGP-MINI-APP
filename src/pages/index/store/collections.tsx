@@ -18,7 +18,7 @@ function cancleTab(event) {
 }
 export const Collections: FC<CollectionProps> = ({ collections }) => {
   return (
-    <Tabs defaultActiveKey={"content-0"}>
+    <Tabs scrollable={true} defaultActiveKey={"content-0"}>
       <Tabs.Tab disabled key="titleTab" label="Bộ sưu tập"></Tabs.Tab>
       {collections.map((collection, index) => {
         const productsByCollection = useRecoilValue(
