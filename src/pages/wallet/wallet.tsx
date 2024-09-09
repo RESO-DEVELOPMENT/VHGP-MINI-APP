@@ -15,7 +15,7 @@ import { Divider } from "components/divider";
 const WalletScreen: FC = () => {
   const member = useRecoilValueLoadable(memberState);
   const setStoreIdx = useSetRecoilState(selectedStoreIndexState);
- 
+
   const flexContainerStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
@@ -49,11 +49,11 @@ const WalletScreen: FC = () => {
               <Text.Title size="normal">Dịch vụ</Text.Title>
             </Box>
             <SwiperItem />
-            <Box className="mx-4 mt-4" style={flexContainerStyle}>
+            {/* <Box className="mx-4 mt-4" style={flexContainerStyle}>
               <Text.Title size="normal">Chương trình</Text.Title>
             </Box>
             <Divider/>
-            <SwiperEn />
+            <SwiperEn /> */}
           </>
         ) : (
           <>
@@ -63,11 +63,11 @@ const WalletScreen: FC = () => {
               <Text.Title size="normal">Dịch vụ</Text.Title>
             </Box>
             <SwiperItem />
-            <Box className="mx-4 mt-4" style={flexContainerStyle}>
+            {/* <Box className="mx-4 mt-4" style={flexContainerStyle}>
               <Text.Title size="normal">Chương trình</Text.Title>
             </Box>
             <Divider/>
-            <SwiperEn />
+            <SwiperEn /> */}
           </>
         )}
       </Box>
