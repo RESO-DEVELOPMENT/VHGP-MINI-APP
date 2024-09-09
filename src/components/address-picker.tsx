@@ -59,7 +59,25 @@ const AddressPicker: FC = () => {
         areaInfoLoadable.contents.listCluster[0].listBuilding[0].name
       );
     }
-  }, [areaInfoLoadable]);
+  }, [areaInfoLoadable, selectedArea]);
+
+  useEffect(() => {
+    if (
+      areaInfoLoadable.state === "hasValue" &&
+      areaInfoLoadable.contents !== null &&
+      selectedCluster !== undefined
+    ) {
+      const selectedClusterInfo = areaInfoLoadable.contents.listCluster.find(
+        (cluster) => cluster.id.toString() === selectedCluster
+      );
+      if (selectedClusterInfo) {
+        setSelectedBuilding(selectedClusterInfo.listBuilding[0].id.toString());
+        setSelectedBuildingName(selectedClusterInfo.listBuilding[0].name);
+      }
+    }
+  }, [selectedCluster, areaInfoLoadable]);
+
+  console.log(selectedArea, selectedCluster, selectedBuilding);
 
   useEffect(() => {
     setAddress(
@@ -161,46 +179,57 @@ const AddressPicker: FC = () => {
             ) {
               setSelectedArea(selectedValues.Area?.value.toString());
               setSelectedAreaName(selectedValues.Area?.displayName);
+              setSelectedCluster(undefined);
+              setSelectedClusterName(undefined);
+              setSelectedBuilding(undefined);
+              setSelectedBuildingName(undefined);
             }
           }}
           mask={true}
           disabled={false}
           data={[...pickerData1]}
         />
-        <Picker
-          helperText="Chọn địa chỉ giao hàng của bạn"
-          placeholder={` ${selectedClusterName}`}
-          title="Cuộn để hiển thị thông tin"
-          onChange={(selectedValues) => {
-            if (
-              selectedValues.Cluster?.value &&
-              selectedValues.Cluster?.value.toString() !== selectedCluster
-            ) {
-              setSelectedCluster(selectedValues.Cluster?.value.toString());
-              setSelectedClusterName(selectedValues.Cluster?.displayName);
-            }
-          }}
-          mask={true}
-          disabled={false}
-          data={[...pickerData2]}
-        />
-        <Picker
-          helperText="Chọn địa chỉ giao hàng của bạn"
-          placeholder={`${selectedBuildingName}`}
-          title="Cuộn để hiển thị thông tin"
-          onChange={(selectedValues) => {
-            if (
-              selectedValues.Building?.value &&
-              selectedValues.Building?.value.toString() !== selectedBuilding
-            ) {
-              setSelectedBuilding(selectedValues.Building?.value.toString());
-              setSelectedBuildingName(selectedValues.Building?.displayName);
-            }
-          }}
-          mask={true}
-          disabled={false}
-          data={[...pickerData3]}
-        />
+
+        {selectedCluster !== undefined && (
+          <Picker
+            helperText="Chọn địa chỉ giao hàng của bạn"
+            placeholder={` ${selectedClusterName}`}
+            title="Cuộn để hiển thị thông tin"
+            onChange={(selectedValues) => {
+              if (
+                selectedValues.Cluster?.value &&
+                selectedValues.Cluster?.value.toString() !== selectedCluster
+              ) {
+                setSelectedCluster(selectedValues.Cluster?.value.toString());
+                setSelectedClusterName(selectedValues.Cluster?.displayName);
+                setSelectedBuilding(undefined);
+                setSelectedBuildingName(undefined);
+              }
+            }}
+            mask={true}
+            disabled={false}
+            data={[...pickerData2]}
+          />
+        )}
+        {selectedBuilding !== undefined && (
+          <Picker
+            helperText="Chọn địa chỉ giao hàng của bạn"
+            placeholder={`${selectedBuildingName}`}
+            title="Cuộn để hiển thị thông tin"
+            onChange={(selectedValues) => {
+              if (
+                selectedValues.Building?.value &&
+                selectedValues.Building?.value.toString() !== selectedBuilding
+              ) {
+                setSelectedBuilding(selectedValues.Building?.value.toString());
+                setSelectedBuildingName(selectedValues.Building?.displayName);
+              }
+            }}
+            mask={true}
+            disabled={false}
+            data={[...pickerData3]}
+          />
+        )}
       </Box>
     );
   }
