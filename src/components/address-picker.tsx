@@ -1,4 +1,6 @@
-import React, { FC, useState, useEffect } from "react";
+import { filter } from "lodash";
+import { any, string } from "prop-types";
+import React, { FC, useState, useEffect, useMemo } from "react";
 import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import {
   listAreasVHGPState,
@@ -8,6 +10,12 @@ import { addressState } from "states/order.state";
 import { Area } from "types/vhgp-address";
 import { Box, Picker, Text } from "zmp-ui";
 import { PickerColumnOption, PickerDataType } from "zmp-ui/picker";
+
+type PickerValue = {
+  Area?: { value: string; displayName: string };
+  Cluster?: { value: string; displayName: string };
+  Building?: { value: string; displayName: string };
+};
 
 const AddressPicker: FC = () => {
   const setAddress = useSetRecoilState(addressState);
@@ -31,7 +39,6 @@ const AddressPicker: FC = () => {
     getAreaInfosVHGPState(+selectedArea!)
   );
 
-  // Set area to state
   useEffect(() => {
     if (
       areasLoadBalance.state === "hasValue" &&
@@ -44,7 +51,6 @@ const AddressPicker: FC = () => {
     }
   }, [areasLoadBalance, selectedArea]);
 
-  // Set cluster to state
   useEffect(() => {
     if (
       areaInfoLoadable.state === "hasValue" &&
@@ -60,7 +66,6 @@ const AddressPicker: FC = () => {
     }
   }, [areaInfoLoadable, selectedArea]);
 
-  // Set building to state
   useEffect(() => {
     if (
       areaInfoLoadable.state === "hasValue" &&
@@ -78,14 +83,61 @@ const AddressPicker: FC = () => {
     }
   }, [selectedCluster, areaInfoLoadable]);
 
-  // Set address to state
   useEffect(() => {
     setAddress(
       `${selectedAreaName}, ${selectedClusterName}, ${selectedBuildingName}`
     );
   }, [selectedAreaName, selectedClusterName, selectedBuildingName, setAddress]);
 
-  // Render loading if data is loading
+  const areaOptions = useMemo(() => {
+    if (
+      areasLoadBalance.state === "hasValue" &&
+      areasLoadBalance.contents !== null
+    ) {
+      const areas: Area[] = areasLoadBalance.contents;
+      return areas.map(({ id, name }) => ({
+        key: id.toString(),
+        value: id,
+        displayName: name,
+      }));
+    }
+    return [];
+  }, [areasLoadBalance]);
+
+  const clusterOptions = useMemo(() => {
+    if (
+      areaInfoLoadable.state === "hasValue" &&
+      areaInfoLoadable.contents !== null &&
+      areaInfoLoadable.contents.listCluster.length > 0
+    ) {
+      return areaInfoLoadable.contents.listCluster.map(({ id, name }) => ({
+        key: id.toString(),
+        value: id.toString(),
+        displayName: name,
+      }));
+    }
+    return [{ key: "", value: "", displayName: "______" }];
+  }, [areaInfoLoadable]);
+
+  const buildingOptions = useMemo(() => {
+    if (
+      areaInfoLoadable.state === "hasValue" &&
+      areaInfoLoadable.contents !== null &&
+      areaInfoLoadable.contents.listCluster.length > 0
+    ) {
+      return (
+        areaInfoLoadable.contents.listCluster
+          .find((c) => c.id.toString() === selectedCluster)
+          ?.listBuilding.map(({ id, name }) => ({
+            key: id.toString(),
+            value: id.toString(),
+            displayName: name,
+          })) ?? [{ key: "", value: "", displayName: "______" }]
+      );
+    }
+    return [{ key: "", value: "", displayName: "______" }];
+  }, [areaInfoLoadable, selectedCluster]);
+
   if (areasLoadBalance.state === "loading") {
     return (
       <Box>
@@ -94,85 +146,18 @@ const AddressPicker: FC = () => {
     );
   }
 
-  // Render data if data is loaded
   if (
     areasLoadBalance.state === "hasValue" &&
     areasLoadBalance.contents !== null
   ) {
-    const areas: Area[] = areasLoadBalance.contents;
-
-    const areaOptions: PickerColumnOption[] = areas.map(({ id, name }) => ({
-      key: id.toString(),
-      value: id,
-      displayName: name,
-    }));
-
-    // Render cluster options
-    const clusterOptions: PickerColumnOption[] =
-      areaInfoLoadable.state === "hasValue" &&
-      areaInfoLoadable.contents !== null &&
-      areaInfoLoadable.contents.listCluster.length > 0
-        ? areaInfoLoadable.contents.listCluster.map(({ id, name }) => ({
-            key: id.toString(),
-            value: id.toString(),
-            displayName: name,
-          }))
-        : [
-            {
-              key: "",
-              value: "",
-              displayName: "______",
-            },
-          ];
-
-    // Render building options
-    const buildingOptions: PickerColumnOption[] =
-      areaInfoLoadable.state === "hasValue" &&
-      areaInfoLoadable.contents !== null &&
-      areaInfoLoadable.contents.listCluster.length > 0
-        ? areaInfoLoadable.contents.listCluster
-            .find((c) => c.id.toString() === selectedCluster)
-            ?.listBuilding.map(({ id, name }) => ({
-              key: id.toString(),
-              value: id.toString(),
-              displayName: name,
-            })) ?? [
-            {
-              key: "",
-              value: "",
-              displayName: "______",
-            },
-          ]
-        : [
-            {
-              key: "",
-              value: "",
-              displayName: "______",
-            },
-          ];
-
-    // Render picker data
     const pickerData1: PickerDataType[] = [
-      {
-        name: "Area",
-        options: areaOptions,
-      },
+      { name: "Area", options: areaOptions },
     ];
-
-    // Render cluster picker data
     const pickerData2: PickerDataType[] = [
-      {
-        name: "Cluster",
-        options: clusterOptions,
-      },
+      { name: "Cluster", options: clusterOptions },
     ];
-
-    // Render building picker data
     const pickerData3: PickerDataType[] = [
-      {
-        name: "Building",
-        options: buildingOptions,
-      },
+      { name: "Building", options: buildingOptions },
     ];
 
     return (

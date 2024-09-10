@@ -3,6 +3,7 @@ import { atom, selector, selectorFamily } from "recoil";
 import { memberState } from "./member.state";
 import { OrderDetails, PaymentType, orderStatusCart } from "types/order";
 import { Payment } from "types/payment";
+import { Order, OrderType, PaymentStatus } from "types/order";
 
 export const requestOrderTransactionTriesState = atom({
   key: "requestOrderTransactionTries",
@@ -53,12 +54,30 @@ export const setOrder = selectorFamily<
   },
 });
 
+export const orderStatusState = atom<Order[]>({
+  key: "orderStatus",
+  default: [
+    {
+      type: OrderType.DELIVERY,
+      name: "Giao hàng",
+    },
+    {
+      type: OrderType.TAKE_AWAY,
+      name: "Mang đi",
+    },
+    {
+      type: OrderType.EATIN,
+      name: "Dùng ngay",
+    },
+  ],
+});
+
 export const paymentTypeState = atom<Payment[]>({
   key: "paymentType",
   default: [
     {
-      type: PaymentType.POINTIFY,
-      name: "Điểm Bean",
+      type: PaymentType.BANKING,
+      name: "Ngân hàng",
     },
     {
       type: PaymentType.CASH,
