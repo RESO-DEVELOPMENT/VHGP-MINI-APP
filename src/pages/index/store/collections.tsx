@@ -18,8 +18,44 @@ function cancleTab(event) {
 }
 export const Collections: FC<CollectionProps> = ({ collections }) => {
   return (
-    <Tabs scrollable={true} defaultActiveKey={"content-0"}>
-      {collections.map((collection, index) => {
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      {" "}
+      {/* Added a parent div to wrap the returned JSX */}
+      {/* <Tabs scrollable={true} defaultActiveKey={"content-0"}> */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}
+      >
+        {collections.map((collection, index) => (
+          <div
+            key={index}
+            style={{
+              margin: "5px 10px",
+              maxWidth: "calc(25% - 20px)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src="https://cdn.hita.com.vn/storage/blog/am-thuc-doi-song/cach-nau-pho-3.jpeg"
+              style={{
+                width: "100%",
+                objectFit: "cover",
+                borderRadius: "10px",
+              }}
+            />
+            <Text>Bún Phở</Text>
+          </div>
+        ))}
+      </div>
+      {/* </Tabs> */}
+    </div> // Closing the parent div
+    /* {collections.map((collection, index) => {
         const productsByCollection = useRecoilValue(
           productsByCollectionId(collection.id)
         );
@@ -64,7 +100,6 @@ export const Collections: FC<CollectionProps> = ({ collections }) => {
             </Tabs.Tab>
           </>
         );
-      })}
-    </Tabs>
+      })} */
   );
 };

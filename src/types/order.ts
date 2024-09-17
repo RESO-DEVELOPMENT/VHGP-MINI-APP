@@ -23,6 +23,11 @@ export enum PaymentStatus {
   PAID = "PAID",
 }
 
+export interface Order {
+  type: string;
+  name: string;
+}
+
 export interface orderStatusCart {
   status: OrderStatus;
   paymentType: PaymentStatus;

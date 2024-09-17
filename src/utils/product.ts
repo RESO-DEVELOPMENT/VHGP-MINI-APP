@@ -61,10 +61,22 @@ export function showPaymentType(paymentType: string) {
   switch (paymentType) {
     case PaymentType.CASH:
       return "TIỀN MẶT";
-    case PaymentType.POINTIFY:
-      return "Điểm BEAN";
+    case PaymentType.BANKING:
+      return "NGÂN HÀNG";
     default:
       return "TIỀN MẶT";
+  }
+}
+export function showOrderType(type: string) {
+  switch (type) {
+    case OrderType.EATIN:
+      return "DÙNG NGAY";
+    case OrderType.DELIVERY:
+      return "GIAO HÀNG";
+    case OrderType.TAKE_AWAY:
+      return "MANG ĐI";
+    default:
+      return "MANG ĐI";
   }
 }
 export function showOrderStatus(status: string) {
@@ -99,18 +111,6 @@ export function showDeliStatus(status: string) {
       return "Giao thành công";
     default:
       return "Đang thực hiện";
-  }
-}
-export function showOrderType(type: string) {
-  switch (type) {
-    case OrderType.EATIN:
-      return "Tại quầy";
-    case OrderType.DELIVERY:
-      return "Giao hàng";
-    case OrderType.TAKE_AWAY:
-      return "Mang đi";
-    default:
-      return "Mang đi";
   }
 }
 export function showPaymentStatus(status: string) {

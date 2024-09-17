@@ -17,7 +17,7 @@ export const ProductItem: FC<{
   return (
     <ProductPicker product={product} isUpdate={false}>
       {({ open }) => (
-        <div className="space-y-2 relative" onClick={open}>
+        <div className="space-y-2 relative ml-3 mr-3 " onClick={open}>
           {quantity > 0 && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
