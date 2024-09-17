@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import { Box } from "zmp-ui";
 import { Navigation } from "./navigation";
 import HomePage from "pages/index";
+import MenuPage from "pages/index/menu";
 import CategoryPage from "pages/category";
 import CartPage from "pages/cart";
 import NotificationPage from "pages/notification";
@@ -19,7 +20,6 @@ import InformationPage from "pages/information";
 import FeedbackForm from "pages/feedback";
 import BlogDetail from "pages/wallet/blog-detail";
 import { GiftsPage } from "pages/gifts";
-
 
 import { StoresPickerByFood } from "pages/index/store-picker-by-food";
 import StorePage from "pages/index/store";
@@ -61,6 +61,7 @@ export const Layout: FC = () => {
           <Route path="/feedback" element={<FeedbackForm />} />
           <Route path="/listTransaction" element={<TransactionPage />} />
           <Route path="/blog" element={<BlogDetail />}>
+
             {""}
           </Route>
           <Route path="/gifts" element={<GiftsPage />}/>
@@ -74,6 +75,8 @@ export const Layout: FC = () => {
             path="/stores-picker-by-food"
             element={<StoresPickerByFood />}
           />
+
+          <Route path="/menu" element={<MenuPage />} />
         </Routes>
       </Box>
       <Navigation />

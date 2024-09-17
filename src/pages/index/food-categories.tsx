@@ -20,6 +20,10 @@ export const FoodCategories: FC = () => {
     navigate("/stores-picker-by-food");
   };
 
+  const gotoMenu = (url : string) => {
+    navigate(url);
+  }
+
   switch (foodCategoriesLoadable.state) {
     case "loading":
       return (
@@ -42,15 +46,21 @@ export const FoodCategories: FC = () => {
           </Text>
         </Box>
       );
+      
     case "hasValue":
       const categories: FoodCategory[] = foodCategoriesLoadable.contents;
+      const listMenu = [{name: 'Siêu Rẻ', url: '/'}, 
+                        {name: 'BST DEAL 8K', url: '/'}, 
+                        {name: 'Giảm 50%', url: '/'}, 
+                        {name: 'Menu', url: '/menu'}];
+      const filteredCategories = categories.filter(category => category.displayOrder >= 100 && category.displayOrder <= 999).slice(0, 4);
       return (
-        <Box className="bg-white grid grid-cols-2 gap-4 p-4">
-          {categories.map((category) => (
+        <Box className="bg-white grid grid-cols-4 gap-4 p-3">
+          {filteredCategories.map((category) => (
             <div
               key={category.code}
               onClick={() => gotoCategory(category)}
-              className="flex flex-row space-y-2 justify-between items-center shadow-sm shadow-primary p-2 rounded-lg"
+              className="flex flex-col justify-content-center items-center rounded-lg"
             >
               <Box>
                 <img
@@ -60,8 +70,29 @@ export const FoodCategories: FC = () => {
                 />
               </Box>
               <Box>
-                <Text size="xxSmall" className="text-gray">
+                <Text size="xxxSmall" className="text-gray text-center mt-1">
                   {category.name}
+                </Text>
+              </Box>
+            </div>
+          ))}
+
+          {listMenu.map((menu, index) => (
+            <div
+              key={index}
+              onClick={() => gotoMenu(menu.url)}
+              className="flex flex-col justify-content-center items-center rounded-lg "
+            >
+              <Box>
+                <img
+                  className="w-12 h-12"
+                  src={foodCateSkeleton}
+                  alt={menu.name}
+                />
+              </Box>
+              <Box >
+                <Text size="xxSmall" className="text-gray text-center mt-1">
+                  {menu.name}
                 </Text>
               </Box>
             </div>
