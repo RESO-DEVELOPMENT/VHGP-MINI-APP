@@ -1,14 +1,12 @@
-import React, { FC } from "react";
 import { Divider } from "components/divider";
-import { Box, Header, Page } from "zmp-ui";
+import { useVirtualKeyboardVisible } from "hooks";
+import React, { FC } from "react";
+import { Header, Page } from "zmp-ui";
 import { CartItems } from "./cart-items";
+import { Delivery } from "./delivery";
+import { PaymentInfo } from "./payment";
 import { CartPreview } from "./preview";
 import { TermsAndPolicies } from "./term-and-policies";
-import { Delivery } from "./delivery";
-import { useVirtualKeyboardVisible } from "hooks";
-import { PaymentInfo } from "./payment";
-import { useRecoilStateLoadable } from "recoil";
-import { cartState } from "states/cart.state";
 
 const CartPage: FC = () => {
   const keyboardVisible = useVirtualKeyboardVisible();

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { Box } from "zmp-ui";
 
 interface ConfirmationModalProps {
@@ -30,7 +30,6 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
     top: 220,
     position: "relative",
     backgroundColor: "#fff",
-    // boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
     padding: "50px 40px",
     borderRadius: "5px",
     margin: "10vh auto", // Canh giữa theo chiều dọc
@@ -44,10 +43,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
           <Modal.Header className="text-center font-bold text-xl" closeButton>
             <Modal.Title>Bạn chắc chắn muốn hủy đơn này?</Modal.Title>
           </Modal.Header>
-          {/* <Modal.Body className="text-center mb-7">
-            Bạn có chắc chắn muốn hủy đơn này không?
-          </Modal.Body> */}
-          <Modal.Footer className="ml-12 flex ">
+          <Modal.Footer className=" flex justify-around">
             <Box>
               <Button
                 className="p-3 bg-primary font-bold text-lg rounded-lg"
@@ -58,7 +54,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
             </Box>
             <Box>
               <Button
-                className="ml-24 p-3 bg-primary font-bold text-lg rounded-lg"
+                className="p-3 bg-primary font-bold text-lg rounded-lg"
                 variant="primary"
                 onClick={onCancel}
               >

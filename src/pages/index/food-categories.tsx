@@ -20,9 +20,9 @@ export const FoodCategories: FC = () => {
     navigate("/stores-picker-by-food");
   };
 
-  const gotoMenu = (url : string) => {
+  const gotoMenu = (url: string) => {
     navigate(url);
-  }
+  };
 
   switch (foodCategoriesLoadable.state) {
     case "loading":
@@ -46,14 +46,18 @@ export const FoodCategories: FC = () => {
           </Text>
         </Box>
       );
-      
+
     case "hasValue":
       const categories: FoodCategory[] = foodCategoriesLoadable.contents;
-      const listMenu = [{name: 'Siêu Rẻ', url: '/'}, 
-                        {name: 'BST DEAL 8K', url: '/'}, 
-                        {name: 'Giảm 50%', url: '/'}, 
-                        {name: 'Menu', url: '/menu'}];
-      const filteredCategories = categories.filter(category => category.displayOrder >= 100 && category.displayOrder <= 999).slice(0, 4);
+      const listMenu = [
+        { name: "Siêu Rẻ", url: "/" },
+        { name: "BST DEAL 8K", url: "/" },
+        { name: "Giảm 50%", url: "/" },
+        { name: "Menu", url: "/menu" },
+      ];
+      const filteredCategories = categories
+        .filter((category) => category.displayOrder >= 1000)
+        .slice(0, 4);
       return (
         <Box className="bg-white grid grid-cols-4 gap-4 p-3">
           {filteredCategories.map((category) => (
@@ -90,7 +94,7 @@ export const FoodCategories: FC = () => {
                   alt={menu.name}
                 />
               </Box>
-              <Box >
+              <Box>
                 <Text size="xxSmall" className="text-gray text-center mt-1">
                   {menu.name}
                 </Text>

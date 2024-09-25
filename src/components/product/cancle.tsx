@@ -30,7 +30,7 @@ export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
       const updateElapsedTime = () => {
         const currentTime = new Date().getTime();
         const elapsedSeconds = Math.floor((currentTime - createTime) / 1000);
-        const countDown = 120 - elapsedSeconds;
+        const countDown = 12000 - elapsedSeconds;
         setTime(countDown);
         if (countDown <= 0) {
           setCanCancel(false);

@@ -4,7 +4,7 @@ import { Box, Icon, Text, Modal, Input } from "zmp-ui";
 import { ListRenderer } from "components/list-renderer";
 import { LocationPicker } from "./location-picker";
 import { cartState } from "states/cart.state";
-import {  storeState } from "states/store.state";
+import { storeState } from "states/store.state";
 
 export const AddressPopup: FC<{
   title: string;
@@ -63,17 +63,14 @@ export const Delivery: FC = () => {
             {
               left: <Icon icon="zi-home" className="my-auto" />,
               right: (
-               
-                    <Box>
-                      <Text size="small" className="text-primary">
-                        {currentStore.name || "Cửa hàng"}
-                      </Text>
-                      <Text size="xSmall" className="text-gray">
-                        {"Cửa hàng"}
-                      </Text>
-                    </Box>
-                 
-        
+                <Box>
+                  <Text size="small" className="text-primary">
+                    {currentStore.name || "Cửa hàng"}
+                  </Text>
+                  <Text size="xSmall" className="text-gray">
+                    {"Cửa hàng"}
+                  </Text>
+                </Box>
               ),
             },
             {

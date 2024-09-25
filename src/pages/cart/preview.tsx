@@ -59,6 +59,7 @@ export const CartPreview: FC = () => {
         // customerPhone: member.contents.phoneNumber,
         address: store.name,
         deliveryAddress: address,
+        shippingFee: cartPrepare.contents.finalAmount * 0.15,
       };
       console.log("body", body);
 
@@ -174,7 +175,6 @@ export const CartPreview: FC = () => {
         };
 
         const res = await orderApi.createNewOrder(body);
-
         if (res.status == 200) {
           snackbar.openSnackbar({
             type: "success",

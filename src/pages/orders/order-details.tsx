@@ -32,7 +32,7 @@ const OrderDetailsPage: FC = () => {
     setCancellationReason("");
   };
 
-  console.log("OrderDetail", orderDetail.contents);
+  console.log("OrderDetail", orderDetail);
 
   return (
     <Page className="flex flex-col">

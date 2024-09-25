@@ -126,20 +126,22 @@ requestLogin.interceptors.request.use((options) => {
   return options;
 });
 
-
 requestLogin.interceptors.response.use(
   (response) => response,
   (error) =>
     Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
 );
 const requestVHGP = axios.create({
+  headers: {
+    nguyenkunquan: "cristianoronaldo7",
+  },
   baseURL: vhgp,
   paramsSerializer: parseParams,
 });
 
 requestVHGP.interceptors.request.use((options) => {
   const { method } = options;
-  console.log("break")
+  console.log("break");
   if (method === "put" || method === "post") {
     Object.assign(options.headers, {
       "Content-Type": "application/json;charset=UTF-8",
@@ -159,7 +161,6 @@ requestPromotion.interceptors.response.use(
     Promise.reject((error.response && error.response.data) || "Có lỗi xảy ra")
 );
 
-
 //handle error
 const requestReport = axios.create({
   baseURL: report,
@@ -177,8 +178,6 @@ requestReport.interceptors.request.use((options) => {
 
   return options;
 });
-
-
 
 // ----------------------------------------------------------------------
 class AxiosClientFactory {
@@ -237,4 +236,3 @@ export const axiosInstances = {
 };
 
 export default axiosInstances.webAdmin;
-
