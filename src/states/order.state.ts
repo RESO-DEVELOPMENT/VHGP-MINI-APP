@@ -17,13 +17,12 @@ export const listOrderState = selector({
     if (request) {
       const member = get(memberState);
       if (member !== null) {
-        const listOrder = await orderApi.getListOrder(
-          member.membershipId || "67c3bab8-91bb-4828-9f3a-d87c87957209",
-          {
-            page: 1,
-            size: 100,
-          }
-        );
+        const listOrder = await orderApi.getListOrder({
+          cusPhoneNumber: encodeURIComponent(member.phoneNumber),
+          brandId: "34519997-3d4b-4b31-857f-d6612082c11b",
+          page: 1,
+          size: 100,
+        });
         return listOrder.data.items;
       }
     }

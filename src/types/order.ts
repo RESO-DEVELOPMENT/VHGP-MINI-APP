@@ -30,7 +30,7 @@ export interface Order {
 
 export interface orderStatusCart {
   status: OrderStatus;
-  paymentType: PaymentStatus;
+  paymentType: string;
   guestNumber: number;
   deliStatus: string;
 }

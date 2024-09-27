@@ -6,13 +6,19 @@ import { listStoreState } from "states/store.state";
 import { getOrderDetailstate } from "states/order.state";
 import { OrderStatus, PaymentStatus } from "types/order";
 import orderApi from "api/order";
-
+import { useNavigate } from "react-router-dom";
 interface CancelOrderProps {
+  orderStatus: string;
   index: number;
   orderId: string;
 }
 
-export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
+export const CancelOrder: FC<CancelOrderProps> = ({
+  orderStatus,
+  index,
+  orderId,
+}) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [canCancel, setCanCancel] = useState(false);
@@ -30,9 +36,9 @@ export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
       const updateElapsedTime = () => {
         const currentTime = new Date().getTime();
         const elapsedSeconds = Math.floor((currentTime - createTime) / 1000);
-        const countDown = 12000 - elapsedSeconds;
-        setTime(countDown);
-        if (countDown <= 0) {
+        const countDown = 120 - elapsedSeconds;
+        setTime(countDown > 0 ? countDown : 0);
+        if (countDown <= 0 || orderStatus == "CANCELED") {
           setCanCancel(false);
         } else {
           setCanCancel(true);
@@ -51,7 +57,7 @@ export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
     return token;
   };
 
-  const cancel = useCallback(async () => {
+  const cancle = useCallback(async () => {
     if (!store) {
       console.error("Store not found");
       setShowModal(false);
@@ -62,23 +68,19 @@ export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
     try {
       const orderStatusCart = {
         status: OrderStatus.CANCELED,
-        paymentType: PaymentStatus.FAIL,
-        guestNumber: orderDetail.customerNumber,
-        deliStatus: "FAIL",
+        paymentType: orderDetail.paymentType,
+        guestNumber: 0,
+        deliStatus: "PENDING",
       };
-      await orderApi.setOrderStatusToCanceled(
-        orderStatusCart,
-        store.id,
-        orderId,
-        getToken()
-      );
+      await orderApi.cancleOreder(orderDetail.orderId, orderStatusCart);
       setShowModal(false);
+      navigate("/");
     } catch (error) {
       console.error("Failed to cancel the order:", error);
     } finally {
       setLoading(false);
     }
-  }, [orderDetail, store, orderId]);
+  }, [orderDetail, store, orderId, navigate]); // Thêm navigate vào dependencies
 
   const formatElapsedTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -124,7 +126,7 @@ export const CancelOrder: FC<CancelOrderProps> = ({ index, orderId }) => {
                 show={showModal}
                 onHide={() => setShowModal(false)}
                 onCancel={() => setShowModal(false)}
-                onConfirm={cancel}
+                onConfirm={cancle}
               />
             </>
           ) : (

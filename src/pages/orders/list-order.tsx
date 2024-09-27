@@ -104,11 +104,14 @@ const HistoryPicker: FC = () => {
                         />
                       )}
                       {order && order.status !== OrderStatus.PENDING && (
-                        <CancelOrder
-                          orderId={order.id}
-                          index={0}
-                          key={order.id}
-                        />
+                        <>
+                          <CancelOrder
+                            orderStatus={order.status}
+                            orderId={order.id}
+                            index={0}
+                            key={order.id}
+                          />
+                        </>
                       )}
                     </div>
                   </Card>
