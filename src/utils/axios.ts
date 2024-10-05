@@ -37,8 +37,8 @@ export const parseParams = (params: any) => {
   return options ? options.slice(0, -1) : options;
 };
 //TODO:TEST Environment
-const admin = "https://admin-test.reso.vn/api/v1/";
-// const admin = "https://admin.reso.vn/api/v1/";
+// const admin = "https://admin-test.reso.vn/api/v1/";
+const admin = "https://admin.reso.vn/api/v1/";
 const account = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
 const paymentService = `${process.env.REACT_APP_PAYMENT_SERVICE_URL}`;
 const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
