@@ -16,7 +16,7 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
   const [showMore, setShowMore] = useState(false);
   return (
     <>
-      <div className="px-4 mt-4">
+      <div className="px-4 my-4">
         <div className="grid grid-cols-4 gap-4">
           {showMore
             ? categories.map((category, index) => (
