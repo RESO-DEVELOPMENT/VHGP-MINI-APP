@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Section } from "components/section";
 import { useRecoilValueLoadable } from "recoil";
-import { Box, Tabs, Icon } from "zmp-ui";
+import { Box, Tabs, Icon, Text } from "zmp-ui";
 import { ProductItem } from "components/product/item";
 import { ProductItemSkeleton } from "components/skeletons";
 import { productsByCategoryId } from "states/product.state";
@@ -16,58 +16,47 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
   const [showMore, setShowMore] = useState(false);
   return (
     <>
-      <div>
+      <div className="px-4 mt-4">
         <div className="grid grid-cols-4 gap-4">
           {showMore
             ? categories.map((category, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center"
+                  className="flex flex-col space-y-1 items-center w-20"
                 >
-                  <img
-                    src={skeleton}
-                    style={{
-                      padding: "5px",
-                      height: "70px",
-                      width: "70px",
-                      objectFit: "cover",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div className="text-base whitespace-nowrap overflow-hidden text-ellipsis w-20 text-center">
+                  <img className="w-14 h-14" src={skeleton} />
+                  <Text
+                    size="small"
+                    className="text-gray text-center truncate overflow-hidden text-ellipsis w-full"
+                  >
                     {category.name}
-                  </div>
+                  </Text>
                 </div>
               ))
             : categories.slice(0, 8).map((category, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center"
+                  className="flex flex-col space-y-1 items-center w-20"
                 >
-                  <img
-                    src={skeleton}
-                    style={{
-                      padding: "5px",
-                      height: "70px",
-                      width: "70px",
-                      objectFit: "cover",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div className="text-base whitespace-nowrap overflow-hidden text-ellipsis w-20 text-center">
+                  <img className="w-16 h-16" src={skeleton} />
+                  <Text
+                    size="small"
+                    className="text-gray text-center truncate overflow-hidden text-ellipsis w-full"
+                  >
                     {category.name}
-                  </div>
+                  </Text>
                 </div>
               ))}
         </div>
       </div>
+
       <div style={{ textAlign: "right" }}>
         {categories.length > 8 && (
           <button
             onClick={() => setShowMore(!showMore)}
-            className="px-5 py-2 border-none rounded-full cursor-pointer m-2.5"
+            className="pt-2 border-none rounded-full cursor-pointer "
           >
-            {showMore ? "Show Less" : "Show More"}{" "}
+            {showMore ? "Đóng" : "Hiện"}{" "}
             {!showMore ? (
               <Icon icon="zi-chevron-down" />
             ) : (
@@ -76,7 +65,6 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
           </button>
         )}
       </div>
-      <Divider />
       {categories.map((category, index) => (
         <>
           <ProductListTabContent
