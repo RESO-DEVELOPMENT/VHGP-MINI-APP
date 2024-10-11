@@ -32,7 +32,7 @@ const StorePage: FC = () => {
             title={currentStoreState.name}
             style={{ paddingBottom: "0px" }}
           />
-          <div className="bg-white font-light text-base pl-10 pb-2 whitespace-nowrap overflow-hidden text-ellipsis w-96 ">
+          <div className="bg-white font-light text-base pl-10 whitespace-nowrap overflow-hidden text-ellipsis px-4">
             <Icon icon="zi-location" style={{ color: "#fc8019" }} />
             {currentStoreState.address}
           </div>
