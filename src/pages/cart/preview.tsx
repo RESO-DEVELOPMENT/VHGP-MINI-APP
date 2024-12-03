@@ -21,6 +21,7 @@ import { useProductContext } from "context/app-context";
 import { addressState } from "states/order.state";
 import { storeState } from "states/store.state";
 import { OrderPicker } from "./Order-picker";
+import { DeliveryPicker } from "./delivery-picker";
 
 export const CartPreview: FC = () => {
   const { commonOrderType } = useProductContext();
@@ -302,6 +303,12 @@ export const CartPreview: FC = () => {
               size="small"
             >
               <OrderPicker />
+            </Text.Title>
+            <Text.Title
+              className="text-gray text-transform: uppercase;"
+              size="small"
+            >
+              <DeliveryPicker />
             </Text.Title>
             <Text.Title
               className="text-gray text-transform: uppercase;"

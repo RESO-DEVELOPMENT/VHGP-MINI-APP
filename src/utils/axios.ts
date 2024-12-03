@@ -43,7 +43,7 @@ const account = `${process.env.REACT_APP_WEB_ADMIN_URL}`;
 const paymentService = `${process.env.REACT_APP_PAYMENT_SERVICE_URL}`;
 const report = `${process.env.REACT_APP_REPORT_BASE_URL}`;
 const promotion = "https://api-pointify.reso.vn/api";
-const vhgp = "https://api.vhgp.net/api/v1/";
+const vhgp = "https://api.cho.vin/api/v1/";
 const requestWebAdmin = axios.create({
   baseURL: admin,
   paramsSerializer: parseParams,

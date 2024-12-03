@@ -1,7 +1,12 @@
 import orderApi from "api/order";
 import { atom, selector, selectorFamily } from "recoil";
 import { memberState } from "./member.state";
-import { OrderDetails, PaymentType, orderStatusCart } from "types/order";
+import {
+  DeliveryMode,
+  OrderDetails,
+  PaymentType,
+  orderStatusCart,
+} from "types/order";
 import { Payment } from "types/payment";
 import { Order, OrderType, PaymentStatus } from "types/order";
 
@@ -67,6 +72,24 @@ export const orderStatusState = atom<Order[]>({
     {
       type: OrderType.EATIN,
       name: "Dùng ngay",
+    },
+  ],
+});
+
+export const deliveryMode = atom<Order[]>({
+  key: "DeliveryMode",
+  default: [
+    {
+      type: DeliveryMode.STANDART_DELIVERY,
+      name: "Giao nhanh",
+    },
+    {
+      type: DeliveryMode.EXPRESS_DELIVERY,
+      name: "Giao hỏa tốc",
+    },
+    {
+      type: DeliveryMode.PRE_DELIVERY,
+      name: "Đặt hẹn",
     },
   ],
 });

@@ -2,7 +2,7 @@ import orderApi from "api/order";
 
 import { atom, selector } from "recoil";
 import { Cart } from "types/cart";
-import { OrderType, PaymentType } from "types/order";
+import { DeliveryMode, OrderType, PaymentType } from "types/order";
 import { memberState } from "./member.state";
 
 export const prepareCartState = selector<Cart>({
@@ -34,6 +34,8 @@ export const cartState = atom<Cart>({
     storeId: "",
     orderType: OrderType.DELIVERY,
     paymentType: PaymentType.CASH,
+    deliveryMode: DeliveryMode.STANDART_DELIVERY,
+    orderSchedule: new Date().toISOString(),
     productList: [],
     totalAmount: 0,
     shippingFee: 0,

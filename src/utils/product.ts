@@ -6,6 +6,7 @@ import { Product, ProductTypeEnum } from "types/store-menu";
 import { ProductList } from "pages/index/product-list";
 import { useRecoilState } from "recoil";
 import {
+  DeliveryMode,
   OrderStatus,
   OrderType,
   PaymentStatus,
@@ -79,6 +80,20 @@ export function showOrderType(type: string) {
       return "MANG ĐI";
   }
 }
+
+export function showDeliveryMode(type: string) {
+  switch (type) {
+    case DeliveryMode.STANDART_DELIVERY:
+      return "GIAO NHANH";
+    case DeliveryMode.EXPRESS_DELIVERY:
+      return "GIAO HỎA TỐC";
+    case DeliveryMode.PRE_DELIVERY:
+      return "ĐẶT HẸN";
+    default:
+      return "GIAO NHANH";
+  }
+}
+
 export function showOrderStatus(status: string) {
   switch (status) {
     case OrderStatus.NEW:

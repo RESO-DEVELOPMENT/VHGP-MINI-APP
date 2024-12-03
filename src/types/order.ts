@@ -4,6 +4,12 @@ export enum OrderType {
   DELIVERY = "DELIVERY",
 }
 
+export enum DeliveryMode {
+  STANDART_DELIVERY = "STANDART_DELIVERY",
+  EXPRESS_DELIVERY = "EXPRESS_DELIVERY",
+  PRE_DELIVERY = "PRE_DELIVERY",
+}
+
 export enum OrderStatus {
   NEW = "NEW",
   PENDING = "PENDING",
