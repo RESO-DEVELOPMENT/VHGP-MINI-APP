@@ -20,10 +20,10 @@ const tabs: Record<string, MenuItem> = {
     label: "Đặt hàng",
     icon: <Icon icon="zi-add-story" />,
   },
-  "/qr": {
-    label: "Mã QR",
-    icon: <Icon icon="zi-qrline" />,
-  },
+  // "/qr": {
+  //   label: "Mã QR",
+  //   icon: <Icon icon="zi-qrline" />,
+  // },
   "/history": {
     label: "Lịch sử",
     icon: <Icon icon="zi-memory" />,
