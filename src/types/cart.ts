@@ -17,6 +17,8 @@ export interface Cart {
   customerName?: string;
   customerPhone?: string;
   deliveryAddress?: string;
+  deliveryMode?: string;
+  orderSchedule?: string;
   message?: string;
   customerNumber?: number;
   totalQuantity: number;
