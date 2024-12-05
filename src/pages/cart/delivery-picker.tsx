@@ -28,7 +28,7 @@ export const DeliveryPicker: FC = () => {
     if (deliveryModeList.state !== "hasValue") return [];
 
     const deliveryModes = [
-      DeliveryMode.STANDART_DELIVERY,
+      DeliveryMode.STANDARD_DELIVERY,
       DeliveryMode.EXPRESS_DELIVERY,
       DeliveryMode.PRE_DELIVERY,
     ];
