@@ -13,6 +13,24 @@ interface ProductListProps {
   categories: Category[];
 }
 export const Categories: FC<ProductListProps> = ({ categories }) => {
+  
+  
+
+  if (categories.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full bg-gray-100">
+        <img
+          src="https://i.pinimg.com/736x/82/d0/d3/82d0d3fbdb556fca9e2ca37fe2d60365.jpg"
+          alt="Shop chưa hoạt động"
+          className="max-w-full h-auto mb-6 rounded-lg shadow-lg"
+          style={{ width: "100%", maxWidth: "280px" }}
+        />
+        <h2 className="text-2xl font-bold text-gray-800">Shop chưa hoạt động</h2>
+        <p className="text-gray-600 mt-2 text-center">Vui lòng quay lại sau.</p>
+      </div>
+    );
+  }
+
   const [showMore, setShowMore] = useState(false);
   return (
     <>

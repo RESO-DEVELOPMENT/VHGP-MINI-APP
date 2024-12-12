@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Box, Icon, Text, Modal, Input } from "zmp-ui";
 import { ListRenderer } from "components/list-renderer";
 import { LocationPicker } from "./location-picker";
@@ -65,7 +65,7 @@ export const Delivery: FC = () => {
               right: (
                 <Box>
                   <Text size="small" className="text-primary">
-                    {currentStore.name || "Cửa hàng"}
+                    {cart.productList.length === 0 ? "Tên cửa hàng" : currentStore.name || "Cửa hàng"}
                   </Text>
                   <Text size="xSmall" className="text-gray">
                     {"Cửa hàng"}
