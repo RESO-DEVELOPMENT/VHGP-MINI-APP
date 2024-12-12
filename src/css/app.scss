@@ -122,3 +122,9 @@ body {
 .custom-header {
   width: 200px;
 }
+
+.truncate-voucher {
+  max-width: 100px; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}

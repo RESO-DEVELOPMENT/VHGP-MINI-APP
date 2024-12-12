@@ -289,7 +289,7 @@ export const CartPreview: FC = () => {
               className="space-x-2"
               onClick={() => navigate("/voucher")}
             >
-              <Text size="xLarge" className="font-medium text-sm text-primary">
+              <Text size="xLarge" className="font-medium text-sm text-primary truncate-voucher ">
                 {cartPrepare.state === "hasValue" &&
                 cartPrepare.contents !== null &&
                 cartPrepare.contents.promotionCode !== null
