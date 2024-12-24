@@ -39,11 +39,11 @@ const StorePage: FC = () => {
           {/* <StoreDetail /> */}
           {/* <Divider /> */}
           <Suspense>
-            {/* <Collections collections={menu.contents.collections} /> */}
+            <Collections collections={menu.contents.collections} />
             {/* <Divider /> */}
             <Categories categories={menu.contents.categories} />
           </Suspense>
-          <Divider />
+          {/* <Divider /> */}
           <FloatingActionButton onClick={handleFabClick} icon={<CartIcon />} />
         </Box>
       </Page>

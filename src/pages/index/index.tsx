@@ -17,11 +17,11 @@ const HomePage: FC = () => {
         onBackClick={() => {}}
       />
       <Box className="flex-1 overflow-auto">
-        {/* <Inquiry /> */}
-        {/* <FoodCategories /> */}
-        {/* <Divider /> */}
-        {/* <Promotions /> */}
-        {/* <Divider /> */}
+        <Inquiry />
+        <FoodCategories />
+        <Divider />
+        <Promotions />
+        <Divider />
         {/* <ProductsRecommend /> */}
         <Divider />
         <Recommend />

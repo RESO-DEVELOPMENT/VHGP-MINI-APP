@@ -13,9 +13,6 @@ interface ProductListProps {
   categories: Category[];
 }
 export const Categories: FC<ProductListProps> = ({ categories }) => {
-  
-  
-
   if (categories.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full bg-gray-100">
@@ -25,7 +22,9 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
           className="max-w-full h-auto mb-6 rounded-lg shadow-lg"
           style={{ width: "100%", maxWidth: "280px" }}
         />
-        <h2 className="text-2xl font-bold text-gray-800">Shop chưa hoạt động</h2>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Shop chưa hoạt động
+        </h2>
         <p className="text-gray-600 mt-2 text-center">Vui lòng quay lại sau.</p>
       </div>
     );
@@ -34,7 +33,7 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
   const [showMore, setShowMore] = useState(false);
   return (
     <>
-      <div>
+      <div className="px-5">
         <div className="grid grid-cols-4 gap-4">
           {showMore
             ? categories.map((category, index) => (
@@ -79,7 +78,7 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
               ))}
         </div>
       </div>
-      <div style={{ textAlign: "right" }}>
+      <div className=" text-right">
         {categories.length > 8 && (
           <button
             onClick={() => setShowMore(!showMore)}
@@ -94,7 +93,7 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
           </button>
         )}
       </div>
-      <Divider />
+      {/* <Divider /> */}
       {categories.map((category, index) => (
         <>
           <ProductListTabContent
@@ -102,7 +101,7 @@ export const Categories: FC<ProductListProps> = ({ categories }) => {
             categoryId={category.id}
             key={category.id}
           />
-          <Divider />
+          {/* <Divider /> */}
         </>
       ))}
     </>
@@ -130,7 +129,7 @@ export const ProductListTabContent: FC<ProductListTabContentProps> = ({
     const productsByCategory = productsByCategoryLoadable.contents;
     return (
       <>
-        <div>
+        <div className="px-2">
           <Box className="grid grid-cols-2 gap-2">
             <div className="text-xl font-bold ml-3">{categoryName}</div>
             <br />
