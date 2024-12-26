@@ -24,7 +24,15 @@ const userLogin = (phone: string, name: string) => {
   return requestPomotion.post<UserLogin>(
     `/memberships/signin-zalo?apiKey=${apiKey}`,
     data
-  );
+  ).then(response => {
+    // luu thong tin dang nhap vao local storage
+    localStorage.setItem('userLogin', JSON.stringify(response.data));
+    console.log("userLogin res:",response);
+    return response;
+  }).catch(error => {
+    console.error("Login error:", error);
+  });
+
   // Cái có thể chạy nhưng chưa đúng
   // return requestPomotion.post<UserLogin>(
   //   `/memberships/signin-zalo?apiKey=E40D5DEE-FC46-4BA1-A2F3-E50A8140D1A6`,
