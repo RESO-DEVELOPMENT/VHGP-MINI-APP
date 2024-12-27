@@ -13,7 +13,7 @@ const MyApp = () => {
 
   return (
     <RecoilRoot>
-  <AutoLogin/>
+  {/* <AutoLogin/> */}
       <ConfigProvider
         cssVariables={{
           "--zmp-primary-color": getConfig((c) => c.template.primaryColor),
