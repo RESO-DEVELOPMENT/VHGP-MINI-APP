@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { App, ZMPRouter, SnackbarProvider } from "zmp-ui";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
 import { getConfig } from "utils/config";
 import { Layout } from "./navigation-menu/layout";
 import { ConfigProvider } from "./config-provider";
 import { ProductContextProvider } from "context/app-context";
+import { initializeUserLoginState, useInitializeUserLogin, userStateLogin } from "states/user.state";
+import AutoLogin from "context/AutoLogin";
 
 const MyApp = () => {
+  
+
   return (
     <RecoilRoot>
+  {/* <AutoLogin/> */}
       <ConfigProvider
         cssVariables={{
           "--zmp-primary-color": getConfig((c) => c.template.primaryColor),

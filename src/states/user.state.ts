@@ -1,9 +1,11 @@
 import userApi from "api/user";
 import zaloApi from "api/zalo-api";
-import { atom, selector } from "recoil";
+import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
 import axios from "utils/axios";
 import { getAccessToken, getPhoneNumber, getUserInfo } from "zmp-sdk";
 import { memberState } from "./member.state";
+import { UserLogin } from "types/user";
+import { useEffect } from "react";
 
 export const requestRetriveQRstate = atom({
   key: "requestRetriveQR",
@@ -113,3 +115,34 @@ export const qrState = selector({
     return null;
   },
 });
+
+
+export const userStateLogin = atom<UserLogin | null> ({
+  key: "userStateLogin",
+  default: null,
+})
+
+export const initializeUserLoginState = selector({
+  key: "initializeUserLoginState",
+  get: async ({ get }) => {
+    const userLoginData = localStorage.getItem("userLogin");
+    console.log("User login info from local storage:", userLoginData);
+    if (userLoginData) {
+      const userLogin: UserLogin = JSON.parse(userLoginData); 
+      return userLogin;
+    }
+    return null;
+  },
+});
+
+// Hook to initialize user login state
+export const useInitializeUserLogin = () => {
+  const setUserLogin = useSetRecoilState(userStateLogin);
+  const initializeUserLogin = useRecoilValue(initializeUserLoginState);
+
+  useEffect(() => {
+    if (initializeUserLogin) {
+      setUserLogin(initializeUserLogin);
+    }
+  }, [initializeUserLogin, setUserLogin]);
+};

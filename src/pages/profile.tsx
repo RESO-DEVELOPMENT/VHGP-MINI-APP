@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Box, Header, Icon, Page, Text } from "zmp-ui";
 import { ListRenderer } from "components/list-renderer";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,9 @@ import { ContentFallback } from "components/content-fallback";
 import { memberState } from "states/member.state";
 
 export const Subscription: FC = () => {
+  useEffect(() => {
+    retry((r) => r + 1);
+  }, []);
   const retry = useSetRecoilState(requestPhoneTriesState);
   const onClick = () => retry((r) => r + 1);
   return (
