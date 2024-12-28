@@ -284,7 +284,7 @@ export const CartPreview: FC = () => {
             justifyContent="space-between"
             className=" flex-none mb-3 mx-4"
           >
-            <Box
+            {/* <Box
               flex
               className="space-x-2"
               onClick={() => navigate("/voucher")}
@@ -297,7 +297,7 @@ export const CartPreview: FC = () => {
                   : "KHUYẾN MÃI"}
               </Text>
               <Icon className="bottom-0.5" icon="zi-chevron-up" />
-            </Box>
+            </Box> */}
             <Text.Title
               className="text-gray text-transform: uppercase;"
               size="small"
